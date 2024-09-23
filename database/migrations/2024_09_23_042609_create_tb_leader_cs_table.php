@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_perusahaan', function (Blueprint $table) {
-            $table->id('id_perusahaan');
-            $table->string('nama_perusahaan')->nullable();
-            $table->string('nama_direktur')->nullable();
+        Schema::create('tb_leader_cs', function (Blueprint $table) {
+            $table->id('id_leader');
+            $table->string('nama_lengkap')->nullable();
             $table->string('username')->unique()->nullable();
             $table->string('password');
-            $table->string('logo')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('profile_leader')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_perusahaan');
+        Schema::dropIfExists('tb_leader_cs');
     }
 };

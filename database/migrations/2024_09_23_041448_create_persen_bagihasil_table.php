@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_persen_bagihasil', function (Blueprint $table) {
+        Schema::create('persen_bagihasil', function (Blueprint $table) {
             $table->id('id_persen');
+            $table->unsignedBigInteger('perusahaan_id')->nullable();
             $table->decimal('persen', 10, 2)->nullable();
             $table->timestamps();
+
+            $table->foreign('perusahaan_id')
+                    ->references('id_perusahaan')
+                    ->on('tb_perusahaan')
+                    ->onDelete('set null');
         });
     }
 
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_persen_bagihasil');
+        Schema::dropIfExists('persen_bagihasil');
     }
 };

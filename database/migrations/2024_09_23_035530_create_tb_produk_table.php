@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_hargabotol', function (Blueprint $table) {
-            $table->id('id_hargabotol');
-            $table->decimal('harga_botol', 10, 2)->nullable(); // Menyimpan angka hingga 10 digit, 2 digit desimal
+        Schema::create('tb_produk', function (Blueprint $table) {
+            $table->id('id_produk');
+            $table->string('nama_produk');
+            $table->decimal('harga_botol', 10, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_hargabotol');
+        Schema::dropIfExists('tb_produk');
     }
 };

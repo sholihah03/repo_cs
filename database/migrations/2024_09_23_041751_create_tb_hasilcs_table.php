@@ -13,23 +13,22 @@ return new class extends Migration
     {
         Schema::create('tb_hasilcs', function (Blueprint $table) {
             $table->id('id_hasilcs');
-            $table->unsignedBigInteger('cs_id')->nullable(); // Kolom cs_id, nullable
-            $table->unsignedBigInteger('hargabotol_id')->nullable();
+            $table->unsignedBigInteger('rekapcs_id')->nullable();
+            $table->unsignedBigInteger('rekap_produk_id')->nullable();
             $table->integer('cr_new')->nullable();
             $table->decimal('ratio_botol', 10, 2)->nullable();
             $table->decimal('omzet', 10, 2)->nullable();
             $table->timestamps();
 
-            $table->foreign('cs_id')
-                  ->references('id_cs')
-                  ->on('tb_cs')
-                  ->onDelete('set null'); // Set null jika cs yang berelasi dihapus
+            $table->foreign('rekapcs_id')
+                    ->references('id_rekap_cs')
+                    ->on('rekap_cs')
+                    ->onDelete('set null');
 
-            // Relasi ke tabel tb_hargabotol
-            $table->foreign('hargabotol_id')
-                    ->references('id_hargabotol')
-                    ->on('tb_hargabotol')
-                    ->onDelete('set null'); // Set null jika hargabotol dihapus
+            $table->foreign('rekap_produk_id')
+                    ->references('id_rekap_produk')
+                    ->on('rekap_produk')
+                    ->onDelete('set null');
         });
     }
 

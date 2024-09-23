@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_pemasukan', function (Blueprint $table) {
-            $table->id('id_pemasukan'); // Primary key
+        Schema::create('rekap_cs', function (Blueprint $table) {
+            $table->id('id_rekap_cs');
             $table->unsignedBigInteger('cs_id')->nullable(); // Kolom cs_id, nullable
             $table->integer('total_lead')->nullable(); // Kolom untuk total_lead
             $table->integer('total_closing')->nullable(); // Kolom untuk total_closing
-            $table->integer('total_botol')->nullable(); // Kolom untuk total_botol
-            $table->timestamps(); // Kolom created_at dan updated_at
+            $table->timestamps();
 
             // Relasi ke tabel tb_cs
             $table->foreign('cs_id')
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_pemasukan');
+        Schema::dropIfExists('rekap_cs');
     }
 };

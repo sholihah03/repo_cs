@@ -25,8 +25,9 @@ return new class extends Migration
 
             $table->foreign('persen_id')
                     ->references('id_persen')
-                    ->on('tb_persen_bagihasil')
+                    ->on('persen_bagihasil')
                     ->onDelete('set null'); // Set null jika hargabotol dihapus
+            $table->timestamps();
         });
     }
 
