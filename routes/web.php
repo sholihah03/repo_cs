@@ -7,3 +7,4 @@ Route::get('/', function () {
 });
 
 Route::view('/dashboard', 'cs.layouts.index')->name('dashboardcs');
+Route::view('/jam', 'cs.layouts.jam')->name('jam');
