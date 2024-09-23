@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('tb_produk', function (Blueprint $table) {
             $table->id('id_produk');
+            $table->unsignedBigInteger('cs_id')->nullable(); // Kolom cs_id, nullable
             $table->string('nama_produk');
             $table->decimal('harga_botol', 10, 2)->nullable();
             $table->timestamps();
+
+            $table->foreign('cs_id')
+                    ->references('id_cs')
+                    ->on('tb_cs')
+                    ->onDelete('set null');
         });
     }
 
