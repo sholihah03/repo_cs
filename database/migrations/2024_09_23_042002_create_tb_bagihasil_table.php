@@ -27,7 +27,6 @@ return new class extends Migration
                     ->references('id_persen')
                     ->on('persen_bagihasil')
                     ->onDelete('set null'); // Set null jika hargabotol dihapus
-            $table->timestamps();
         });
     }
 
