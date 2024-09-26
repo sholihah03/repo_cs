@@ -10,13 +10,20 @@ class PersenBagiHasil extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan
-    protected $table = 'tb_persen_bagihasil';
+    protected $table = 'persen_bagihasil';
 
     // Primary key yang digunakan
     protected $primaryKey = 'id_persen';
 
-    // Kolom yang dapat diisi
+    // Kolom-kolom yang dapat diisi (mass assignable)
     protected $fillable = [
+        'perusahaan_id',
         'persen',
     ];
+
+    // Relasi ke model Perusahaan
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id', 'id_perusahaan');
+    }
 }

@@ -24,6 +24,7 @@ class Cs extends Authenticatable
         'no_telepon',
         'profile_cs',
         'password',
+        'status',
     ];
 
     // Hidden fields (terutama untuk kolom password)

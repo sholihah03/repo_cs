@@ -9,13 +9,13 @@ class BagiHasil extends Model
 {
     use HasFactory;
 
-    // Nama tabel yang digunakan
+    // Menentukan nama tabel jika tidak mengikuti konvensi Laravel
     protected $table = 'tb_bagihasil';
 
-    // Primary key yang digunakan
+    // Menentukan kolom primary key jika tidak menggunakan 'id'
     protected $primaryKey = 'id_bagihasil';
 
-    // Kolom yang dapat diisi
+    // Kolom-kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'hasilcs_id',
         'persen_id',
@@ -28,9 +28,9 @@ class BagiHasil extends Model
         return $this->belongsTo(HasilCs::class, 'hasilcs_id', 'id_hasilcs');
     }
 
-    // Relasi ke model PersenBagihasil
-    public function persen()
+    // Relasi ke model PersenBagiHasil
+    public function persenBagiHasil()
     {
-        return $this->belongsTo(PersenBagihasil::class, 'persen_id', 'id_persen');
+        return $this->belongsTo(PersenBagiHasil::class, 'persen_id', 'id_persen');
     }
 }

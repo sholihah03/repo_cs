@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('no_telepon')->nullable(); // Kolom untuk nomor telepon, nullable
             $table->string('profile_cs')->nullable(); // Kolom untuk profile picture CS, nullable
             $table->string('password'); // Kolom untuk password
+            $table->enum('status', ['proses', 'aktif', 'tidak aktif'])->default('proses'); // Kolom enum status
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }

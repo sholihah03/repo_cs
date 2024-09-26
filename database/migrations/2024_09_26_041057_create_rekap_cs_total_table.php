@@ -11,22 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rekap_produk', function (Blueprint $table) {
-            $table->id('id_rekap_produk');
-            $table->unsignedBigInteger('rekap_cs_id')->nullable(); // Kolom cs_id, nullable
-            $table->unsignedBigInteger('produk_id')->nullable(); // Kolom cs_id, nullable
-            $table->integer('total_produk')->nullable(); // Kolom untuk total_botol
+        Schema::create('rekap_cs_total', function (Blueprint $table) {
+            $table->id('id_rekap_cs_total');
+            $table->unsignedBigInteger('rekap_cs_id')->nullable();
+            $table->integer('total_botol')->nullable();
             $table->timestamps();
 
             // Relasi
             $table->foreign('rekap_cs_id')
                     ->references('id_rekap_cs')
                     ->on('rekap_cs')
-                    ->onDelete('set null');
-
-            $table->foreign('produk_id')
-                    ->references('id_produk')
-                    ->on('tb_produk')
                     ->onDelete('set null');
         });
     }
@@ -36,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rekap_produk');
+        Schema::dropIfExists('rekap_cs_total');
     }
 };
