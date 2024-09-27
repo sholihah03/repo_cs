@@ -73,7 +73,7 @@
         </div>
     </header>
 
-   
+
 
         <footer class="py-10 md:py-16 mb-20 md:mb-40 lg::mb-52">
             <div class="container max-w-screen-xl mx-auto px-4">
