@@ -75,7 +75,7 @@
 
 
 
-        <footer class="py-10 md:py-16 mb-20 md:mb-40 lg::mb-52">
+        {{-- <footer class="py-10 md:py-16 mb-20 md:mb-40 lg::mb-52">
             <div class="container max-w-screen-xl mx-auto px-4">
                 <div class="text-center">
                     <div class="flex items-center justify-center space-x-8">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> --}}
 
         <script>
             feather.replace()
