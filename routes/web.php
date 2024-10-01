@@ -8,4 +8,8 @@ Route::get('/', function () {
 
 Route::view('/dashboard', 'cs.layouts.index')->name('dashboardcs');
 Route::view('/jam', 'cs.layouts.jam')->name('jam');
-Route::view('/pemasukan', 'cs.layouts.pemasukan')->name('pemasukan');
+Route::view('/setting', 'rekap.setting')->name('setting');
+Route::view('/informasi', 'rekap.informasi')->name('informasi');
+Route::view('/edit', 'rekap.edit')->name('edit');
+Route::view('/login', 'rekap.login')->name('login');
+Route::view('/coba', 'cs.layouts.coba')->name('coba');
