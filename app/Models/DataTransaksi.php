@@ -5,25 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RekapCs extends Model
+class DataTransaksi extends Model
 {
     use HasFactory;
 
-    // Menentukan nama tabel jika tidak mengikuti konvensi Laravel
-    protected $table = 'rekap_cs';
+    protected $table = 'tb_datatransaksi';
 
     // Menentukan kolom primary key jika tidak menggunakan 'id'
-    protected $primaryKey = 'id_rekap_cs';
+    protected $primaryKey = 'id_datatransaksi';
 
     // Kolom-kolom yang dapat diisi (mass assignable)
     protected $fillable = [
+        'transaksi_id',
         'karyawan_id',
-        'total_lead',
-        'total_closing',
+        'tanggal',
+        'jumlah',
+        'keterangan',
     ];
 
     // Relasi ke model TbCs
-    public function tbKaryawan()
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class, 'transaksi_id', 'id_transaksi');
+    }
+
+    public function karyawan()
     {
         return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id_karyawan');
     }

@@ -16,13 +16,13 @@ class Produk extends Model
 
     // Kolom yang dapat diisi
     protected $fillable = [
-        'cs_id',
+        'karyawan_id',
         'nama_produk',
         'harga_botol',
     ];
 
-    public function cs()
+    public function karyawan()
     {
-        return $this->belongsTo(Cs::class, 'cs_id', 'id_cs');
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id_karyawan');
     }
 }

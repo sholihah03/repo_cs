@@ -11,9 +11,8 @@
 
                     <div class="flex flex-col md:flex-row md:space-x-8 mt-8">
                         <div class="flex flex-col items-center space-y-5">
-                            {{-- <img class="object-cover w-40 h-40 p-1 bg-white rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                                src="" alt="Foto Profil"> --}}
-                                <svg class="object-cover w-40 h-40 p-1 bg-white rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 73.825a182.175 182.175 0 1 0 182.18 182.18A182.177 182.177 0 0 0 256 73.825zm0 71.833a55.05 55.05 0 1 1-55.054 55.046A55.046 55.046 0 0 1 256 145.658zm.52 208.723h-80.852c0-54.255 29.522-73.573 48.885-90.906a65.68 65.68 0 0 0 62.885 0c19.363 17.333 48.885 36.651 48.885 90.906z" data-name="Profile"/></svg>
+                                <img src="{{ asset('images/profile.png') }}" alt="Foto Profil" style="width: 120px; height: 120px" class="object-cover p-1 bg-white rounded-full ring-1 ring-indigo-300 dark:ring-indigo-500">
+                                {{-- <svg class="object-cover w-40 h-40 p-1 bg-white rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 73.825a182.175 182.175 0 1 0 182.18 182.18A182.177 182.177 0 0 0 256 73.825zm0 71.833a55.05 55.05 0 1 1-55.054 55.046A55.046 55.046 0 0 1 256 145.658zm.52 208.723h-80.852c0-54.255 29.522-73.573 48.885-90.906a65.68 65.68 0 0 0 62.885 0c19.363 17.333 48.885 36.651 48.885 90.906z" data-name="Profile"/></svg> --}}
                                 <div class="flex flex-col items-center space-y-3">
                                     <button type="button" class="py-2 px-4 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 transition duration-200 ease-in-out transform hover:scale-105 focus:z-10 focus:ring-4 focus:ring-indigo-200 whitespace-nowrap">
                                         Ganti foto
@@ -29,22 +28,22 @@
                             <div class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                                 <div class="w-full">
                                     <label for="first_name" class="block mb-2 text-sm font-medium text-indigo-900">Username</label>
-                                    <input type="text" id="first_name" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Nama depan Anda" value="" required>
+                                    <input type="text" name="username" id="username" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Username" value="" required>
                                 </div>
                                 <div class="w-full">
                                     <label for="last_name" class="block mb-2 text-sm font-medium text-indigo-900">Nama Lengkap</label>
-                                    <input type="text" id="last_name" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Nama belakang Anda" value="" required>
+                                    <input type="text" name="nama_lengkap" id="nama_lengkap" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Nama Lengkap" value="" required>
                                 </div>
                             </div>
 
                             <div class="mb-2 sm:mb-6">
                                 <label for="email" class="block mb-2 text-sm font-medium text-indigo-900">Email Anda</label>
-                                <input type="email" id="email" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="your.email@gmail.com" required>
+                                <input type="email" name="email" id="email" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="your.email@gmail.com" required>
                             </div>
 
                             <div class="mb-2 sm:mb-6">
-                                <label for="profession" class="block mb-2 text-sm font-medium text-indigo-900">Jabatan</label>
-                                <input type="text" id="profession" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Profesi Anda" required>
+                                <label for="profession" class="block mb-2 text-sm font-medium text-indigo-900">No Telepon</label>
+                                <input type="text" name="no_telepon" id="no_telepon" class=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="No Telepon" required>
                             </div>
 
                             {{-- <div class="mb-6">
