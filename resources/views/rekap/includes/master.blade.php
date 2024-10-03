@@ -22,14 +22,16 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   </head>
 
-  <body>
-    @yield('content')
+  <body class="m-0 font-sans text-base antialiased font-normal leading-default bg-gray-50 text-slate-500">
+    @include('rekap.includes.sidenav')
 
+      <!-- Navbar -->
 
+      <!-- Begin Page Content -->
+      @yield('content')
+      <!-- End of Content Wrapper -->
 
-<!-- jQuery, Popper.js, and Bootstrap JS -->
-
-</body>
+    </body>
     <!-- plugin for charts  -->
     <script src="{{asset('soft/assets/js/plugins/chartjs.min.js')}}" async></script>
     <!-- plugin for scrollbar  -->

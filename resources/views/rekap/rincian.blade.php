@@ -1,4 +1,4 @@
-@extends('rekap.main')
+@extends('rekap.includes.master')
 @section('title', 'rincian')
 
 @section('content')
