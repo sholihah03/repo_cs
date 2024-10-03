@@ -12,4 +12,3 @@ Route::view('/setting', 'rekap.setting')->name('setting');
 Route::view('/informasi', 'rekap.informasi')->name('informasi');
 Route::view('/edit', 'rekap.edit')->name('edit');
 Route::view('/login', 'rekap.login')->name('login');
-Route::view('/coba', 'cs.layouts.coba')->name('coba');
