@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Karyawan extends Model
+class Karyawan extends Authenticatable
 {
     use HasFactory;
 
@@ -28,6 +29,6 @@ class Karyawan extends Model
 
     public function jabatan()
     {
-        return $this->belongsTo(Jabatan::class, 'jabatan_id', 'id_jabatan');
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
 }

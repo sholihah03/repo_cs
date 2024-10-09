@@ -40,6 +40,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'direktur' => [
+            'driver' => 'session',
+            'provider' => 'direkturs',
+        ],
+        'manager' => [
+            'driver' => 'session',
+            'provider' => 'managers',
+        ],
+        'karyawan' => [
+            'driver' => 'session',
+            'provider' => 'karyawans',
+        ],
+        'cs' => [
+            'driver' => 'session',
+            'provider' => 'cs',
+        ],
+        'advertiser' => [
+            'driver' => 'session',
+            'provider' => 'advertisers',
+        ],
     ],
 
     /*
@@ -63,6 +83,26 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'direkturs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
+        ],
+        'managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
+        ],
+        'karyawans' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
+        ],
+        'cs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
+        ],
+        'advertisers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
         ],
 
         // 'users' => [

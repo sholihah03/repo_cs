@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS</title>
+    <title>Dashboard CS</title>
     <link rel="stylesheet" href="{{ asset('Porto/Porto/assets/css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('Porto/Porto/assets/css/nav.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -40,7 +42,7 @@
                 </a>
 
                 <!-- Sign In Button -->
-                <a href="signin.html" class="px-4 py-2 bg-purple-500 text-white rounded">Sign In</a>
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-500 text-white rounded">Logout</a>
             </div>
 
             <!-- Burger Menu for Mobile -->
@@ -81,8 +83,6 @@
             </div>
         </div>
     </nav>
-
-
     <script>
         feather.replace()
     </script>
