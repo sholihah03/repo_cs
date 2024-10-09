@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realtime Clock</title>
+    {{-- <title>Realtime Clock</title> --}}
     <style>
         /* Styling untuk jam agar lebih terlihat */
         #clock {
