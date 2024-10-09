@@ -17,3 +17,5 @@ Route::view('/edit', 'rekap.edit')->name('edit');
 Route::view('/login', 'rekap.login')->name('login');
 Route::view('/loginrekap', 'login.loginrekap')->name('loginrekap');
 Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
+Route::view('/kontakperusahaan', 'rekap.kontakperusahaan')->name('kontakperusahaan');
+Route::view('/alamatperusahaan', 'rekap.alamatperusahaan')->name('alamatperusahaan');

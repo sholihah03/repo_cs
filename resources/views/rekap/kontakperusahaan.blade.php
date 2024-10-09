@@ -1,5 +1,5 @@
 @extends('rekap.includes.master')
-@section('title', 'edit perusahaan')
+@section('title', 'kontak perusahaan')
 
 @section('content')
 <div class="w-full px-6 py-6 mx-auto">
@@ -13,15 +13,19 @@
           </div>
           <div class="flex-auto p-6">
             <form role="form">
-              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Nama Perusahaan</label>
+              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">No .Telp</label>
               <div class="mb-4">
                 <input type="email" class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Email" aria-label="Email" aria-describedby="email-addon" />
               </div>
-              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Nama Direktur</label>
+              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Email</label>
               <div class="mb-4">
                 <input type="password" class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Password" aria-label="Password" aria-describedby="password-addon" />
               </div>
-              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Logo</label>
+              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Instagram</label>
+              <div class="mb-4">
+                <input type="password" class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Password" aria-label="Password" aria-describedby="password-addon" />
+              </div>
+              <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Wa</label>
               <div class="mb-4">
                 <input type="password" class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Password" aria-label="Password" aria-describedby="password-addon" />
               </div>
