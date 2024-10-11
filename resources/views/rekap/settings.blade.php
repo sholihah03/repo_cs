@@ -1,6 +1,6 @@
 @extends('rekap.includes.master')
 @section('title', 'rincian')
-
+@include('rekap.includes.sidenav')
 @section('content')
 <div class="w-full px-6 mx-auto">
   <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl" style="background-image: url('{{ asset('soft/build/assets/img/curved-images/curved0.jpg') }}'); background-position-y: 50%">
@@ -86,27 +86,33 @@
     <div class="flex flex-wrap -mx-3">
       <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
         <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-          <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-            <div class="flex flex-wrap -mx-3">
-              <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
-                <h6 class="mb-0">Profile Information</h6>
-              </div>
-              <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                <a href="{{route('editperusahaan')}}" data-target="tooltip_trigger" data-placement="top">
-                  <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
-                </a>
-              </div>              
+            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
+                        <h6 class="mb-0">Profile Information</h6>
+                    </div>
+                    <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
+                        <a href="{{ route('editperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                            <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
+                        </a>
+                    </div>              
+                </div>
             </div>
-          </div>
-          <div class="flex-auto p-4">
-            <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-              <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit"><strong class="text-slate-700">Nama Perusahaan:</strong> &nbsp; Alec M. Thompson</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Nama Direktur:</strong> &nbsp; (44) 123 1234 123</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Logo:</strong> &nbsp; alecthompson@mail.com</li>
-            </ul>
-          </div>
+            <div class="flex-auto p-4">
+                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
+                    <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
+                        <strong class="text-slate-700">Nama Perusahaan:</strong> &nbsp; {{ $perusahaan->nama_perusahaan }}
+                    </li>
+                    <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                        <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur }}
+                    </li>
+                    <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                        <strong class="text-slate-700">Logo:</strong> &nbsp; {{ $perusahaan->logo }}
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
+    </div>    
       <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
         <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
           <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
