@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Cs\Setting\SettingController;
+use App\Http\Controllers\Cs\Setting\SettingProfileController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -32,12 +33,11 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::view('/dashboard', 'cs.layouts.index')->name('dashboardcs');
 Route::get('/dashboardCs', [DashboardController::class, 'indexCs'])->name('dashboardcs');
 Route::view('/jam', 'cs.layouts.jam')->name('jam');
-Route::view('/settingcs', 'cs.setting.settingProfile')->name('settingcs');
-
-Route::get('/cs/setting', [SettingController::class, 'index'])->name('setting.cs');
-Route::get('/cs/setting/profile', [SettingController::class, 'index'])->name('cs.setting.profile');
-Route::put('cs/setting/edit', [SettingController::class, 'storeOrUpdateProfile'])->name('storeProfile.cs');
-Route::post('/cs/setting/password', [SettingController::class, 'updatePassword'])->name('setting.password.cs');
+Route::get('/cs/setting', [SettingController::class, 'index'])->name('settingcs');
+Route::put('/cs/setting/update', [SettingController::class, 'update'])->name('updateProfile.cs');
+Route::post('/cs/profile/update', [SettingProfileController::class, 'updateProfilePhoto'])->name('cs.profile.update');
+Route::delete('/cs/profile/delete', [SettingProfileController::class, 'deleteProfilePhoto'])->name('cs.profile.delete');
+Route::post('/cs/setting/password', [SettingController::class, 'resetPassword'])->name('setting.password.cs');
 
 Route::view('/rincian', 'rekap.rincian')->name('rincian');
 Route::view('/settings', 'rekap.settings')->name('settings');

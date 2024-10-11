@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('no_telepon')->nullable();
             $table->string('profile_karyawan')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('status', ['proses', 'aktif', 'tidak aktif'])->default('proses'); // Kolom enum status
             $table->timestamps();
 

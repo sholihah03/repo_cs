@@ -23,7 +23,7 @@
         <div class="flex items-center justify-between p-4">
             <!-- Logo Section -->
             <div class="flex items-center">
-                <a href="index.html">
+                <a href="{{ route('dashboardcs') }}">
                     <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
                 </a>
             </div>

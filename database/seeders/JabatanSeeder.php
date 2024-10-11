@@ -17,7 +17,7 @@ class JabatanSeeder extends Seeder
             ['nama_jabatan' => 'Direktur'],
             ['nama_jabatan' => 'Manager'],
             ['nama_jabatan' => 'Karyawan'],
-            ['nama_jabatan' => 'Cs'],
+            ['nama_jabatan' => 'Customer Service'],
             ['nama_jabatan' => 'Advertiser'],
         ]);
     }
