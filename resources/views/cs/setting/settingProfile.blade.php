@@ -1,37 +1,22 @@
 @include('cs.setting.indexSetting')
 @include('cs.layouts.main')
-
 <body>
     <div class="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
         <main class="flex justify-center items-center w-full min-h-screen py-1">
             <div class="p-2 md:p-4">
                 <div class="w-full bg-purple-100 shadow-lg px-6 pb-8 mt-20 sm:max-w-full sm:rounded-lg pt-4">
                     <h2 class="pl-6 text-2xl font-bold sm:text-xl">Setting Profile</h2>
-                    @if(session('success'))
-                        <div class="text-green-700 px-4 py-3 rounded relative" role="alert">
-                            <span class="block sm:inline">{{ session('success') }}</span>
-                        </div>
-                    @endif
 
-                    @if($errors->any())
-                        <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <div class="flex flex-col md:flex-row md:space-x-8 mt-8">
-                        {{-- Update Profile --}}
+                    <!-- Flex container to keep profile image and forms in row layout -->
+                    <div class="flex flex-col md:flex-row md:space-x-8 mt-8 items-center justify-center md:justify-start">
+                        <!-- Update Profile -->
                         <div class="flex flex-col items-center space-y-5">
                             @if ($cs->profile_karyawan)
                                 <img src="{{ asset('storage/profile_karyawan/' . $cs->profile_karyawan) }}"
                                         alt="Foto Profil"
-                                        style="width: 120px; height: 120px"
-                                        class="object-cover p-1 bg-white rounded-full ring-1 ring-indigo-300 dark:ring-indigo-500">
+                                        class="object-cover p-1 bg-white rounded-full ring-1 ring-indigo-300 dark:ring-indigo-500 profile-pic">
                             @else
-                            <img src="{{ asset('images/profile.png') }}" alt="Foto Profil" style="width: 120px; height: 120px" class="object-cover p-1 bg-white rounded-full ring-1 ring-indigo-300 dark:ring-indigo-500">
+                                <img src="{{ asset('images/profile.png') }}" alt="Foto Profil" class="object-cover p-1 bg-white rounded-full ring-1 ring-indigo-300 dark:ring-indigo-500 profile-pic">
                             @endif
                             <div class="flex flex-col items-center space-y-3">
                                 <!-- Change Profile Photo Button -->
@@ -53,12 +38,12 @@
                             </div>
                         </div>
 
-                        {{-- Form Update Profile --}}
+                        <!-- Form Update Profile -->
                         <div class="mt-8 md:mt-0 text-[#202142] w-full">
                             <h3 class="text-lg font-semibold text-indigo-900 mb-2">Profile</h3>
                             <form action="{{ route('updateProfile.cs') }}" method="POST">
                                 @csrf
-                                    @method('PUT')
+                                @method('PUT')
                                 <div class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                                     <div class="w-full">
                                         <label for="username" class="block mb-2 text-sm font-medium text-indigo-900">Username</label>
@@ -85,26 +70,10 @@
                             </form>
                         </div>
 
-                        {{-- Form Reset Password --}}
+                        <!-- Form Reset Password -->
                         <div class="mt-8 md:mt-0 text-[#202142] w-full">
-                            <!-- Bagian reset password -->
                             <div class="mb-6">
                                 <h3 class="text-lg font-semibold text-indigo-900 mb-2">Reset Password</h3>
-                                {{-- @if(session('success'))
-                                    <div class="text-green-700 px-4 py-3 rounded relative" role="alert">
-                                        <span class="block sm:inline">{{ session('success') }}</span>
-                                    </div>
-                                @endif
-
-                                @if($errors->any())
-                                    <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
-                                        <ul>
-                                            @foreach($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif --}}
                                 <form action="{{ route('setting.password.cs') }}" method="POST">
                                     @csrf
                                     <div class="flex flex-col space-y-4">
@@ -134,5 +103,19 @@
             </div>
         </main>
     </div>
-</body>
 
+    <style>
+        /* Scaling profile image and making sure the layout is responsive */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-pic {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</body>

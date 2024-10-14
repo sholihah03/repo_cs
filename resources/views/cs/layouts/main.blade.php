@@ -75,7 +75,7 @@
                             </li>
                             <!-- Sign In Button -->
                             <li>
-                                <a href="signin.html" class="px-4 py-2 bg-purple-500 text-white rounded block text-center">Sign In</a>
+                                <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-500 text-white rounded">Logout</a>
                             </li>
                         </ul>
                     </nav>

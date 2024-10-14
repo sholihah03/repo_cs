@@ -6,6 +6,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Cs\Setting\SettingController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
+use App\Http\Controllers\Rekap\RekapPerusahaanController;
+use App\Http\Controllers\Rekap\AlamatPerusahaanController;
+use App\Http\Controllers\Rekap\KontakPerusahaanController;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -44,3 +48,11 @@ Route::view('/settings', 'rekap.settings')->name('settings');
 Route::view('/informasi', 'rekap.informasi')->name('informasi');
 Route::view('/edit', 'rekap.edit')->name('edit');
 Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
+Route::view('/kontakperusahaan', 'rekap.kontakperusahaan')->name('kontakperusahaan');
+Route::view('/alamatperusahaan', 'rekap.alamatperusahaan')->name('alamatperusahaan');
+
+// Route::post('/rekapperusahaan/store', [RekapPerusahaanController::class, 'store'])->name('rekapperusahaan.store');
+Route::post('/rekapPerusahaan/store', [RekapPerusahaanController::class, 'store'])->name('rekapPerusahaan.store');
+Route::post('/kontakperusahaan/store', [KontakPerusahaanController::class, 'store'])->name('kontakperusahaan.store');
+Route::post('/alamatperusahaan/store', [AlamatPerusahaanController::class, 'store'])->name('alamatperusahaan.store');
+Route::get('/profile', [RekapPerusahaanController::class, 'showProfile'])->name('profile');

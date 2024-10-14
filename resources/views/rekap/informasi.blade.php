@@ -1,4 +1,4 @@
-@extends('rekap.includes.master')
+@extends('rekap.includes.sidenav')
 @section('title', 'informasi')
 
 @section('content')

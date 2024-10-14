@@ -18,13 +18,14 @@ class AlamatPerusahaan extends Model
     // Kolom yang dapat diisi
     protected $fillable = [
         'perusahaan_id',
-        'nama_jalan',
+        'detail_lainnya',
         'rt',
         'rw',
         'kelurahan',
         'kabupaten',
         'kecamatan',
         'provinsi',
+        'kode_pos',
     ];
 
     public function perusahaan()
