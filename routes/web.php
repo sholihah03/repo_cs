@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Cs\Setting\SettingController;
+use App\Http\Controllers\Cs\RekapCsController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -44,3 +45,6 @@ Route::view('/settings', 'rekap.settings')->name('settings');
 Route::view('/informasi', 'rekap.informasi')->name('informasi');
 Route::view('/edit', 'rekap.edit')->name('edit');
 Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
+
+
+Route::post('/rekap-cs', [RekapCsController::class, 'store'])->name('rekap_cs.store');

@@ -12,7 +12,7 @@
                     <div class="flex flex-wrap flex-col justify-center items-center"> <!-- Flex direction column -->
                         <div class="w-full lg:w-3/12 px-4 flex justify-center">
                             <div class="relative">
-                                <img alt="..." src="{{ asset('images/profile.png') }}" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px">
+                                <img alt="..." src="{{ asset('images/profile.png') }}" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px absolute top-[-200px]">
                             </div>
                         </div>
                         <!-- Tambahkan margin-bottom untuk memberi jarak -->
@@ -34,17 +34,17 @@
                     <div class="flex justify-center items-center min-h-screen">
                         <div class="bg-purple-50 shadow-xl rounded-lg p-6 max-w-md w-full">
                             <h2 class="text-xl font-semibold mb-4 text-gray-700 text-center">Pemasukan Harian</h2>
+                            <form action="{{ route('rekap_cs.store') }}" method="POST">
+                                @csrf
                             <div class="flex space-x-4">
-                                <!-- Form Input Pertama -->
                                 <div class="w-1/2">
-                                    <label for="input1" class="block text-sm font-medium">Masukkan Data 1</label>
-                                    <input id="input1" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <label for="input1" class="block text-sm font-medium">Lead</label>
+                                    <input id="input1" name="total_lead" type="number" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                                 </div>
-
-                                <!-- Form Input Kedua -->
+                            
                                 <div class="w-1/2">
-                                    <label for="input2" class="block text-sm font-medium">Masukkan Data 2</label>
-                                    <input id="input2" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <label for="input2" class="block text-sm font-medium">Closing</label>
+                                    <input id="input2" name="total_closing" type="number" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                                 </div>
                             </div>
                             <!-- Penempatan Tombol Submit di Tengah -->
