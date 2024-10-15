@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class AlamatPerusahaanController extends Controller
 {
+    public function index(){
+        $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
+
+        return view('rekap.alamatperusahaan', compact('alamatPerusahaan'));
+    }
     public function store(Request $request)
     {
         // Validasi input
@@ -22,21 +27,22 @@ class AlamatPerusahaanController extends Controller
             'detail_lainnya' => 'nullable|string|max:255',
         ]);
 
-        // Simpan data ke database
-        AlamatPerusahaan::create([
-            'perusahaan_id' => 1, // Ganti dengan perusahaan_id yang relevan
-            'provinsi' => $validated['provinsi'],
-            'kabupaten' => $validated['kabupaten'],
-            'kecamatan' => $validated['kecamatan'],
-            'kelurahan' => $validated['kelurahan'],
-            'kode_pos' => $validated['kode_pos'],
-            'rt' => $validated['rt'],
-            'rw' => $validated['rw'],
-            'detail_lainnya' => $validated['detail_lainnya'],
-        ]);
+        // Update data yang ada atau buat baru jika tidak ditemukan
+        AlamatPerusahaan::updateOrCreate(
+            ['perusahaan_id' => 1], // Kondisi untuk mencari data berdasarkan perusahaan_id
+            [
+                'provinsi' => $validated['provinsi'],
+                'kabupaten' => $validated['kabupaten'],
+                'kecamatan' => $validated['kecamatan'],
+                'kelurahan' => $validated['kelurahan'],
+                'kode_pos' => $validated['kode_pos'],
+                'rt' => $validated['rt'],
+                'rw' => $validated['rw'],
+                'detail_lainnya' => $validated['detail_lainnya'],
+            ]
+        );
 
         // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Alamat perusahaan berhasil ditambahkan.');
+        return redirect()->route('rekapPerusahaan')->with('success', 'Alamat perusahaan berhasil diperbarui.');
     }
 }
-

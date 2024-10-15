@@ -44,15 +44,19 @@ Route::put('cs/setting/edit', [SettingController::class, 'storeOrUpdateProfile']
 Route::post('/cs/setting/password', [SettingController::class, 'updatePassword'])->name('setting.password.cs');
 
 Route::view('/rincian', 'rekap.rincian')->name('rincian');
-Route::view('/settings', 'rekap.settings')->name('settings');
+// Route::view('/settings', 'rekap.settings')->name('settings');
 Route::view('/informasi', 'rekap.informasi')->name('informasi');
 Route::view('/edit', 'rekap.edit')->name('edit');
-Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
-Route::view('/kontakperusahaan', 'rekap.kontakperusahaan')->name('kontakperusahaan');
+// Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
 Route::view('/alamatperusahaan', 'rekap.alamatperusahaan')->name('alamatperusahaan');
 
 // Route::post('/rekapperusahaan/store', [RekapPerusahaanController::class, 'store'])->name('rekapperusahaan.store');
+Route::get('/settingPerusahaan', [RekapPerusahaanController::class, 'index'])->name('rekapPerusahaan');
+Route::get('/editPerusahaan', [RekapPerusahaanController::class, 'indexEdit'])->name('editPerusahaan');
 Route::post('/rekapPerusahaan/store', [RekapPerusahaanController::class, 'store'])->name('rekapPerusahaan.store');
+Route::get('/kontakPerusahaan', [KontakPerusahaanController::class, 'index'])->name('kontakperusahaan');
 Route::post('/kontakperusahaan/store', [KontakPerusahaanController::class, 'store'])->name('kontakperusahaan.store');
+Route::get('/alamatPerusahaan', [AlamatPerusahaanController::class, 'index'])->name('alamatperusahaan');
 Route::post('/alamatperusahaan/store', [AlamatPerusahaanController::class, 'store'])->name('alamatperusahaan.store');
-Route::get('/profile', [RekapPerusahaanController::class, 'showProfile'])->name('profile');
+Route::post('/perusahaan/save/{id?}', [RekapPerusahaanController::class, 'editOrCreate'])->name('perusahaan.save');
+
