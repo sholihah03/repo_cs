@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Cs\Setting\SettingController;
+use App\Http\Controllers\ProdukController;
+
 use App\Http\Controllers\Cs\RekapCsController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
 use App\Http\Controllers\Rekap\RekapPerusahaanController;
@@ -34,7 +36,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('loginrekap');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::view('/dashboard', 'cs.layouts.index')->name('dashboardcs');
+// Route::view('/dashboard', 'cs.layouts.index')->name('dashboardcs');
 Route::get('/dashboardCs', [DashboardController::class, 'indexCs'])->name('dashboardcs');
 Route::view('/jam', 'cs.layouts.jam')->name('jam');
 Route::get('/cs/setting', [SettingController::class, 'index'])->name('settingcs');
@@ -42,7 +44,12 @@ Route::put('/cs/setting/update', [SettingController::class, 'update'])->name('up
 Route::post('/cs/profile/update', [SettingProfileController::class, 'updateProfilePhoto'])->name('cs.profile.update');
 Route::delete('/cs/profile/delete', [SettingProfileController::class, 'deleteProfilePhoto'])->name('cs.profile.delete');
 Route::post('/cs/setting/password', [SettingController::class, 'resetPassword'])->name('setting.password.cs');
-Route::post('/rekap-cs', [RekapCsController::class, 'store'])->name('rekap_cs.store');
+// Route::post('/rekap-cs', [RekapCsController::class, 'store'])->name('rekap_cs.store');
+// Route::get('/cs/dashboard', [RekapCsController::class, 'indexcs'])->name('cs.index');
+Route::post('/rekap-cs', [RekapCsController::class, 'store'])
+     ->name('rekap_cs.store');    
+    //  ->middleware('auth:karyawan');
+
 
 Route::view('/rincian', 'rekap.rincian')->name('rincian');
 Route::view('/settings', 'rekap.settings')->name('settings');
@@ -57,3 +64,13 @@ Route::post('/rekapPerusahaan/store', [RekapPerusahaanController::class, 'store'
 Route::post('/kontakperusahaan/store', [KontakPerusahaanController::class, 'store'])->name('kontakperusahaan.store');
 Route::post('/alamatperusahaan/store', [AlamatPerusahaanController::class, 'store'])->name('alamatperusahaan.store');
 Route::get('/profile', [RekapPerusahaanController::class, 'showProfile'])->name('profile');
+// Rute untuk menampilkan daftar produk
+// Route::view('/produk', 'rekap.produk')->name('produk.index');
+// Rute untuk daftar produk
+Route::get('/produk', [ProdukController::class, 'index'])->name('rekap.produk');
+Route::get('/produk/create', [ProdukController::class, 'create'])->name('rekap.createproduk');
+Route::post('/produk1', [ProdukController::class, 'store'])->name('produk.store'); // ini yang benar
+Route::get('/produk/{id_produk}/edit', [ProdukController::class, 'edit'])->name('editproduk');
+Route::put('/produk/{id_produk}', [ProdukController::class, 'update'])->name('produk.update');
+Route::delete('/produk/{id_produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+Route::get('/produk2', [ProdukController::class, 'index'])->name('produk.index');

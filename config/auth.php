@@ -50,7 +50,7 @@ return [
         ],
         'karyawan' => [
             'driver' => 'session',
-            'provider' => 'karyawans',
+            'provider' => 'karyawan',
         ],
         'cs' => [
             'driver' => 'session',
@@ -92,7 +92,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Karyawan::class,
         ],
-        'karyawans' => [
+        'karyawan' => [
             'driver' => 'eloquent',
             'model' => App\Models\Karyawan::class,
         ],
