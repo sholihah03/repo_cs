@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_admin', function (Blueprint $table) {
             $table->id('id_admin');
             $table->string('username')->unique()->nullable();
-            $table->string('password'); // Kolom untuk password
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

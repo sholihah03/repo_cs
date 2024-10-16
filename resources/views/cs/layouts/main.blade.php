@@ -23,7 +23,7 @@
         <div class="flex items-center justify-between p-4">
             <!-- Logo Section -->
             <div class="flex items-center">
-                <a href="index.html">
+                <a href="{{ route('dashboardcs') }}">
                     <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
                 </a>
             </div>
@@ -75,7 +75,7 @@
                             </li>
                             <!-- Sign In Button -->
                             <li>
-                                <a href="signin.html" class="px-4 py-2 bg-purple-500 text-white rounded block text-center">Sign In</a>
+                                <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-500 text-white rounded">Logout</a>
                             </li>
                         </ul>
                     </nav>

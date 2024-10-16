@@ -1,6 +1,5 @@
-@extends('rekap.includes.master')
+@extends('rekap.includes.sidenav')
 @section('title', 'informasi')
-@include('rekap.includes.sidenav')
 @section('content')
 <div class="w-full px-6 py-6 mx-auto">
   <!-- table 1 -->

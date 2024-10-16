@@ -107,8 +107,13 @@
                         <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur ?? 'Data tidak tersedia' }}
                     </li>
                     <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                        <strong class="text-slate-700">Logo:</strong> &nbsp; {{ $perusahaan->logo ?? 'Data tidak tersedia' }}
-                    </li>
+                      <strong class="text-slate-700">Logo:</strong> &nbsp; 
+                      @if ($perusahaan->logo)
+                          <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
+                      @else
+                          'Data tidak tersedia'
+                      @endif
+                  </li>
                 </ul>
             </div>
         </div>
@@ -200,10 +205,10 @@
         <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
           <thead class="align-bottom">
             <tr>
-              <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Author</th>
-              <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Function</th>
-              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Status</th>
-              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Employed</th>
+              <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Nama Perusahaan</th>
+              <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Persen Bagi Hasil</th>
+              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Bagi Hasil</th>
+              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Tanggal</th>
               <th class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
             </tr>
           </thead>
@@ -212,17 +217,22 @@
               <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                 <div class="flex px-2 py-1">
                   <div>
-                    <img src="../assets/img/team-2.jpg" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1" />
+                    {{-- <img src="../assets/img/team-2.jpg" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1" /> --}}
+                    @if ($perusahaan->logo)
+                          <img src="{{ asset('storage/' . $perusahaan->logo) }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
+                      @else
+                          'Data tidak tersedia'
+                      @endif
                   </div>
                   <div class="flex flex-col justify-center">
-                    <h6 class="mb-0 text-sm leading-normal">John Michael</h6>
-                    <p class="mb-0 text-xs leading-tight text-slate-400">john@creative-tim.com</p>
+                    <h6 class="mb-0 text-sm leading-normal">{{ $perusahaan->nama_perusahaan ?? 'Data tidak tersedia' }}</h6>
+                    <p class="mb-0 text-xs leading-tight text-slate-400">{{ $kontakPerusahaan->email ?? 'Data tidak tersedia' }}</p>
                   </div>
                 </div>
               </td>
               <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                <p class="mb-0 text-xs font-semibold leading-tight">Manager</p>
-                <p class="mb-0 text-xs leading-tight text-slate-400">Organization</p>
+                <p class="mb-0 text-xs font-semibold leading-tight"></p>
+                {{-- <p class="mb-0 text-xs leading-tight text-slate-400">Organization</p> --}}
               </td>
               <td class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                 <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Online</span>
@@ -231,8 +241,9 @@
                 <span class="text-xs font-semibold leading-tight text-slate-400">23/04/18</span>
               </td>
               <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                <a href="javascript:;" class="text-xs font-semibold leading-tight text-slate-400"> Edit </a>
-              </td>
+                <a href="{{route ('persen.indexx')}}" class="text-xs font-semibold leading-tight text-slate-400 edit-button"> Edit </a>
+            </td>
+            
             </tr>
           </tbody>
         </table>

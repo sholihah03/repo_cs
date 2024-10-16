@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_perusahaan')->nullable();
             $table->string('nama_direktur')->nullable();
             $table->string('username')->unique()->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
         });

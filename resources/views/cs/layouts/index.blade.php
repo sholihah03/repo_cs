@@ -9,21 +9,26 @@
         <div class="container mx-auto px-4">
             <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-64" >
                 <div class="px-6">
-                    <div class="flex flex-wrap flex-col justify-center items-center"> <!-- Flex direction column -->
+                    <div class="flex flex-wrap flex-col justify-center items-center">
                         <div class="w-full lg:w-3/12 px-4 flex justify-center">
                             <div class="relative">
-                                <img alt="..." src="{{ asset('images/profile.png') }}" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px">
+                                {{-- <img alt="..." src="{{ asset('images/profile.png') }}" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px"> --}}
+                                @if ($cs->profile_karyawan)
+                                <img src="{{ asset('storage/profile_karyawan/' . $cs->profile_karyawan) }}"
+                                        alt="Foto Profil"
+                                        class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px">
+                                @else
+                                <img src="{{ asset('images/profile.png') }}" alt="Foto Profil" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px">
+                                @endif
                             </div>
                         </div>
-                        <!-- Tambahkan margin-bottom untuk memberi jarak -->
-                        <div class="w-full lg:w-3/12 px-4 flex justify-center mt-24"></div> <!-- Spacer div to adjust gap -->
-                        <div class="w-full lg:w-4/12 px-4 text-center"> <!-- Hilangkan margin-top besar -->
+                        <div class="w-full lg:w-3/12 px-4 flex justify-center mt-24"></div>
+                        <div class="w-full lg:w-4/12 px-4 text-center">
                             <h3 class="text-2xl font-semibold leading-normal mb-2 text-blueGray-700">
-                                Jenna Stones
+                                {{ old('nama_lengkap', $cs->nama_lengkap ?? '') }}
                             </h3>
                             <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                                <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                Los Angeles, California
+                                {{ $jabatan->nama_jabatan }}
                             </div>
                             <div class="absolute" style="right: 50px;">
                                 @include('cs.layouts.jam')
