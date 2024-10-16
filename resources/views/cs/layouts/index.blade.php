@@ -9,27 +9,39 @@
         <div class="container mx-auto px-4">
             <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-64" >
                 <div class="px-6">
-                    <div class="flex flex-wrap flex-col justify-center items-center"> <!-- Flex direction column -->
-                        <div class="w-full lg:w-3/12 px-4 flex justify-center">
-                            <div class="relative">
-                                <img alt="..." src="{{ asset('images/profile.png') }}" class="shadow-xl rounded-full h-auto align-middle border-none inset-x-0 -m-16 lg:ml-0 max-w-150-px absolute top-[-200px]">
+                    <div class="flex flex-wrap flex-col justify-center items-center relative">
+                        {{-- Gambar Profil --}}
+                        <div class="w-full flex justify-center">
+                            <div class="bg-white p-2 rounded-full shadow-lg relative -top-12">
+                                @if ($cs->profile_karyawan)
+                                <img src="{{ asset('storage/profile_karyawan/' . $cs->profile_karyawan) }}"
+                                     alt="Foto Profil"
+                                     class="rounded-full h-40 w-40 object-cover">
+                                @else
+                                <img src="{{ asset('images/profile.png') }}" 
+                                     alt="Foto Profil" 
+                                     class="rounded-full h-40 w-40 object-cover">
+                                @endif
                             </div>
+                            {{-- Jam --}}
+                        <div class="absolute" style="right: 50px;">
+                            @include('cs.layouts.jam')
                         </div>
-                        <!-- Tambahkan margin-bottom untuk memberi jarak -->
-                        <div class="w-full lg:w-3/12 px-4 flex justify-center mt-24"></div> <!-- Spacer div to adjust gap -->
-                        <div class="w-full lg:w-4/12 px-4 text-center"> <!-- Hilangkan margin-top besar -->
+                        </div>
+                    
+                        {{-- Nama Lengkap dan Jabatan --}}
+                        <div class="w-full text-center -mt-5">
                             <h3 class="text-2xl font-semibold leading-normal mb-2 text-blueGray-700">
-                                Jenna Stones
+                                {{ $cs->nama_lengkap ? old('nama_lengkap', $cs->nama_lengkap) : 'Name' }}
                             </h3>
                             <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                                <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                Los Angeles, California
-                            </div>
-                            <div class="absolute" style="right: 50px;">
-                                @include('cs.layouts.jam')
+                                {{ $jabatan->nama_jabatan }}
                             </div>
                         </div>
+                    
+                        
                     </div>
+                    
 
                     <div class="flex justify-center items-center min-h-screen">
                         <div class="bg-purple-50 shadow-xl rounded-lg p-6 max-w-md w-full">
