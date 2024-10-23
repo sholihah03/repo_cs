@@ -20,7 +20,7 @@
                     <th class="px-6 py-3 font-semibold text-center uppercase align-middle bg-transparent border-b border-black-200 text-xxs text-black">Harga</th>
                     <th class="px-6 py-3 font-semibold text-center uppercase align-middle bg-transparent border-b border-black-200 text-xxs text-black">Aksi</th>
                 </tr>
-            </thead>
+            </thead>   
             <tbody>
                 @foreach($produk as $item)
                 <tr>

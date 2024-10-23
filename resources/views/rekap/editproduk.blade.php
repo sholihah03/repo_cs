@@ -34,7 +34,7 @@
         <!-- Harga -->
         <div class="mb-4">
             <label for="harga_botol" class="block text-sm font-medium text-gray-700 mb-1">Harga</label>
-            <input type="text" name="harga_botol" id="harga_botol" value="{{ number_format($produk->harga_botol, 2) }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input type="text" name="harga_botol" id="harga_botol" value="{{ $produk->harga_botol }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
         
         <!-- Buttons (Update and Cancel) -->

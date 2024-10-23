@@ -63,36 +63,37 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::findOrFail($id);
-
+    
         $request->validate([
             'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_produk' => 'required|string|max:255',
             'stok' => 'required|integer',
             'harga_botol' => 'required|numeric|min:0',
         ]);
-
+    
         // Handle file upload if present
         if ($request->hasFile('gambar_produk')) {
-            // Delete old image
+            // Delete old image if exists
             if ($produk->gambar_produk && Storage::disk('public')->exists($produk->gambar_produk)) {
                 Storage::disk('public')->delete($produk->gambar_produk);
             }
             $imagePath = $request->file('gambar_produk')->store('product_images', 'public');
         } else {
-            $imagePath = $produk->gambar_produk; // Keep the old image if no new image uploaded
+            // Keep the old image if no new image uploaded
+            $imagePath = $produk->gambar_produk;
         }
-
+    
         // Update product
         $produk->update([
-            'gambar_produk' => $imagePath,
-            'nama_produk' => $request->nama_produk,
-            'stok' => $request->stok,
-            'harga_botol' => $request->harga_botol,
+            'gambar_produk' => $imagePath ?: $produk->gambar_produk,
+            'nama_produk' => $request->nama_produk ?: $produk->nama_produk,
+            'stok' => $request->stok ?: $produk->stok,
+            'harga_botol' => $request->harga_botol ?: $produk->harga_botol,
         ]);
-
+    
         return redirect()->route('rekap.produk')->with('success', 'Produk berhasil diperbarui');
     }
-
+    
     // Delete a product
     public function destroy($id)
     {

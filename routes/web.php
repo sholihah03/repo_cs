@@ -3,17 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Cs\DashboardController;
+use App\Http\Controllers\Rekap\NeracaController;
 use App\Http\Controllers\Cs\Setting\SettingController;
-<<<<<<< HEAD
-use App\Http\Controllers\Cs\Setting\SettingProfileController;
 use App\Http\Controllers\Rekap\RekapPerusahaanController;
 use App\Http\Controllers\Rekap\AlamatPerusahaanController;
 use App\Http\Controllers\Rekap\KontakPerusahaanController;
-
-=======
-use App\Http\Controllers\ProdukController;
->>>>>>> 9518ad8 (crud produk admin)
+use App\Http\Controllers\Cs\Setting\SettingProfileController;
+use App\Http\Controllers\Rekap\DataTransaksiController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -51,7 +49,6 @@ Route::view('/rincian', 'rekap.rincian')->name('rincian');
 Route::view('/settings', 'rekap.settings')->name('settings');
 Route::view('/informasi', 'rekap.informasi')->name('informasi');
 Route::view('/edit', 'rekap.edit')->name('edit');
-<<<<<<< HEAD
 Route::view('/editperusahaan', 'rekap.editperusahaan')->name('editperusahaan');
 Route::view('/kontakperusahaan', 'rekap.kontakperusahaan')->name('kontakperusahaan');
 Route::view('/alamatperusahaan', 'rekap.alamatperusahaan')->name('alamatperusahaan');
@@ -61,8 +58,6 @@ Route::post('/rekapPerusahaan/store', [RekapPerusahaanController::class, 'store'
 Route::post('/kontakperusahaan/store', [KontakPerusahaanController::class, 'store'])->name('kontakperusahaan.store');
 Route::post('/alamatperusahaan/store', [AlamatPerusahaanController::class, 'store'])->name('alamatperusahaan.store');
 Route::get('/profile', [RekapPerusahaanController::class, 'showProfile'])->name('profile');
-=======
-Route::view('/login', 'rekap.login')->name('login');
 // Rute untuk menampilkan daftar produk
 // Route::view('/produk', 'rekap.produk')->name('produk.index');
 // Rute untuk daftar produk
@@ -74,4 +69,7 @@ Route::put('/produk/{id_produk}', [ProdukController::class, 'update'])->name('pr
 Route::delete('/produk/{id_produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 Route::get('/produk2', [ProdukController::class, 'index'])->name('produk.index');
 
->>>>>>> 9518ad8 (crud produk admin)
+//neraca
+Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
+Route::post('/rekap/neraca/store', [NeracaController::class, 'store'])->name('rekap.neraca.store');
+Route::post('/rekap/transaksi/store', [DataTransaksiController::class, 'store'])->name('rekap.transaksi.store');
