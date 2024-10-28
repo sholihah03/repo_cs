@@ -86,7 +86,7 @@
             <div id="dropdownMenu" class="hidden absolute bg-gray-200 shadow-lg rounded-lg mt-2 py-2 right-0">
               <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
               <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-              <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+              <a href="{{ route('logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
             </div>
         </li>
 
@@ -161,7 +161,7 @@
         </li>
 
         <li class="mt-0.5 w-full">
-          <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/sign-up.html">
+          <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route ('logout')}}">
             <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -182,7 +182,7 @@
                 </g>
               </svg>
             </div>
-            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign Up</span>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Logout</span>
           </a>
         </li>
       </ul>
@@ -241,11 +241,17 @@
               <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-fuchsia-500 ease-soft-in hover:scale-102 active:shadow-soft-xs text-fuchsia-500 hover:border-fuchsia-500 active:bg-fuchsia-500 active:hover:text-fuchsia-500 hover:text-fuchsia-500 tracking-tight-soft hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
             </li> -->
             <li class="flex items-center">
-              <a href="./pages/sign-in.html" class="block px-0 py-2 text-sm font-semibold transition-all ease-nav-brand text-slate-500">
-                <i class="fa fa-user sm:mr-1"></i>
-                <span class="hidden sm:inline">Sign In</span>
+              <a href="#" class="block px-0 py-2 text-sm font-semibold transition-all ease-nav-brand text-slate-500"
+                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <i class="fa fa-user sm:mr-1"></i>
+                  <span class="hidden sm:inline">Logout</span>
               </a>
-            </li>
+          </li>
+          
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+          
             <li class="flex items-center pl-4 xl:hidden">
               <a href="javascript:;" class="block p-0 text-sm transition-all ease-nav-brand text-slate-500" sidenav-trigger>
                 <div class="w-4.5 overflow-hidden">

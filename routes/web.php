@@ -77,4 +77,5 @@ Route::get('/produk2', [ProdukController::class, 'index'])->name('produk.index')
 
 
 Route::get('/persen', [PersenController::class, 'index'])->name('persen.index');
-Route::get('/persenn', [PersenController::class, 'indexx'])->name('persen.indexx');
+Route::get('/persen/edit', [PersenController::class, 'indexEdit'])->name('persen.edit');
+Route::post('/persenPerusahaan', [PersenController::class, 'store'])->name('persen.store');
