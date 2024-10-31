@@ -91,8 +91,8 @@
                     <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
                         <h6 class="mb-0">Profile Information</h6>
                     </div>
-                    <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                        <a href="{{ route('editperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                    <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">                        
+                      <a href="{{ route('editPerusahaan') }}" data-target="tooltip_trigger" data-placement="top">
                             <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
                         </a>
                     </div>              
@@ -101,70 +101,156 @@
             <div class="flex-auto p-4">
                 <ul class="flex flex-col pl-0 mb-0 rounded-lg">
                     <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
-                        <strong class="text-slate-700">Nama Perusahaan:</strong> &nbsp; {{ $perusahaan->nama_perusahaan }}
+                        <strong class="text-slate-700">Nama Perusahaan:</strong> &nbsp; {{ $perusahaan->nama_perusahaan ?? 'Data tidak tersedia' }}
                     </li>
                     <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                        <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur }}
+                        <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur ?? 'Data tidak tersedia' }}
                     </li>
                     <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                        <strong class="text-slate-700">Logo:</strong> &nbsp; {{ $perusahaan->logo }}
-                    </li>
+                      <strong class="text-slate-700">Logo:</strong> &nbsp; 
+                      @if ($perusahaan->logo)
+                          <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
+                      @else
+                          'Data tidak tersedia'
+                      @endif
+                  </li>
                 </ul>
             </div>
         </div>
     </div>    
-      <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
-        <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+    <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
+      <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
           <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-            <div class="flex flex-wrap -mx-3">
-              <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
-                <h6 class="mb-0">Kontak Perusahaan</h6>
+              <div class="flex flex-wrap -mx-3">
+                  <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
+                      <h6 class="mb-0">Kontak Perusahaan</h6>
+                  </div>
+                  <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
+                      <a href="{{ route('kontakperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                          <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
+                      </a>
+                  </div>
               </div>
-              <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                <a href="{{route('kontakperusahaan')}}" data-target="tooltip_trigger" data-placement="top">
-                  <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
-                </a>
-              </div>              
-            </div>
           </div>
           <div class="flex-auto p-4">
-            <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-              <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit"><strong class="text-slate-700">No. Telp:</strong> &nbsp; Alec M. Thompson</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Email:</strong> &nbsp; (44) 123 1234 123</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Instagram:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">WhatsApp:</strong> &nbsp; alecthompson@mail.com</li>
-            </ul>
+              <ul class="flex flex-col pl-0 mb-0 rounded-lg">
+                  <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
+                      <strong class="text-slate-700">No. Telp:</strong> &nbsp; {{ $kontakPerusahaan->no_telepon ?? 'Data tidak tersedia' }}
+                  </li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                      <strong class="text-slate-700">Email:</strong> &nbsp; {{ $kontakPerusahaan->email ?? 'Data tidak tersedia' }}
+                  </li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                      <strong class="text-slate-700">Instagram:</strong> &nbsp; {{ $kontakPerusahaan->instagram ?? 'Data tidak tersedia' }}
+                  </li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                      <strong class="text-slate-700">WhatsApp:</strong> &nbsp; {{ $kontakPerusahaan->wa ?? 'Data tidak tersedia' }}
+                  </li>
+              </ul>
           </div>
-        </div>
       </div>
-      <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
-        <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-          <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+  </div>  
+  <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
+    <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+        <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
             <div class="flex flex-wrap -mx-3">
-              <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
-                <h6 class="mb-0">Alamat Perusahaan</h6>
-              </div>
-              <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                <a href="{{route('alamatperusahaan')}}" data-target="tooltip_trigger" data-placement="top">
-                  <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
-                </a>
-              </div>              
+                <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
+                    <h6 class="mb-0">Alamat Perusahaan</h6>
+                </div>
+                <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
+                    <a href="{{ route('alamatperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                        <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
+                    </a>
+                </div>
             </div>
-          </div>
-          <div class="flex-auto p-4">
-            <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-              <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit"><strong class="text-slate-700">Provinsi:</strong> &nbsp; Alec M. Thompson</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Kabupaten:</strong> &nbsp; (44) 123 1234 123</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Kecamatan:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Kelurahan:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Kode Pos:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">RT:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">RW:</strong> &nbsp; alecthompson@mail.com</li>
-              <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong class="text-slate-700">Detail Lainnya:</strong> &nbsp; alecthompson@mail.com</li>
-            </ul>
-          </div>
         </div>
+        <div class="flex-auto p-4">
+            <ul class="flex flex-col pl-0 mb-0 rounded-lg">
+                <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
+                    <strong class="text-slate-700">Provinsi:</strong> &nbsp; {{ $alamatPerusahaan->provinsi ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">Kabupaten:</strong> &nbsp; {{ $alamatPerusahaan->kabupaten ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">Kecamatan:</strong> &nbsp; {{ $alamatPerusahaan->kecamatan ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">Kelurahan:</strong> &nbsp; {{ $alamatPerusahaan->kelurahan ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">Kode Pos:</strong> &nbsp; {{ $alamatPerusahaan->kode_pos ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">RT:</strong> &nbsp; {{ $alamatPerusahaan->rt ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">RW:</strong> &nbsp; {{ $alamatPerusahaan->rw ?? 'Data tidak tersedia' }}
+                </li>
+                <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                    <strong class="text-slate-700">Detail Lainnya:</strong> &nbsp; {{ $alamatPerusahaan->detail_lainnya ?? 'Data tidak tersedia' }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="flex-none w-full max-w-full px-3 mt-6">
+  <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+    <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
+      <h6 class="mb-1">Setting Bagi Hasil</h6>
+      <p class="leading-normal text-sm">Architects design houses</p>
+    </div>
+    <div class="flex-auto px-0 pt-0 pb-2">
+      <div class="p-0 overflow-x-auto">
+        <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+          <thead class="align-bottom">
+            <tr>
+              <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Nama Perusahaan</th>
+              <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Persen Bagi Hasil</th>
+              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Bagi Hasil</th>
+              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Tanggal</th>
+              <th class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <div class="flex px-2 py-1">
+                  <div>
+                    {{-- <img src="../assets/img/team-2.jpg" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1" /> --}}
+                    @if ($perusahaan->logo)
+                          <img src="{{ asset('storage/' . $perusahaan->logo) }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
+                      @else
+                          'Data tidak tersedia'
+                      @endif
+                  </div>
+                  <div class="flex flex-col justify-center">
+                    <h6 class="mb-0 text-sm leading-normal">{{ $perusahaan->nama_perusahaan ?? 'Data tidak tersedia' }}</h6>
+                    <p class="mb-0 text-xs leading-tight text-slate-400">{{ $kontakPerusahaan->email ?? 'Data tidak tersedia' }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <p class="mb-0 text-xs font-semibold leading-tight"></p>
+                {{-- <p class="mb-0 text-xs leading-tight text-slate-400">Organization</p> --}}
+              </td>
+              <td class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Online</span>
+              </td>
+              <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <span class="text-xs font-semibold leading-tight text-slate-400">23/04/18</span>
+              </td>
+              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <a href="{{route ('persen.indexx')}}" class="text-xs font-semibold leading-tight text-slate-400 edit-button"> Edit </a>
+            </td>
+            
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+  </div>
+</div>
     </div>
   </div>
 </div>

@@ -8,6 +8,13 @@ use App\Http\Controllers\Controller;
 
 class KontakPerusahaanController extends Controller
 {
+
+    public function index(){
+        $kontakPerusahaan = KontakPerusahaan::where('perusahaan_id', 1)->first();
+
+        return view('rekap.kontakperusahaan', compact('kontakPerusahaan'));
+    }
+
     public function store(Request $request)
     {
         // Validasi input
@@ -18,16 +25,18 @@ class KontakPerusahaanController extends Controller
             'wa' => 'nullable|string|max:255',
         ]);
 
-        // Simpan data ke database
-        KontakPerusahaan::create([
-            'perusahaan_id' => 1, // Ubah sesuai dengan id_perusahaan yang relevan
-            'no_telepon' => $validated['no_telepon'],
-            'email' => $validated['email'],
-            'instagram' => $validated['instagram'],
-            'wa' => $validated['wa'],
-        ]);
+        // Simpan atau update data ke database
+        KontakPerusahaan::updateOrCreate(
+            ['perusahaan_id' => 1], // Ubah sesuai dengan id_perusahaan yang relevan
+            [
+                'no_telepon' => $validated['no_telepon'],
+                'email' => $validated['email'],
+                'instagram' => $validated['instagram'],
+                'wa' => $validated['wa'],
+            ]
+        );
 
         // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Kontak perusahaan berhasil ditambahkan.');
+        return redirect()->route('rekapPerusahaan')->with('success', 'Kontak perusahaan berhasil disimpan.');
     }
 }

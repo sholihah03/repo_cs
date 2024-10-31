@@ -106,4 +106,5 @@ class ProdukController extends Controller
         $product->delete();
         return redirect()->route('rekap.produk')->with('success', 'Produk berhasil dihapus');
     }
+
 }

@@ -13,8 +13,20 @@ class DashboardController extends Controller
     {
         $cs = Auth::guard('cs')->user();
         $jabatan = $cs->jabatan;
-        $produk = Produk::all();
-        // return view('cs.layouts.inde');
-        return view('cs.layouts.index', compact('cs', 'jabatan', 'produk'));
+        $produkList = Produk::all();
+        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList'));
     }
+
+    public function getProduct($id)
+    {
+        $produk = Produk::find($id);
+
+        if ($produk) {
+            return response()->json($produk);
+        }
+
+        return response()->json(['error' => 'Produk tidak ditemukan.'], 404);
+    }
+    
+    
 }

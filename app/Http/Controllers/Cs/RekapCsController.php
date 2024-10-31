@@ -10,30 +10,55 @@ use Illuminate\Support\Facades\Auth;
 
 class RekapCsController extends Controller
 {
+    public function index()
+    {
+        // Ambil semua produk untuk dropdown
+        $produkList = Produk::all();
+
+        // Ambil produk yang terpilih dari session
+        $produkTerpilih = session('produkTerpilih', null);
+
+        return view('cs.layouts.index', compact('produkList', 'produkTerpilih'));
+    }
     public function store(Request $request)
     {
-            // Periksa apakah karyawan terautentikasi
-        if (!Auth::guard('karyawan')->check()) {
-            return redirect()->route('loginrekap')->withErrors(['message' => 'Anda harus login terlebih dahulu.']);
-        }
-
+       
         // Validasi input
         $request->validate([
             'total_lead' => 'required|integer',
             'total_closing' => 'required|integer',
+            'produk_id' => 'nullable|exists:produk,id',
+            'jumlah' => 'nullable|integer'
         ]);
 
         // Ambil ID karyawan yang sedang login
-        $karyawan = Auth::guard('karyawan')->user();
+        $karyawan = Auth::guard('cs')->user();
 
         // Simpan data ke tabel rekap_cs
         RekapCs::create([
+            'karyawan_id' => $karyawan->id_karyawan,
             'total_lead' => $request->input('total_lead'),
             'total_closing' => $request->input('total_closing'),
-            'karyawan_id' => $karyawan->id, // Simpan ID karyawan yang sedang login
+            'produk_id' => $request->input('produk_id'), // Tambahkan produk_id jika ada
+            'jumlah' => $request->input('jumlah'), // Tambahkan jumlah jika ada
         ]);
 
         // Redirect ke halaman yang sesuai dengan pesan sukses
-        return redirect()->back()->with('success', 'Data berhasil disimpan.');
-    }
+        return redirect()->route('dashboardcs')->with('success', 'Data pemasukan berhasil disimpan.');
+      }
+//       public function storeproduk(Request $request)
+// {
+//     $request->validate([
+//         'produk_id' => 'required',
+//         // Validasi lainnya
+//     ]);
+
+//     // Simpan produk terpilih di session
+//     $produkTerpilih = Produk::find($request->produk_id);
+//     session(['produkTerpilih' => $produkTerpilih]);
+
+//     // Redirect ke halaman yang sesuai setelah menyimpan
+//     return redirect()->route('dashboardcs');
+// }
+
 }
