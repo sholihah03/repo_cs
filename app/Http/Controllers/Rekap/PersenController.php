@@ -16,7 +16,7 @@ class PersenController extends Controller
         // $perusahaan = Perusahaan::all();
         $perusahaan = Perusahaan::with('persenBagiHasil')->get();
         $daftarPerusahaan = Perusahaan::all();
-        return view('rekap.settings', compact('perusahaan', 'daftarPerusahaan', 'persen'));
+        return view('rekap.perusahaan.settings', compact('perusahaan', 'daftarPerusahaan', 'persen'));
     }
 
     public function indexEdit()
@@ -24,7 +24,7 @@ class PersenController extends Controller
         $persen = PersenBagiHasil::where('perusahaan_id', 1)->first();
         $daftarPerusahaan = Perusahaan::all();
 
-        return view('rekap.editPersen', compact('persen', 'daftarPerusahaan'));
+        return view('rekap.perusahaan.editPersen', compact('persen', 'daftarPerusahaan'));
     }
 
     public function store(Request $request)

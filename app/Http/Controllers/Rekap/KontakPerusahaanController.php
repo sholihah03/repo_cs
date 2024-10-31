@@ -12,7 +12,7 @@ class KontakPerusahaanController extends Controller
     public function index(){
         $kontakPerusahaan = KontakPerusahaan::where('perusahaan_id', 1)->first();
 
-        return view('rekap.kontakperusahaan', compact('kontakPerusahaan'));
+        return view('rekap.perusahaan.kontakperusahaan', compact('kontakPerusahaan'));
     }
 
     public function store(Request $request)

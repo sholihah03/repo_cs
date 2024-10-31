@@ -11,7 +11,7 @@ class AlamatPerusahaanController extends Controller
     public function index(){
         $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
 
-        return view('rekap.alamatperusahaan', compact('alamatPerusahaan'));
+        return view('rekap.perusahaan.alamatperusahaan', compact('alamatPerusahaan'));
     }
     public function store(Request $request)
     {

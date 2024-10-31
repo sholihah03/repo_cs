@@ -18,7 +18,7 @@ class RekapPerusahaanController extends Controller
         $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
 
         // Kirim data ke view
-        return view('rekap.settings', compact('perusahaan', 'kontakPerusahaan', 'alamatPerusahaan'));
+        return view('rekap.perusahaan.settings', compact('perusahaan', 'kontakPerusahaan', 'alamatPerusahaan'));
     }
 
     public function indexEdit()
@@ -28,7 +28,7 @@ class RekapPerusahaanController extends Controller
         // $perusahaan = Perusahaan::where('id_perusahaan', 1)->first();
 
         // Kirim data ke view
-        return view('rekap.editperusahaan', compact('perusahaan'));
+        return view('rekap.perusahaan.editperusahaan', compact('perusahaan'));
     }
 
     public function store(Request $request)

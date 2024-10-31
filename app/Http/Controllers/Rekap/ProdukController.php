@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Rekap;
 
 use App\Models\Produk;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
-    // Display the product list
     public function index()
     {
         $produk = Produk::all();
-        return view('rekap.produk', compact('produk'));
+        return view('rekap.produk.produk', compact('produk'));
     }
 
     // Show the form for creating a new product
@@ -22,7 +22,7 @@ class ProdukController extends Controller
         $karyawans = Karyawan::all(); // Ganti dengan model yang sesuai jika menggunakan nama yang berbeda
 
         // Kembalikan view dengan data karyawan
-        return view('rekap.create', compact('karyawans'));
+        return view('rekap.produk.create', compact('karyawans'));
     }
 
     // Store a new product
@@ -56,32 +56,32 @@ class ProdukController extends Controller
     public function edit($id)
     {
         $produk = Produk::findOrFail($id);
-        return view('rekap.editproduk', compact('produk'));
+        return view('rekap.produk.editproduk', compact('produk'));
     }
 
     // Update the product
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $produk = Produk::findOrFail($id);
-
+    
         $request->validate([
             'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_produk' => 'required|string|max:255',
             'stok' => 'required|integer',
             'harga_botol' => 'required|numeric|min:0',
         ]);
-
+    
         // Handle file upload if present
         if ($request->hasFile('gambar_produk')) {
-            // Delete old image
+            // Delete old image if exists
             if ($produk->gambar_produk && Storage::disk('public')->exists($produk->gambar_produk)) {
                 Storage::disk('public')->delete($produk->gambar_produk);
             }
             $imagePath = $request->file('gambar_produk')->store('product_images', 'public');
         } else {
-            $imagePath = $produk->gambar_produk; // Keep the old image if no new image uploaded
+            // Keep the old image if no new image uploaded
+            $imagePath = $produk->gambar_produk;
         }
-
+    
         // Update product
         $produk->update([
             'gambar_produk' => $imagePath,
@@ -89,10 +89,11 @@ class ProdukController extends Controller
             'stok' => $request->stok,
             'harga_botol' => $request->harga_botol,
         ]);
-
+        
+    
         return redirect()->route('rekap.produk')->with('success', 'Produk berhasil diperbarui');
     }
-
+    
     // Delete a product
     public function destroy($id)
     {

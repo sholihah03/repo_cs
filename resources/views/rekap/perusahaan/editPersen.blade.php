@@ -1,5 +1,5 @@
 @extends('rekap.includes.master')
-@section('title', 'Kontak Perusahaan')
+@section('title', 'Edit Persen')
 
 @section('content')
 @include('rekap.includes.sidenav')
