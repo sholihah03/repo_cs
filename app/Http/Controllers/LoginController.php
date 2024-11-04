@@ -62,15 +62,15 @@ class LoginController extends Controller
         // Redirect ke dashboard sesuai dengan tipe akun
         switch ($accountType) {
             case 'direktur':
-                return redirect()->route('informasi'); // Ubah sesuai dengan rute dashboard direktur
+                return redirect()->route('dashboardRekap'); // Ubah sesuai dengan rute dashboard direktur
             case 'manager':
-                return redirect()->route('informasi'); // Ubah sesuai dengan rute dashboard manajer
+                return redirect()->route('dashboardRekap'); // Ubah sesuai dengan rute dashboard manajer
             case 'karyawan':
-                return redirect()->route('informasi'); // Ubah sesuai dengan rute dashboard karyawan
+                return redirect()->route('dashboardRekap'); // Ubah sesuai dengan rute dashboard karyawan
             case 'cs':
                 return redirect()->route('dashboardcs'); // Ubah sesuai dengan rute dashboard CS
             case 'advertiser':
-                return redirect()->route('informasi'); // Ubah sesuai dengan rute dashboard advertiser
+                return redirect()->route('dashboardRekap'); // Ubah sesuai dengan rute dashboard advertiser
             default:
                 return redirect()->route('home'); // Redirect default jika tipe akun tidak dikenali
         }
