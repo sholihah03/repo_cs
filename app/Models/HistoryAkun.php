@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Karyawan extends Authenticatable
+class HistoryAkun extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_karyawan';
+    protected $table = 'tb_historyakun';
 
-    // Primary key yang digunakan
-    protected $primaryKey = 'id_karyawan';
+    protected $primaryKey = 'id_historyakun';
 
-    // Kolom yang dapat diisi
     protected $fillable = [
         'jabatan_id',
         'nama_lengkap',
@@ -23,13 +20,14 @@ class Karyawan extends Authenticatable
         'email',
         'no_telepon',
         'profile_karyawan',
-        'password',
-        'status',
         'mulai_bekerja',
+        'akhir_bekerja',
+        'status',
     ];
 
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
+
 }

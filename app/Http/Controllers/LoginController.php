@@ -21,18 +21,18 @@ class LoginController extends Controller
             case 'direktur-login':
                 $user = \App\Models\Karyawan::where('email', $credentials['email'])->first();
                 if ($user && Auth::guard('direktur')->attempt($credentials)) {
-                    return redirect()->route('informasi');
+                    return redirect()->route('dashboardRekap');
                 }
                 break;
 
             case 'manager-login':
                 $user = \App\Models\Karyawan::where('email', $credentials['email'])->first();
                 if ($user && Auth::guard('manager')->attempt($credentials)) {
-                    return redirect()->route('informasi');
+                    return redirect()->route('dashboardRekap');
                 }
                 break;
 
-            case 'karyawan-login':
+            case 'karyawan-login':   
                 $user = \App\Models\Karyawan::where('email', $credentials['email'])->first();
                 if ($user && Auth::guard('karyawan')->attempt($credentials)) {
                     return redirect()->route('dashboard-karyawan');
