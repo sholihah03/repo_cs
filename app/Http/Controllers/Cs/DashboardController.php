@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cs;
 
 use App\Models\Produk;
+use App\Models\Perusahaan;
 use App\Models\RekapProduk;
 use App\Models\RekapCsTotal;
 use Illuminate\Http\Request;
@@ -16,9 +17,10 @@ class DashboardController extends Controller
         $cs = Auth::guard('cs')->user();
         $jabatan = $cs->jabatan;
         $produkList = Produk::where('karyawan_id', $cs->id_karyawan)->get();
+        $perusahaan = Perusahaan::find(1);
 
 
-        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList'));
+        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList', 'perusahaan'));
     }
 
     public function getProduct($id)

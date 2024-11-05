@@ -24,7 +24,13 @@
             <!-- Logo Section -->
             <div class="flex items-center">
                 <a href="{{ route('dashboardcs') }}">
-                    <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
+                    <div class="w-16 h-16 overflow-hidden rounded-full">
+                    @if ($perusahaan->logo)
+                        <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
+                    @else
+                        <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
+                    @endif
+                    </div>
                 </a>
             </div>
 
