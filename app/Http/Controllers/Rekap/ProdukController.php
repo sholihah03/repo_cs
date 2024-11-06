@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rekap;
 
 use App\Models\Produk;
 use App\Models\Karyawan;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -12,17 +13,19 @@ class ProdukController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         $produk = Produk::all();
-        return view('rekap.produk.produk', compact('produk'));
+        return view('rekap.produk.produk', compact('produk', 'perusahaan'));
     }
 
     // Show the form for creating a new product
     public function create()
     {
+        $perusahaan = Perusahaan::find(1);
         $karyawans = Karyawan::all(); // Ganti dengan model yang sesuai jika menggunakan nama yang berbeda
 
         // Kembalikan view dengan data karyawan
-        return view('rekap.produk.create', compact('karyawans'));
+        return view('rekap.produk.create', compact('karyawans', 'perusahaan'));
     }
 
     // Store a new product
@@ -55,8 +58,9 @@ class ProdukController extends Controller
     // Show the form to edit a product
     public function edit($id)
     {
+        $perusahaan = Perusahaan::find(1);
         $produk = Produk::findOrFail($id);
-        return view('rekap.produk.editproduk', compact('produk'));
+        return view('rekap.produk.editproduk', compact('produk', 'perusahaan'));
     }
 
     // Update the product

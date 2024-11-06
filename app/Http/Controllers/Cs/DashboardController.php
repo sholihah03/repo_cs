@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Cs;
 
-use App\Models\Produk;
 use App\Models\Perusahaan;
+use App\Models\Produk;
 use App\Models\RekapProduk;
 use App\Models\RekapCsTotal;
 use Illuminate\Http\Request;
