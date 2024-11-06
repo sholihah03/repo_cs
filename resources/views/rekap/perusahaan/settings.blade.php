@@ -108,7 +108,7 @@
                         </li>
                         <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
                           <strong class="text-slate-700">Logo:</strong> &nbsp; 
-                          @if ($perusahaan->logo)
+                          @if ($perusahaan && $perusahaan->logo)
                               <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
                           @else
                               'Data tidak tersedia'
@@ -219,20 +219,20 @@
                               <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                   <div class="flex px-2 py-1">
                                       <div>
-                                          @if ($perusahaan->logo)
+                                          @if ($perusahaan && $perusahaan->logo)
                                               <img src="{{ asset('storage/' . $perusahaan->logo) }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
                                           @else
-                                              'Data tidak tersedia'
+                                          <img src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
                                           @endif
                                       </div>
                                       <div class="flex flex-col justify-center">
-                                          <h6 class="mb-0 text-sm leading-normal">{{ $perusahaan->nama_perusahaan ?? 'Data tidak tersedia' }}</h6>
-                                          <p class="mb-0 text-xs leading-tight text-slate-400">{{ $kontakPerusahaan->email ?? 'Data tidak tersedia' }}</p>
+                                          <h6 class="mb-0 text-sm leading-normal">{{ $perusahaan->nama_perusahaan ?? 'Nama Perusahaan' }}</h6>
+                                          <p class="mb-0 text-xs leading-tight text-slate-400">{{ $kontakPerusahaan->email ?? 'Email Perusahaan' }}</p>
                                       </div>
                                   </div>
                               </td>
                               <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                  <p class="mb-0 text-xs font-semibold leading-tight">{{ isset($perusahaan->persenBagiHasil->persen) ? number_format($perusahaan->persenBagiHasil->persen, 0) : 'Data tidak tersedia' }}%
+                                  <p class="mb-0 text-xs font-semibold leading-tight">{{ isset($perusahaan->persenBagiHasil->persen) ? number_format($perusahaan->persenBagiHasil->persen, 0) : 'Persen' }}%
                                   </p>
                               </td>
                               <td class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
