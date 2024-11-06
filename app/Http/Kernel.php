@@ -15,4 +15,9 @@ class Kernel extends HttpKernel
         // Middleware lainnya
         'auth.cs' => \App\Http\Middleware\CheckCsAuthenticated::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+    $schedule->command('check:data-entry')->dailyAt('14:00');
+    }
 }

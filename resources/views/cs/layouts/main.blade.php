@@ -24,11 +24,13 @@
             <!-- Logo Section -->
             <div class="flex items-center">
                 <a href="{{ route('dashboardcs') }}">
-                    @if ($perusahaan->logo)
-                    <img class="om" src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan}}" />
+                    <div class="w-14 h-14 overflow-hidden rounded-full">
+                    @if ($perusahaan && $perusahaan->logo)
+                        <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
                     @else
-                    <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
+                    <svg class="h-8 w-8 text-white" <svg  viewBox="0 0 24 24"  width="24"  height="24"  xmlns="http://www.w3.org/2000/svg"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />  <rect x="7" y="7" width="3" height="9" />  <rect x="14" y="7" width="3" height="5" /></svg>
                     @endif
+                    </div>
                 </a>
             </div>
 
