@@ -35,4 +35,16 @@ class DataTransaksiController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('neraca.index')->with('success', 'Detail transaksi berhasil disimpan!');
     }
+
+    public function getTransaksiPerBulan()
+    {
+        // Ambil data transaksi yang dikelompokkan per bulan
+        $transaksiPerBulan = DataTransaksi::selectRaw('YEAR(tanggal) as year, MONTH(tanggal) as month, SUM(jumlah) as total')
+            ->groupByRaw('YEAR(tanggal), MONTH(tanggal)')
+            ->orderByRaw('YEAR(tanggal) DESC, MONTH(tanggal) DESC')
+            ->get();
+
+        // Kirim data ke view
+        return view('rekap.neraca.grafik', compact('transaksiPerBulan'));
+    }
 }
