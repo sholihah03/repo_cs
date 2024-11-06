@@ -19,12 +19,16 @@
 
 <body class="bg-gray-100">
     <!-- ===== Header Start ===== -->
-    <nav class="w-full bg-purple-300 bg-opacity-90 backdrop-blur-lg shadow-lg fixed top-0 z-50">
+    <nav class="w-full bg-purple-600 bg-opacity-90 backdrop-blur-lg shadow-lg fixed top-0 z-50">
         <div class="flex items-center justify-between p-4">
             <!-- Logo Section -->
             <div class="flex items-center">
                 <a href="{{ route('dashboardcs') }}">
+                    @if ($perusahaan->logo)
+                    <img class="om" src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan}}" />
+                    @else
                     <img class="om" src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" alt="Logo Light" />
+                    @endif
                 </a>
             </div>
 
@@ -32,17 +36,17 @@
             <div class="hidden lg:flex items-center space-x-4">
                 <!-- Notification Icon -->
                 <a href="#" class="relative">
-                    <i data-feather="bell" class="text-black" style="width: 28px; height: 28px;"></i>
+                    <i data-feather="bell" class="text-white" style="width: 28px; height: 28px;"></i>
                     <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
                 </a>
 
                 <!-- Profile Icon -->
                 <a href="{{ route('settingcs') }}">
-                    <i data-feather="user" class="text-black" style="width: 28px; height: 28px;"></i>
+                    <i data-feather="user" class="text-white" style="width: 28px; height: 28px;"></i>
                 </a>
 
                 <!-- Sign In Button -->
-                <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-500 text-white rounded">Logout</a>
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-400 text-white rounded">Logout</a>
             </div>
 
             <!-- Burger Menu for Mobile -->
