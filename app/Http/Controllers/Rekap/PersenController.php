@@ -12,6 +12,7 @@ class PersenController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         $persen = PersenBagiHasil::all();
         // $perusahaan = Perusahaan::all();
         $perusahaan = Perusahaan::with('persenBagiHasil')->get();
@@ -21,10 +22,11 @@ class PersenController extends Controller
 
     public function indexEdit()
     {
+        $perusahaan = Perusahaan::find(1);
         $persen = PersenBagiHasil::where('perusahaan_id', 1)->first();
         $daftarPerusahaan = Perusahaan::all();
 
-        return view('rekap.perusahaan.editPersen', compact('persen', 'daftarPerusahaan'));
+        return view('rekap.perusahaan.editPersen', compact('persen', 'daftarPerusahaan','perusahaan'));
     }
 
     public function store(Request $request)

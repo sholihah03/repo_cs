@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rekap;
 
 use App\Models\Produk;
 use App\Models\Karyawan;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,17 +14,19 @@ class PembagianProdukController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         // Retrieve all CS employees with their related products
         $csList = Karyawan::with('produk')->whereHas('jabatan', function($query) {
             $query->where('nama_jabatan', 'cs');
         })->get();
 
-        return view('rekap.cs.pembagianProduk', compact('csList'));
+        return view('rekap.cs.pembagianProduk', compact('csList', 'perusahaan'));
     }
 
 
     public function indexTambah()
     {
+        $perusahaan = Perusahaan::find(1);
         // Mendapatkan karyawan CS yang belum memiliki pembagian produk
         $cs = Karyawan::whereHas('jabatan', function($query) {
             $query->where('nama_jabatan', 'cs');
@@ -31,7 +34,7 @@ class PembagianProdukController extends Controller
 
         $produk = Produk::whereDoesntHave('karyawan')->get();
 
-        return view('rekap.cs.tambahPembagian', compact('cs', 'produk'));
+        return view('rekap.cs.tambahPembagian', compact('cs', 'produk', 'perusahaan'));
     }
 
     public function store(Request $request)
@@ -59,13 +62,14 @@ class PembagianProdukController extends Controller
 
     public function indexEdit($id)
     {
+        $perusahaan = Perusahaan::find(1);
         // Retrieve the CS employee and their associated products
         $karyawan = Karyawan::with('produk')->findOrFail($id);
 
         // Retrieve all available products to allow for replacement
         $allProducts = Produk::whereDoesntHave('karyawan')->get();
 
-        return view('rekap.cs.editPembagian', compact('karyawan', 'allProducts'));
+        return view('rekap.cs.editPembagian', compact('karyawan', 'allProducts', 'perusahaan'));
     }
 
     // public function update(Request $request, $id)
