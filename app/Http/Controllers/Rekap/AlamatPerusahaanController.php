@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rekap;
 
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Models\AlamatPerusahaan;
 use App\Http\Controllers\Controller;
@@ -9,9 +10,10 @@ use App\Http\Controllers\Controller;
 class AlamatPerusahaanController extends Controller
 {
     public function index(){
+        $perusahaan = Perusahaan::find(1);
         $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
 
-        return view('rekap.perusahaan.alamatperusahaan', compact('alamatPerusahaan'));
+        return view('rekap.perusahaan.alamatperusahaan', compact('alamatPerusahaan', 'perusahaan'));
     }
     public function store(Request $request)
     {

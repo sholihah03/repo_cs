@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Rekap;
 
-use App\Http\Controllers\Controller;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardRekapController extends Controller
 {
     public function index()
     {
-        return view('rekap.dashboardRekap');
+        $perusahaan = Perusahaan::find(1);
+        return view('rekap.dashboardRekap', compact('perusahaan'));
     }
 }

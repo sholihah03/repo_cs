@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Rekap;
 
-use App\Http\Controllers\Controller;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Transaksi; // Pastikan model ini diimpor
 
 class NeracaController extends Controller
 {
     public function index()
     {
-        return view('rekap.neraca.transaksi');
+        $perusahaan = Perusahaan::find(1);
+        return view('rekap.neraca.transaksi', compact('perusahaan'));
     }
 
     public function store(Request $request)
