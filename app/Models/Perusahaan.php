@@ -36,4 +36,10 @@ class Perusahaan extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+        public function persenBagiHasil()
+    {
+        return $this->hasOne(PersenBagiHasil::class, 'perusahaan_id', 'id_perusahaan');
+    }
+
 }

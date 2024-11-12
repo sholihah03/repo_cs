@@ -17,7 +17,9 @@ class Produk extends Model
     // Kolom yang dapat diisi
     protected $fillable = [
         'karyawan_id',
+        'gambar_produk',
         'nama_produk',
+        'stok',
         'harga_botol',
     ];
 

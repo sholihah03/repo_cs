@@ -32,4 +32,9 @@ class Karyawan extends Authenticatable
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'karyawan_id', 'id_karyawan');
+    }
 }
