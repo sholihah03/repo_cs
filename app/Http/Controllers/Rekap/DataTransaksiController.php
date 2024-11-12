@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DataTransaksi; // Pastikan model ini diimpor
 
 class DataTransaksiController extends Controller
-{   
+{ 
+
     public function store(Request $request)
     {
+        // Memeriksa apakah pengguna sudah login sebagai karyawan
+        if (Auth::guard('manager')->check()) {
+            // Mendapatkan data karyawan yang sedang login
+            $karyawan = Auth::guard('manager')->user();
+            $karyawan_id = $karyawan->id_karyawan;  // Mengambil ID karyawan
+
+        } else {
+            // Jika pengguna tidak login sebagai karyawan, arahkan ke halaman login dengan pesan error
+            return redirect()->route('login')->with('error', 'Anda harus login sebagai karyawan.');
+        }
+
         // Validasi input
         $request->validate([
             'nama_transaksi' => 'required|string',
@@ -27,7 +39,7 @@ class DataTransaksiController extends Controller
         // Menyimpan data ke tabel tb_datatransaksi
         DataTransaksi::create([
             'transaksi_id' => $transaksi->id_transaksi,
-            'karyawan_id' => Auth::user()->id_karyawan,
+            'karyawan_id' => $karyawan_id,  // Menggunakan ID karyawan yang sudah didapatkan
             'tanggal' => $request->tanggal,
             'jumlah' => $request->jumlah,
             'keterangan' => $request->keterangan,
