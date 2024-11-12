@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cs;
 
 use App\Models\Perusahaan;
 use App\Models\Produk;
+use App\Models\RekapCs;
 use App\Models\RekapProduk;
 use App\Models\RekapCsTotal;
 use Illuminate\Http\Request;
@@ -36,7 +37,17 @@ class DashboardController extends Controller
 
     public function storeRekap(Request $request)
 {
-    $rekapCsId = Auth::guard('cs')->user()->id_karyawan;
+    // $rekapCsId = Auth::guard('cs')->user()->id_karyawan;
+    $cs = Auth::guard('cs')->user();
+
+    $rekapCsId = RekapCs::where('karyawan_id', $cs->id_karyawan)
+                        ->latest('id_rekap_cs')
+                        ->value('id_rekap_cs');
+
+    if (!$rekapCsId) {
+        return redirect()->back()->with('error', 'Tidak ditemukan data rekap CS untuk karyawan ini');
+    }
+
     $jumlahProduk = $request->input('jumlah', []);
     $totalBotol = array_sum($jumlahProduk);
 
