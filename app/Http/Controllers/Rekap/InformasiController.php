@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rekap;
 
 use App\Models\Jabatan;
 use App\Models\Karyawan;
+use App\Models\Perusahaan;
 use App\Models\HistoryAkun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class InformasiController extends Controller
     {
         // Mengambil semua jabatan
         $jabatan = Jabatan::all();
+        $perusahaan = Perusahaan::find(1);
         $historyakun = HistoryAkun::all();
 
         // Mengambil karyawan berdasarkan jabatan_id dari request
@@ -31,7 +33,7 @@ class InformasiController extends Controller
             return response()->json($karyawan);
         }
 
-        return view('rekap.pegawai.informasipegawai', compact('karyawan', 'jabatan', 'historyakun'));
+        return view('rekap.pegawai.informasipegawai', compact('karyawan', 'jabatan', 'historyakun', 'perusahaan'));
     }
 
 
