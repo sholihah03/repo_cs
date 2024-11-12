@@ -44,6 +44,8 @@ class DataTransaksiController extends Controller
             'jumlah' => $request->jumlah,
             'keterangan' => $request->keterangan,
         ]);
+        
+        $request->session()->forget('nama_transaksi');
 
         // Redirect dengan pesan sukses
         return redirect()->route('neraca.index')->with('success', 'Detail transaksi berhasil disimpan!');
