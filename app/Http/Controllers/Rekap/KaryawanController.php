@@ -3,25 +3,28 @@
 namespace App\Http\Controllers\Rekap;
 
 use App\Models\Jabatan;
+use App\Models\Karyawan;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Karyawan;
 
 class KaryawanController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         $karyawan = Karyawan::with('jabatan')->get();
         $jabatan = Jabatan::all();
-        return view('rekap.pegawai.tambahpegawai', compact('karyawan', 'jabatan'));
+        return view('rekap.pegawai.tambahpegawai', compact('karyawan', 'jabatan', 'perusahaan'));
     }
 
     public function edit($id)
     {
+        $perusahaan = Perusahaan::find(1);
         $karyawan = Karyawan::findOrFail($id); // Find Karyawan by ID
         $jabatan = Jabatan::all(); // Fetch all Jabatan data
-        return view('rekap.pegawai.editpegawai', compact('karyawan', 'jabatan')); // Return the edit view
+        return view('rekap.pegawai.editpegawai', compact('karyawan', 'jabatan', 'perusahaan')); // Return the edit view
     }
 
     public function store(Request $request)

@@ -4,15 +4,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 use App\Http\Middleware\CheckCsAuthenticated;
-use App\Http\Middleware\CheckManagerAuthenticated;
-
 use App\Http\Controllers\Cs\RekapCsController;
 use App\Http\Controllers\Cs\DashboardController;
+
 use App\Http\Controllers\Rekap\NeracaController;
 use App\Http\Controllers\Rekap\PersenController;
 use App\Http\Controllers\Rekap\ProdukController;
 use App\Http\Controllers\Rekap\KaryawanController;
+use App\Http\Middleware\CheckManagerAuthenticated;
 use App\Http\Controllers\Rekap\InformasiController;
+use App\Http\Controllers\Rekap\DataRekapcsController;
 use App\Http\Controllers\Rekap\HistoryAkunController;
 use App\Http\Controllers\Cs\Setting\SettingController;
 use App\Http\Controllers\Rekap\DataTransaksiController;
@@ -73,7 +74,9 @@ Route::post('/cs/rekap', [DashboardController::class, 'storeRekap'])->name('cs.s
 Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::view('/rincian', 'rekap.rincian')->name('rincian');
     Route::view('/informasi', 'rekap.informasi')->name('informasi');
-    Route::view('/edit', 'rekap.edit')->name('edit');
+    Route::get('/rekapdata', [DataRekapcsController::class, 'index'])->name('rekapdata');
+    Route::get('/rekap/search-karyawan', [DataRekapcsController::class, 'searchKaryawan'])->name('rekap.search.karyawan');
+
 
     //Rekap_Perusahaan
     Route::get('/settingPerusahaan', [RekapPerusahaanController::class, 'index'])->name('rekapPerusahaan');

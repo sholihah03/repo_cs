@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cs;
 
 use App\Models\Produk;
 use App\Models\RekapCs;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +13,18 @@ class RekapCsController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         // Ambil semua produk untuk dropdown
         $produkList = Produk::all();
 
         // Ambil produk yang terpilih dari session
         $produkTerpilih = session('produkTerpilih', null);
 
-        return view('cs.layouts.index', compact('produkList', 'produkTerpilih'));
+        return view('cs.layouts.index', compact('produkList', 'produkTerpilih', 'perusahaan'));
     }
     public function store(Request $request)
     {
-       
+
         // Validasi input
         $request->validate([
             'total_lead' => 'required|integer',
