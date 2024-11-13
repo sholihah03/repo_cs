@@ -102,7 +102,7 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
     Route::post('/rekap/neraca/store', [NeracaController::class, 'store'])->name('rekap.neraca.store');
     Route::post('/rekap/transaksi/store', [DataTransaksiController::class, 'store'])->name('rekap.transaksi.store');
-    Route::get('/grafik-transaksi', [DataTransaksiController::class, 'getTransaksiPerBulan'])->name('rekap.grafikTransaksi');
+    Route::get('/rekap/neraca/grafik', [DataTransaksiController::class, 'getTransaksiPerBulan'])->name('rekap.grafikTransaksi');
 
     //Rekap_PembagianProdukCS
     Route::get('/pembagianProdukCS', [PembagianProdukController::class, 'index'])->name('pembagianProdukCS.index');

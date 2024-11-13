@@ -162,6 +162,35 @@
           </a>
         </li>
 
+        <li class="mt-0.5 w-full relative">
+          <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors cursor-pointer"
+             href="javascript:void(0);"
+             id="dropdownToggleNeraca">
+            <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="fill-slate-800 opacity-60" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="fill-slate-800" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Neraca</span>
+          </a>
+
+          <!-- Dropdown Content -->
+          <div id="dropdownNeraca" class="hidden absolute bg-gray-200 shadow-lg rounded-lg mt-2 py-2 right-0">
+            <a href="{{route ('neraca.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Transaksi</a>
+            <a href="{{route ('rekap.grafikTransaksi')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Grafik</a>
+          </div>
+      </li>
+
         <li class="w-full mt-4">
           <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60">Account pages</h6>
         </li>
@@ -398,18 +427,49 @@
 
 
 
-    <script>
-        document.getElementById('dropdownToggle').addEventListener('click', function() {
+    {{-- <script>
+        document.getElementById('dropdownToggle', 'dropdownToggleNeraca').addEventListener('click', function() {
           const dropdownMenu = document.getElementById('dropdownMenu');
+          const dropdownNeraca = document.getElementById('dropdownNeraca');
           const dropdownToggle = document.getElementById('dropdownToggle');
+          const dropdownToggleNeraca = document.getElementById('dropdownToggleNeraca');
 
           // Mendapatkan lebar elemen "Informasi Akun"
           const dropdownWidth = dropdownToggle.offsetWidth;
+          const dropdownWidth = dropdownToggleNeraca.offsetWidth;
 
           // Menerapkan lebar yang sama pada dropdown
           dropdownMenu.style.width = dropdownWidth + 'px';
+          dropdownNaraca.style.width = dropdownWidth + 'px';
 
           // Toggle visibilitas dropdown
           dropdownMenu.classList.toggle('hidden');
+          dropdownNeraca.classList.toggle('hidden');
         });
-      </script>
+      </script> --}}
+
+      <script>
+        document.getElementById('dropdownToggle').addEventListener('click', function() {
+          const dropdownMenu = document.getElementById('dropdownMenu');
+          // Get the width of the "Informasi Akun" element
+          const dropdownWidth = dropdownToggle.offsetWidth;
+
+          // Apply the same width to the dropdown
+          dropdownMenu.style.width = dropdownWidth + 'px';
+          
+          dropdownMenu.classList.toggle('hidden');
+        });
+      
+        document.getElementById('dropdownToggleNeraca').addEventListener('click', function() {
+          const dropdownNeraca = document.getElementById('dropdownNeraca');
+          
+          // Get the width of the "Neraca" element
+          const dropdownWidth = dropdownToggleNeraca.offsetWidth;
+
+          // Apply the same width to the dropdown
+          dropdownNeraca.style.width = dropdownWidth + 'px';
+          
+          dropdownNeraca.classList.toggle('hidden');
+        });
+</script>
+
