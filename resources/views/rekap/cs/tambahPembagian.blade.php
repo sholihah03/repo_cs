@@ -22,7 +22,6 @@
             <select name="karyawan_id" id="cs" class="form-select w-full max-w-xs border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-400">
                 <option value="">Pilih Karyawan</option>
                 @foreach($cs as $karyawan)
-                @dd($karyawan)
                     <option value="{{ $karyawan->id_karyawan }}">{{ $karyawan->nama_lengkap }}</option>
                 @endforeach
             </select>
