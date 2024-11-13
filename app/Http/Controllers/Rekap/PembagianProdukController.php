@@ -31,7 +31,6 @@ class PembagianProdukController extends Controller
         $cs = Karyawan::whereHas('jabatan', function($query) {
             $query->where('nama_jabatan', 'cs');
         })->whereDoesntHave('produk')->get();
-dd($cs);
         $produk = Produk::whereDoesntHave('karyawan')->get();
 
         return view('rekap.cs.tambahPembagian', compact('cs', 'produk', 'perusahaan'));

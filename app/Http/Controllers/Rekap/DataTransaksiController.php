@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DataTransaksi; // Pastikan model ini diimpor
 
 class DataTransaksiController extends Controller
-{
+{ 
 
-public function store(Request $request)
+    public function store(Request $request)
     {
         // Memeriksa apakah pengguna sudah login sebagai karyawan
         if (Auth::guard('manager')->check()) {
