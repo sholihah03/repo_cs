@@ -36,12 +36,40 @@
 
             <!-- Notification, Profile, and Sign In Button for Larger Screens -->
             <div class="hidden lg:flex items-center space-x-4">
-                <!-- Notification Icon -->
-                <a href="#" class="relative">
-                    <i data-feather="bell" class="text-white" style="width: 28px; height: 28px;"></i>
-                    <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
-                </a>
-
+                <div class="relative">
+                    <!-- Notification Icon -->
+                    <button id="notificationToggle" class="relative focus:outline-none">
+                        <i data-feather="bell" class="text-white w-7 h-7"></i>
+                        @if ($notifications->count() > 0)
+                            <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
+                                {{ $notifications->count() }}
+                            </span>
+                        @endif
+                    </button>
+                
+                    <!-- Dropdown Content -->
+                    <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
+                        <div class="p-4">
+                            <h4 class="font-semibold text-gray-800">Notifikasi</h4>
+                        </div>
+                        <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto">
+                            @forelse ($notifications as $notification)
+                                <li class="p-4 hover:bg-gray-100">
+                                    <p class="text-sm text-gray-700">{{ $notification->message }}</p>
+                                    <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                                </li>
+                            @empty
+                                <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
+                            @endforelse
+                        </ul>
+                        <div class="p-2 text-center">
+                            <a href="{{ route('notifikasi') }}" class="text-blue-500 text-sm hover:underline">
+                                Lihat Semua Notifikasi
+                            </a>
+                        </div>
+                    </div>
+                </div>                
+                
                 <!-- Profile Icon -->
                 <a href="{{ route('settingcs') }}">
                     <i data-feather="user" class="text-white" style="width: 28px; height: 28px;"></i>
@@ -67,12 +95,35 @@
                     <nav>
                         <ul class="space-y-4 text-black">
                             <!-- Notification Icon -->
-                            <li>
+                            <li class="relative group">
                                 <a href="#" class="relative">
-                                    <i data-feather="bell" class="text-black" style="width: 28px; height: 28px;"></i>
-                                    <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
+                                    <i data-feather="bell" class="text-black w-7 h-7"></i>
+                                    @if ($notifications->count() > 0)
+                                        <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
+                                            {{ $notifications->count() }}
+                                        </span>
+                                    @endif
                                 </a>
+                                <!-- Dropdown -->
+                                <div class="absolute right-0 hidden group-hover:block bg-white border border-gray-300 rounded-lg shadow-md w-80 mt-2 z-10">
+                                    <ul class="divide-y divide-gray-200">
+                                        @forelse ($notifications as $notification)
+                                            <li class="p-4 hover:bg-gray-100">
+                                                <p class="text-sm text-gray-700">{{ $notification->cr }}</p>
+                                                <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                                            </li>
+                                        @empty
+                                            <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
+                                        @endforelse
+                                    </ul>
+                                    {{-- <div class="p-2 text-center">
+                                        <a href="{{ route('notifikasi') }}" class="text-blue-500 text-sm hover:underline">
+                                            Lihat Semua Notifikasi
+                                        </a>
+                                    </div> --}}
+                                </div>
                             </li>
+                            
                             <!-- Profile Icon -->
                             <li>
                                 <a href="{{ route('settingcs') }}">
@@ -91,6 +142,77 @@
     </nav>
     <script>
         feather.replace()
+        function submitTargetNotification() {
+    // Ambil nilai dari input CrNew dan Status Target
+    const crNewValue = document.getElementById('crNewTarget').value;
+    const targetStatusValue = document.getElementById('targetStatus').textContent;
+
+    // Validasi jika data kosong
+    if (!crNewValue || !targetStatusValue) {
+        alert('Pastikan data CrNew dan Status Target telah terisi.');
+        return;
+    }
+
+    // Format notifikasi yang akan ditampilkan
+    const notificationMessage = `CrNew: ${crNewValue}, Status: ${targetStatusValue}`;
+
+    // Tambahkan notifikasi ke ikon notifikasi
+    const notificationIcon = document.querySelector('[data-feather="bell"]');
+    const notificationList = document.createElement('div');
+    notificationList.classList.add(
+        'absolute', 'top-12', 'right-0', 'bg-white', 'shadow-lg', 
+        'p-4', 'rounded-lg', 'w-64', 'z-50', 'animate-fade-in'
+    );
+    notificationList.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <span class="text-purple-600 font-bold">Notifikasi Baru</span>
+        </div>
+        <div class="mt-2 text-gray-800 text-sm">
+            ${notificationMessage}
+        </div>
+    `;
+
+    // Tampilkan notifikasi
+    const existingNotification = document.getElementById('notification-content');
+    if (existingNotification) {
+        existingNotification.remove(); // Hapus notifikasi lama jika ada
+    }
+    notificationList.id = 'notification-content';
+    notificationIcon.parentNode.appendChild(notificationList);
+
+    // Timer untuk otomatis menghilangkan notifikasi setelah 5 detik
+    setTimeout(() => {
+        if (notificationList) {
+            notificationList.remove();
+        }
+    }, 5000);
+}
+  // Fungsi untuk mengatur dropdown
+  function setupDropdown(toggleId, dropdownId) {
+        const toggle = document.getElementById(toggleId);
+        const dropdown = document.getElementById(dropdownId);
+
+        if (toggle && dropdown) {
+            toggle.addEventListener("click", () => {
+                dropdown.classList.toggle("hidden");
+            });
+
+            // Klik di luar untuk menutup dropdown
+            document.addEventListener("click", (event) => {
+                if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.add("hidden");
+                }
+            });
+        } else {
+            console.error(`Element with ID ${toggleId} or ${dropdownId} not found.`);
+        }
+    }
+
+    // Inisialisasi Dropdown Notifikasi
+    document.addEventListener("DOMContentLoaded", function () {
+        setupDropdown("notificationToggle", "notificationDropdown");
+    });
+
     </script>
 
 </body>

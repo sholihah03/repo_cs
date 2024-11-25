@@ -30,6 +30,12 @@ class HasilCs extends Model
         return $this->belongsTo(RekapCs::class, 'rekapcs_id', 'id_rekap_cs');
     }
 
+    public function bagihasil()
+    {
+        return $this->hasMany(BagiHasil::class, 'hasilcs_id', 'id_hasilcs');
+    }
+
+
     // Relasi ke model RekapProduk
     public function rekapProduk()
     {

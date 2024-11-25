@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cs\NotifikasiCsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
@@ -50,6 +51,7 @@ Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name(
 Route::middleware(CheckCsAuthenticated::class)->group(function () {
 //cs
 Route::get('/dashboardCs', [DashboardController::class, 'indexCs'])->name('dashboardcs');
+Route::get('/notifikasics', [NotifikasiCsController::class, 'index'])->name('notifikasi');
 Route::view('/jam', 'cs.layouts.jam')->name('jam');
 Route::get('/cs/setting', [SettingController::class, 'index'])->name('settingcs');
 Route::put('/cs/setting/update', [SettingController::class, 'update'])->name('updateProfile.cs');
@@ -72,7 +74,16 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::view('/rincian', 'rekap.rincian')->name('rincian');
     Route::view('/informasi', 'rekap.informasi')->name('informasi');
     Route::get('/rekapdata', [DataRekapcsController::class, 'index'])->name('rekapdata');
+    
+    Route::post('/notifikasi-cs/store', [NotifikasiCsController::class, 'store'])->name('notifikasi.cs.store');
+
+
     Route::get('/rekap/search-karyawan', [DataRekapcsController::class, 'searchKaryawan'])->name('rekap.search.karyawan');
+    Route::get('/rekap/search-karyawan-target', [DataRekapcsController::class, 'searchKaryawanTarget'])->name('rekap.search.karyawan.target');
+
+    Route::post('/rekap/hasilcs', [DataRekapcsController::class, 'store'])->name('hasilcs.store');
+    Route::get('/search-karyawan', [DataRekapcsController::class, 'searchKaryawanByNama'])
+    ->name('search.karyawan');
 
 
     //Rekap_Perusahaan

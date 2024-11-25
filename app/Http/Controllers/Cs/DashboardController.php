@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Cs;
 
-use App\Models\Perusahaan;
 use App\Models\Produk;
 use App\Models\RekapCs;
+use App\Models\Perusahaan;
 use App\Models\RekapProduk;
+use App\Models\NotifikasiCs;
 use App\Models\RekapCsTotal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,9 +20,14 @@ class DashboardController extends Controller
         $jabatan = $cs->jabatan;
         $produkList = Produk::where('karyawan_id', $cs->id_karyawan)->get();
         $perusahaan = Perusahaan::find(1);
+        // Ambil notifikasi dari database (contoh menggunakan model Notification)
+        $notifications = NotifikasiCs::latest()->take(5)->get();
+
+        // Kirim notifikasi ke view
+        // return view('cs.layouts.main', compact('notifications'));
 
 
-        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList', 'perusahaan'));
+        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList', 'perusahaan','notifications'));
     }
 
     public function getProduct($id)

@@ -146,6 +146,7 @@
                                 <span class="text-purple-600 text-sm font-semibold">${totalJumlah}</span>
                             `;
                         }
+                        
                     </script>
                 </div>
             </div>
