@@ -17,7 +17,7 @@
               @csrf
               <input type="hidden" name="id_perusahaan" value="{{ $perusahaan->id_perusahaan ?? '' }}">
               {{-- <p>ID Perusahaan: {{ $perusahaan->id_perusahaan ?? 'Tidak ada' }}</p> --}}
-              
+
 
               <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Nama Perusahaan</label>
               <div class="mb-4">

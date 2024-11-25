@@ -22,7 +22,10 @@ use App\Http\Controllers\Rekap\PembagianProdukController;
 use App\Http\Controllers\Rekap\RekapPerusahaanController;
 use App\Http\Controllers\Rekap\AlamatPerusahaanController;
 use App\Http\Controllers\Rekap\KontakPerusahaanController;
+use App\Http\Controllers\Rekap\DashboardDirekturController;
+use App\Http\Controllers\Rekap\DashboardKaryawanController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
+use App\Http\Controllers\Rekap\DashboardAdvertiserController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -48,7 +51,13 @@ Route::post('/login', [LoginController::class, 'login'])->name('loginrekap');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Dashboard Admin
-Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+Route::get('/dashboardDirektur', [DashboardDirekturController::class, 'index'])->name('dashboardDirektur');
+Route::get('/get-manager-data', [DashboardDirekturController::class, 'getManagerData'])->name('getManagerData');
+Route::get('/get-karyawan-data', [DashboardDirekturController::class, 'getKaryawanData'])->name('getKaryawanData');
+Route::get('/get-cs-data', [DashboardDirekturController::class, 'getCsData'])->name('getCsData');
+Route::get('/get-advertiser-data', [DashboardDirekturController::class, 'getAdvertiserData'])->name('getAdvertiserData');
+Route::get('/dashboardKaryawan', [DashboardKaryawanController::class, 'index'])->name('dashboardKaryawan');
+Route::get('/dashboardAdvertiser', [DashboardAdvertiserController::class, 'index'])->name('dashboardAdvertiser');
 
 Route::middleware(CheckCsAuthenticated::class)->group(function () {
 //cs
@@ -72,6 +81,8 @@ Route::post('/cs/rekap', [DashboardController::class, 'storeRekap'])->name('cs.s
 // });
 
 Route::middleware(CheckManagerAuthenticated::class)->group(function () {
+    Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+
     Route::view('/rincian', 'rekap.rincian')->name('rincian');
     Route::view('/informasi', 'rekap.informasi')->name('informasi');
     Route::get('/rekapdata', [DataRekapcsController::class, 'index'])->name('rekapdata');
@@ -102,7 +113,9 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     //Rekap_Persen
     Route::get('/persen', [PersenController::class, 'index'])->name('persen.index');
     Route::get('/persen/edit', [PersenController::class, 'indexEdit'])->name('persen.edit');
+    Route::get('/persen/edit/target', [PersenController::class, 'indexEditTarget'])->name('persen.target.edit');
     Route::post('/persenPerusahaan', [PersenController::class, 'store'])->name('persen.store');
+    Route::post('/persenTargetPerusahaan', [PersenController::class, 'storeTarget'])->name('persen.target.store');
 
     //Rekap_Neraca
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');

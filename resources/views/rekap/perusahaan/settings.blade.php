@@ -91,11 +91,11 @@
                         <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
                             <h6 class="mb-0">Profile Information</h6>
                         </div>
-                        <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">                        
+                        <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
                           <a href="{{ route('editPerusahaan') }}" data-target="tooltip_trigger" data-placement="top">
                                 <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
                             </a>
-                        </div>              
+                        </div>
                     </div>
                 </div>
                 <div class="flex-auto p-4">
@@ -107,7 +107,7 @@
                             <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur ?? 'Data tidak tersedia' }}
                         </li>
                         <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Logo:</strong> &nbsp; 
+                          <strong class="text-slate-700">Logo:</strong> &nbsp;
                           @if ($perusahaan && $perusahaan->logo)
                               <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
                           @else
@@ -117,7 +117,7 @@
                     </ul>
                 </div>
             </div>
-        </div>    
+        </div>
         <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
           <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
               <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
@@ -149,7 +149,7 @@
                   </ul>
               </div>
           </div>
-        </div>  
+        </div>
         <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
           <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
               <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
@@ -194,63 +194,6 @@
               </div>
           </div>
         </div>
-
-    <!-- Bagian Table -->
-    <div class="flex-none w-full max-w-full px-3 mt-6">
-      <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-          <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
-              <h6 class="mb-1">Setting Bagi Hasil</h6>
-              <p class="leading-normal text-sm">Architects design houses</p>
-          </div>
-          <div class="flex-auto px-0 pt-0 pb-2">
-              <div class="p-0 overflow-x-auto">
-                  <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
-                      <thead class="align-bottom">
-                          <tr>
-                              <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Nama Perusahaan</th>
-                              <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Persen Bagi Hasil</th>
-                              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Bagi Hasil</th>
-                              <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Tanggal</th>
-                              <th class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                  <div class="flex px-2 py-1">
-                                      <div>
-                                          @if ($perusahaan && $perusahaan->logo)
-                                              <img src="{{ asset('storage/' . $perusahaan->logo) }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
-                                          @else
-                                          <img src="{{ asset('Porto/Porto/assets/image/logo-light.svg') }}" class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl" alt="user1">
-                                          @endif
-                                      </div>
-                                      <div class="flex flex-col justify-center">
-                                          <h6 class="mb-0 text-sm leading-normal">{{ $perusahaan->nama_perusahaan ?? 'Nama Perusahaan' }}</h6>
-                                          <p class="mb-0 text-xs leading-tight text-slate-400">{{ $kontakPerusahaan->email ?? 'Email Perusahaan' }}</p>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                  <p class="mb-0 text-xs font-semibold leading-tight">{{ isset($perusahaan->persenBagiHasil->persen) ? number_format($perusahaan->persenBagiHasil->persen, 0) : 'Persen' }}%
-                                  </p>
-                              </td>
-                              <td class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                  <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Online</span>
-                              </td>
-                              <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                  <span class="text-xs font-semibold leading-tight text-slate-400">23/04/18</span>
-                              </td>
-                              <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <a href="{{ route('persen.edit') }}" class="text-xs font-semibold leading-tight text-slate-400 edit-button">Edit</a>
-                            </td>                            
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
     {{-- </div> --}}
     </div>
 </div>

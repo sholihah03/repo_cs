@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\RekapCs;
+use App\Models\RekapProduk;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class HasilCs extends Model
 {
@@ -34,5 +36,10 @@ class HasilCs extends Model
     public function rekapProduk()
     {
         return $this->belongsTo(RekapProduk::class, 'rekap_produk_id', 'id_rekap_produk');
+    }
+
+    public function bagiHasil()
+    {
+        return $this->hasMany(BagiHasil::class, 'hasilcs_id'); // sesuaikan dengan foreign key
     }
 }

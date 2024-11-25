@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\HasilCs;
+use App\Models\Karyawan;
+use App\Models\PersenBagiHasil;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BagiHasil extends Model
 {
@@ -32,5 +35,16 @@ class BagiHasil extends Model
     public function persenBagiHasil()
     {
         return $this->belongsTo(PersenBagiHasil::class, 'persen_id', 'id_persen');
+    }
+
+    public function karyawan()
+    {
+        // Menggunakan relasi hasOneThrough untuk menghubungkan BagiHasil ke Karyawan melalui HasilCs dan RekapCs
+        return $this->hasOneThrough(Karyawan::class, HasilCs::class, 'hasilcs_id', 'id_karyawan', 'hasilcs_id', 'karyawan_id');
+    }
+
+    public function rekapCs()
+    {
+        return $this->hasOneThrough(RekapCs::class, HasilCs::class, 'hasilcs_id', 'rekap_cs_id');
     }
 }
