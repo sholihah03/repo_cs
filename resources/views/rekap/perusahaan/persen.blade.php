@@ -41,7 +41,9 @@
                                 </p>
                             </td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <a href="{{ route('persen.edit') }}" class="text-xs font-semibold leading-tight text-slate-400 edit-button">Edit</a>
+                                <a href="{{ route('persen.edit') }}"
+                                    style="background-color: #16a34a; padding: 0.5rem 1rem; color: white; font-size: 10px; border-radius: 4px; font-weight: bold; text-transform: uppercase; width: 70px; margin-bottom: 0.5rem; text-align: center;">
+                                    Edit</a>
                             </td>
                         </tr>
                     </tbody>
@@ -89,7 +91,9 @@
                                 </p>
                             </td>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <a href="{{ route('persen.target.edit') }}" class="text-xs font-semibold leading-tight text-slate-400 edit-button">Edit</a>
+                                <a href="{{ route('persen.target.edit') }}"
+                                    style="background-color: #16a34a; padding: 0.5rem 1rem; color: white; font-size: 10px; border-radius: 4px; font-weight: bold; text-transform: uppercase; width: 70px; margin-bottom: 0.5rem; text-align: center;">
+                                    Edit</a>
                             </td>
                         </tr>
                     </tbody>
