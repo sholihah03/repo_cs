@@ -11,7 +11,7 @@ class NeracaController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         return view('rekap.neraca.transaksi', compact('perusahaan'));
     }
 
@@ -22,7 +22,7 @@ class NeracaController extends Controller
             'nama_transaksi' => 'required|string|max:255',
             'type' => 'required|string',
         ]);
-    
+
         // Simpan data transaksi ke tabel 'tb_transaksi'
         $transaksi = Transaksi::create([
             'nama_transaksi' => $request->nama_transaksi,
@@ -31,9 +31,9 @@ class NeracaController extends Controller
 
         // Simpan nama transaksi ke session
         session(['nama_transaksi' => $request->nama_transaksi]);
-    
+
         // Redirect ke halaman input detail transaksi dengan membawa ID transaksi
         return redirect()->route('neraca.index', ['transaksi_id' => $transaksi->id])->with('success', 'Transaksi berhasil disimpan!');
     }
-    
+
 }

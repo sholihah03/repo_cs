@@ -13,7 +13,7 @@ class RekapCsController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         // Ambil semua produk untuk dropdown
         $produkList = Produk::all();
 

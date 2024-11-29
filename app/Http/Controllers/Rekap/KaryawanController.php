@@ -13,7 +13,7 @@ class KaryawanController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $karyawan = Karyawan::with('jabatan')->get();
         $jabatan = Jabatan::all();
         return view('rekap.pegawai.tambahpegawai', compact('karyawan', 'jabatan', 'perusahaan'));
@@ -21,7 +21,7 @@ class KaryawanController extends Controller
 
     public function edit($id)
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $karyawan = Karyawan::findOrFail($id); // Find Karyawan by ID
         $jabatan = Jabatan::all(); // Fetch all Jabatan data
         return view('rekap.pegawai.editpegawai', compact('karyawan', 'jabatan', 'perusahaan')); // Return the edit view

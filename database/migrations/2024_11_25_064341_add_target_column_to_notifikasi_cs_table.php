@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('notifikasi_cs', function (Blueprint $table) {
-            $table->string('target')->nullable()->after('cr'); // Menambahkan kolom 'target' setelah kolom 'cr'
+            $table->string('target')->nullable(); // Menambahkan kolom 'target' setelah kolom 'cr'
         });
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DataTransaksi; // Pastikan model ini diimpor
 
 class DataTransaksiController extends Controller
-{ 
+{
 
     public function store(Request $request)
     {
@@ -49,16 +49,23 @@ class DataTransaksiController extends Controller
         return redirect()->route('neraca.index')->with('success', 'Detail transaksi berhasil disimpan!');
     }
 
-    public function getTransaksiPerBulan()
+        public function getTransaksiPerBulan()
     {
-        $perusahaan = Perusahaan::find(1);
-        // Ambil data transaksi yang dikelompokkan per bulan
-        $transaksiPerBulan = DataTransaksi::selectRaw('YEAR(tanggal) as year, MONTH(tanggal) as month, SUM(jumlah) as total')
+        $perusahaan = Perusahaan::first();
+
+        // Ambil data transaksi yang dikelompokkan per bulan dan tipe transaksi
+        $transaksiPerBulan = DataTransaksi::selectRaw(
+            'YEAR(tanggal) as year, MONTH(tanggal) as month,
+            SUM(CASE WHEN t.type = "debit" THEN jumlah ELSE 0 END) as total_debit,
+            SUM(CASE WHEN t.type = "kredit" THEN jumlah ELSE 0 END) as total_kredit'
+        )
+            ->join('tb_transaksi as t', 't.id_transaksi', '=', 'tb_datatransaksi.transaksi_id')
             ->groupByRaw('YEAR(tanggal), MONTH(tanggal)')
-            ->orderByRaw('YEAR(tanggal) DESC, MONTH(tanggal) DESC')
+            ->orderByRaw('YEAR(tanggal) DESC, MONTH(tanggal) ASC') // Urutkan berdasarkan tahun dan bulan dari Januari ke Desember
             ->get();
 
         // Kirim data ke view
         return view('rekap.neraca.grafik', compact('transaksiPerBulan', 'perusahaan'));
     }
+
 }

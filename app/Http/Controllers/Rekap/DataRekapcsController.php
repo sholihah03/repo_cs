@@ -37,38 +37,38 @@ class DataRekapcsController extends Controller
             $query->where('nama_lengkap', 'like', '%' . $search . '%');
         })
         ->get();
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         return view('rekap.datarekap.datarekapcs', compact('perusahaan', 'karyawanCS', 'karyawanTarget'));
     }
     public function searchKaryawan(Request $request)
     {
         $karyawanId = $request->query('search');
-    
+
         // Cari data karyawan berdasarkan ID
         $karyawan = Karyawan::find($karyawanId);
-    
+
         if ($karyawan) {
             // Cari data RekapCs yang terkait dengan karyawan ini dan tidak memiliki HasilCs
             $rekapCs = RekapCs::where('karyawan_id', $karyawan->id_karyawan)
                 ->doesntHave('hasilCs') // RekapCs tanpa HasilCs
                 ->first();
-    
+
             if ($rekapCs) {
                 // Ambil data produk terkait
                 $rekapProduk = RekapProduk::where('rekap_cs_id', $rekapCs->id_rekap_cs)->first();
                 $rekapProdukId = $rekapProduk ? $rekapProduk->id_rekap_produk : null;
-    
+
                 // Ambil data RekapCsTotal
                 $rekapCsTotal = RekapCsTotal::where('rekap_cs_id', $rekapCs->id_rekap_cs)->first();
                 $totalBotol = $rekapCsTotal ? $rekapCsTotal->total_botol : 0;
-    
+
                 // Ambil data harga botol dari Produk
                 $produk = Produk::where('karyawan_id', $karyawan->id_karyawan)->first();
                 $hargaBotol = $produk ? $produk->harga_botol : 0;
-    
+
                 // Ambil persen bagi hasil
                 $persenBagiHasil = PersenBagiHasil::first();
-    
+
                 return response()->json([
                     'rekapcs_id' => $rekapCs->id_rekap_cs,
                     'rekap_produk_id' => $rekapProdukId,
@@ -82,7 +82,7 @@ class DataRekapcsController extends Controller
                 ]);
             }
         }
-    
+
         // Jika data tidak ditemukan
         return response()->json([
             'rekapcs_id' => null,
@@ -98,10 +98,10 @@ class DataRekapcsController extends Controller
     public function searchKaryawanTarget(Request $request)
     {
         $karyawanId = $request->query('search'); // Ambil karyawan_id dari query
-    
+
         // Cari data karyawan berdasarkan ID
         $karyawan = Karyawan::find($karyawanId);
-    
+
         if ($karyawan) {
             // Cari data cr_new dari tb_hasilcs melalui relasi dengan rekap_cs
             $hasilCs = HasilCs::whereHas('rekapCs', function ($query) use ($karyawanId) {
@@ -109,24 +109,24 @@ class DataRekapcsController extends Controller
             })
             ->whereDoesntHave('notifikasics') // Menghindari data yang sudah ada di notifikasi_cs
             ->first();
-    
+
             if ($hasilCs) {
                 // Ambil nilai persen_target dari tabel persen_target
                 // $persenTarget = PersenTarget::where('perusahaan_id', $karyawan->perusahaan_id)
                 //     ->value('persen_target');
                 $persenTarget = PersenTarget::first()->value('persen_target');
-    
+
                 // Ambil nilai cr_new
                 $crNew = $hasilCs->cr_new;
-    
+
                 // Bandingkan cr_new dengan persen_target
                 $isTargetMet = $crNew >= $persenTarget; // Benar jika cr_new >= persen_target
-    
+
                 // Format nilai untuk ditampilkan ke UI (hilangkan angka desimal)
                 $crNewFormatted = number_format($crNew, 0); // Contoh: 70
                 $persenTargetFormatted = number_format($persenTarget, 0); // Contoh: 70
 
-    
+
                 return response()->json([
                     'crNew' => $crNewFormatted, // Nilai yang ditampilkan tanpa simbol "%"
                     'id_hasilcs' => $hasilCs->id_hasilcs,
@@ -136,7 +136,7 @@ class DataRekapcsController extends Controller
                 ]);
             }
         }
-    
+
         // Jika data tidak ditemukan
         return response()->json([
             'crNew' => '0', // Default nilai 0 tanpa simbol "%"
@@ -144,34 +144,34 @@ class DataRekapcsController extends Controller
             'isTargetMet' => false, // Default status adalah "Warning"
         ]);
     }
-    
-      
+
+
     public function searchKaryawanByNama(Request $request)
     {
         $search = $request->input('search');
         $searchTarget = $request->input('searchTarget');
-        
+
         $karyawanCS = Karyawan::where('nama_lengkap', 'like', '%' . $search . '%')
             ->whereHas('jabatan', function ($query) {
                 $query->where('jabatan_id', 4);
             })
             ->select('id_karyawan', 'nama_lengkap', 'profile_karyawan')
             ->get();
-    
-        $perusahaan = Perusahaan::find(1);
-    
+
+        $perusahaan = Perusahaan::first();
+
         $karyawanTarget = Karyawan::where('nama_lengkap', 'like', '%' . $searchTarget . '%')
             ->whereHas('jabatan', function ($query) {
                 $query->where('jabatan_id', 4);
             })
             ->select('id_karyawan', 'nama_lengkap', 'profile_karyawan')
             ->get();
-    
-        $perusahaan = Perusahaan::find(1); // Ini redundan
-    
+
+        $perusahaan = Perusahaan::first(); // Ini redundan
+
         return view('rekap.datarekap.datarekapcs', compact('karyawanCS', 'karyawanTarget', 'perusahaan'));
     }
-    
+
     public function store(Request $request)
     {
         $idBaru = HasilCs::create([
@@ -181,14 +181,14 @@ class DataRekapcsController extends Controller
             'ratio_botol' => $request->input('ratio_botol'),
             'omzet' => $request->input('omzet'),
         ]);
-         
+
         $persenBagiHasil = PersenBagiHasil::first();
-        
+
         BagiHasil::create([
             'hasilcs_id' => $idBaru->id_hasilcs, // Akses ID dari instance model
             'persen_id' => $persenBagiHasil->id_persen,
             'bagi_hasil' => $request->input('hasil'),
-        ]);        
+        ]);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan.');
     }

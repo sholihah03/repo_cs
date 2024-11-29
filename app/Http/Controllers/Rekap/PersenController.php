@@ -13,7 +13,7 @@ class PersenController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $perusahaan = Perusahaan::with(['persenBagiHasil', 'persenTarget'])->first();
         $persen = PersenBagiHasil::all();
         $persenTarget = PersenTarget::all();

@@ -13,7 +13,7 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $produk = Produk::all();
         return view('rekap.produk.produk', compact('produk', 'perusahaan'));
     }
@@ -21,7 +21,7 @@ class ProdukController extends Controller
     // Show the form for creating a new product
     public function create()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $karyawans = Karyawan::all(); // Ganti dengan model yang sesuai jika menggunakan nama yang berbeda
 
         // Kembalikan view dengan data karyawan
@@ -58,7 +58,7 @@ class ProdukController extends Controller
     // Show the form to edit a product
     public function edit($id)
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $produk = Produk::findOrFail($id);
         return view('rekap.produk.editproduk', compact('produk', 'perusahaan'));
     }
@@ -66,14 +66,14 @@ class ProdukController extends Controller
     // Update the product
     public function update(Request $request, $id) {
         $produk = Produk::findOrFail($id);
-    
+
         $request->validate([
             'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_produk' => 'required|string|max:255',
             'stok' => 'required|integer',
             'harga_botol' => 'required|numeric|min:0',
         ]);
-    
+
         // Handle file upload if present
         if ($request->hasFile('gambar_produk')) {
             // Delete old image if exists
@@ -85,7 +85,7 @@ class ProdukController extends Controller
             // Keep the old image if no new image uploaded
             $imagePath = $produk->gambar_produk;
         }
-    
+
         // Update product
         $produk->update([
             'gambar_produk' => $imagePath,
@@ -93,11 +93,11 @@ class ProdukController extends Controller
             'stok' => $request->stok,
             'harga_botol' => $request->harga_botol,
         ]);
-        
-    
+
+
         return redirect()->route('rekap.produk')->with('success', 'Produk berhasil diperbarui');
     }
-    
+
     // Delete a product
     public function destroy($id)
     {

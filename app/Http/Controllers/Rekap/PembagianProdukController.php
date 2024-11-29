@@ -14,7 +14,7 @@ class PembagianProdukController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         // Retrieve all CS employees with their related products
         $csList = Karyawan::with('produk')->whereHas('jabatan', function($query) {
             $query->where('nama_jabatan', 'cs');
@@ -26,7 +26,7 @@ class PembagianProdukController extends Controller
 
     public function indexTambah()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         // Mendapatkan karyawan CS yang belum memiliki pembagian produk
         $cs = Karyawan::whereHas('jabatan', function($query) {
             $query->where('nama_jabatan', 'cs');
@@ -62,7 +62,7 @@ class PembagianProdukController extends Controller
 
     public function indexEdit($id)
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         // Retrieve the CS employee and their associated products
         $karyawan = Karyawan::with('produk')->findOrFail($id);
 

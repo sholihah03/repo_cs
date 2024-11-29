@@ -15,7 +15,7 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $cs = Auth::guard('cs')->user(); // Mengambil data pengguna yang sedang login
         $notifications = NotifikasiCs::where('created_at', '>=', now()->subDay())->latest()->take(5)->get();
 

@@ -13,7 +13,7 @@ class DashboardDirekturController extends Controller
 {
     public function index(Request $request)
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
 
         // Menghitung jumlah karyawan berdasarkan jabatan_id
         $jumlahManager = Karyawan::where('jabatan_id', 2)->count(); // Manager (jabatan_id = 2)

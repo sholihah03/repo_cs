@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $cs = Auth::guard('cs')->user();
         $jabatan = $cs->jabatan;
         $produkList = Produk::where('karyawan_id', $cs->id_karyawan)->get();
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
 
         $kemarin = Carbon::yesterday();
 

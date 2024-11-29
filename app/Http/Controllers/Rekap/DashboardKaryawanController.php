@@ -10,7 +10,7 @@ class DashboardKaryawanController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         return view('rekap.dashboardKaryawan',compact('perusahaan'));
     }
 }

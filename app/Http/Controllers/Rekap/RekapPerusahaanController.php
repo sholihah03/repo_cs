@@ -13,7 +13,7 @@ class RekapPerusahaanController extends Controller
     public function index()
     {
         // Ambil data perusahaan, kontak, dan alamat
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $kontakPerusahaan = KontakPerusahaan::where('perusahaan_id', 1)->first();
         $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
 
@@ -24,7 +24,7 @@ class RekapPerusahaanController extends Controller
     public function indexEdit()
     {
         // Ambil data perusahaan, kontak, dan alamat
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         // $perusahaan = Perusahaan::where('id_perusahaan', 1)->first();
 
         // Kirim data ke view
