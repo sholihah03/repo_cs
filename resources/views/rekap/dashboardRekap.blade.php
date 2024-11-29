@@ -149,8 +149,11 @@
                                     <tr>
                                         <th class="px-6 py-3 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">Nama</th>
                                         <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">Bulan / Tahun</th>
-                                        <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">Total CR New</th>
-                                        <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">Target</th>
+                                        <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">Total CR New %</th>
+                                        <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle text-xxs tracking-none text-slate-700">
+                                            Target ({{ number_format($persenTarget, 0) }}%)
+                                        </th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="karyawanBody">
@@ -185,17 +188,18 @@
                                                 <!-- Menampilkan Total CR New -->
                                                 <h6 class="mb-0 text-sm leading-normal">
                                                     @foreach($data->cr_per_bulan as $bulan => $info)
-                                                        {{ number_format($info['total'], 0, ',', '.') }} <br>
+                                                        {{ number_format($info['total'], 0, ',', '.') }}%<br>
                                                     @endforeach
                                                 </h6>
                                             </td>
                                             <td class="p-2 align-middle bg-transparent border-b border-gray-200 whitespace-nowrap">
                                                 @foreach ($data->cr_per_bulan as $month => $data)
-                                                    <div style="color: {{ $data['color'] }}">
+                                                    <div style="color: {{ $data['color'] }}; font-weight: bold;">
                                                         {{ $data['status'] }}
                                                     </div>
                                                 @endforeach
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
