@@ -11,8 +11,11 @@ use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Rekap\NeracaController;
 use App\Http\Controllers\Rekap\PersenController;
 use App\Http\Controllers\Rekap\ProdukController;
+use App\Http\Controllers\Rekap\KaryawanController;
 use App\Http\Middleware\CheckManagerAuthenticated;
+use App\Http\Controllers\Rekap\InformasiController;
 use App\Http\Controllers\Rekap\DataRekapcsController;
+use App\Http\Controllers\Rekap\HistoryAkunController;
 use App\Http\Controllers\Cs\Setting\SettingController;
 use App\Http\Controllers\Rekap\DataTransaksiController;
 use App\Http\Controllers\Rekap\DashboardRekapController;
@@ -20,7 +23,10 @@ use App\Http\Controllers\Rekap\PembagianProdukController;
 use App\Http\Controllers\Rekap\RekapPerusahaanController;
 use App\Http\Controllers\Rekap\AlamatPerusahaanController;
 use App\Http\Controllers\Rekap\KontakPerusahaanController;
+use App\Http\Controllers\Rekap\DashboardDirekturController;
+use App\Http\Controllers\Rekap\DashboardKaryawanController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
+use App\Http\Controllers\Rekap\DashboardAdvertiserController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -46,7 +52,13 @@ Route::post('/login', [LoginController::class, 'login'])->name('loginrekap');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Dashboard Admin
-Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+Route::get('/dashboardDirektur', [DashboardDirekturController::class, 'index'])->name('dashboardDirektur');
+Route::get('/get-manager-data', [DashboardDirekturController::class, 'getManagerData'])->name('getManagerData');
+Route::get('/get-karyawan-data', [DashboardDirekturController::class, 'getKaryawanData'])->name('getKaryawanData');
+Route::get('/get-cs-data', [DashboardDirekturController::class, 'getCsData'])->name('getCsData');
+Route::get('/get-advertiser-data', [DashboardDirekturController::class, 'getAdvertiserData'])->name('getAdvertiserData');
+Route::get('/dashboardKaryawan', [DashboardKaryawanController::class, 'index'])->name('dashboardKaryawan');
+Route::get('/dashboardAdvertiser', [DashboardAdvertiserController::class, 'index'])->name('dashboardAdvertiser');
 
 Route::middleware(CheckCsAuthenticated::class)->group(function () {
 //cs
@@ -71,6 +83,8 @@ Route::post('/cs/rekap', [DashboardController::class, 'storeRekap'])->name('cs.s
 // });
 
 Route::middleware(CheckManagerAuthenticated::class)->group(function () {
+    Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+
     Route::view('/rincian', 'rekap.rincian')->name('rincian');
     Route::view('/informasi', 'rekap.informasi')->name('informasi');
     Route::get('/rekapdata', [DataRekapcsController::class, 'index'])->name('rekapdata');
@@ -110,7 +124,9 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     //Rekap_Persen
     Route::get('/persen', [PersenController::class, 'index'])->name('persen.index');
     Route::get('/persen/edit', [PersenController::class, 'indexEdit'])->name('persen.edit');
+    Route::get('/persen/edit/target', [PersenController::class, 'indexEditTarget'])->name('persen.target.edit');
     Route::post('/persenPerusahaan', [PersenController::class, 'store'])->name('persen.store');
+    Route::post('/persenTargetPerusahaan', [PersenController::class, 'storeTarget'])->name('persen.target.store');
 
     //Rekap_Neraca
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
@@ -124,5 +140,16 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::post('pembagianProdukCS/store', [PembagianProdukController::class, 'store'])->name('pembagianProdukCS.store');
     Route::get('/pembagianProdukCS/edit/{id}', [PembagianProdukController::class, 'indexEdit'])->name('pembagianProdukCS.edit');
     Route::put('/pembagianProdukCS/update/{id}', [PembagianProdukController::class, 'update'])->name('pembagianProdukCS.update');
+
+//Rekap_Pegawai
+Route::get('/karyawan/index', [KaryawanController::class, 'index'])->name('karyawan.index');
+Route::post('/karyawan/store', [KaryawanController::class, 'store'])->name('karyawan.store');
+Route::put('/karyawan/update/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+Route::get('/informasi/index', [InformasiController::class, 'index'])->name('informasi.index');
+Route::get('/karyawan/filter', [KaryawanController::class, 'filter'])->name('karyawan.filter');
+Route::get('/historyakun', [HistoryAkunController::class, 'index'])->name('historyakun');
+Route::delete('/rekap/karyawan/{id}', [InformasiController::class, 'destroy'])->name('karyawan.destroy');
+Route::get('/informasipegawai', [InformasiController::class, 'index'])->name('informasipegawai');
 
 });

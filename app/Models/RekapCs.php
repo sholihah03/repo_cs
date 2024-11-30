@@ -38,5 +38,11 @@ class RekapCs extends Model
     public function hasilCs()
     {
         return $this->hasMany(HasilCs::class, 'rekapcs_id', 'id_rekap_cs');
+
+    }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id_karyawan');
     }
 }

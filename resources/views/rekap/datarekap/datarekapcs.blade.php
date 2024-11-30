@@ -9,16 +9,16 @@
       <div class="flex flex-wrap -mx-3">
         <!-- Search Form and Profile -->
         <div class="w-full max-w-full px-3 xl:w-4/12">
-          <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+          <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border"><br>
             <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
               <h6 class="mb-0">Profile Cs</h6>
-            </div>
+            </div><br>
             <form action="{{ route('rekapdata') }}" method="GET" class="p-4 flex items-center">
               <div class="relative w-full flex items-center">
                 <input type="text" name="search" id="searchInput" class="pl-6 rounded-lg pr-10 text-sm focus:shadow-soft-primary-outline ease-soft w-full leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Cari nama karyawan..." value="{{ request('search') }}">
                 <button type="submit" class="absolute rounded-lg right-0 top-0 bottom-0 flex items-center justify-center px-3 py-2 text-gray-500 bg-gray-200 rounded-r-lg border-l border-gray-300 hover:bg-gray-300">
-                  <i class="fas fa-search"></i>
-                </button>
+                  <span class="material-icons">search</span> <!-- Ikon search Material Icons -->
+                </button>                
               </div>
             </form>
             <div class="p-4">
@@ -39,10 +39,9 @@
         <!-- Forms for Closing, Lead, and CR New -->
         <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
           <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border p-4">
-            <div class="flex items-center mb-4">
-              <img id="profileImage" src="" alt="Profile Image" class="w-10 h-10 rounded-full mr-4">
-              <p id="karyawanName" class="font-semibold text-gray-700"></p>
-            </div>
+            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+              <h6 class="mb-0">Hasil Cs</h6>
+            </div><br>
             <div id="errorMessage" class="text-red-500 mb-4 hidden text-sm">Data karyawan sudah di inputkan.</div>
 
             <form action="{{ route('hasilcs.store') }}" method="POST">
@@ -143,8 +142,8 @@
                 <div class="relative w-full flex items-center">
                   <input type="text" name="searchTarget" id="searchInput" class="pl-6 rounded-lg pr-10 text-sm focus:shadow-soft-primary-outline ease-soft w-full leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Cari nama karyawan..." value="{{ request('search') }}">
                   <button type="submit" class="absolute rounded-lg right-0 top-0 bottom-0 flex items-center justify-center px-3 py-2 text-gray-500 bg-gray-200 rounded-r-lg border-l border-gray-300 hover:bg-gray-300">
-                    <i class="fas fa-search"></i>
-                  </button>
+                    <span class="material-icons">search</span> <!-- Ikon search Material Icons -->
+                  </button> 
                 </div>
               </form>
               @foreach ($karyawanTarget as $karyawan)
@@ -161,6 +160,7 @@
                 <input type="hidden" name="id_karyawan" id="id_karyawan" value="">
                 <div class="flex gap-x-6">
                     <!-- CR New -->
+                    <input type="text" id="id_hasilcs" name="id_hasilcs" class="w-full h-10 px-3 border border-gray-300 rounded-lg bg-gray-100" hidden>
                     <div class="flex-1">
                         <label for="crNew" class="block text-xs font-medium text-gray-700">CrNew</label>
                         <input type="text" id="crNewTarget" name="cr_new" class="w-full h-10 px-3 border border-gray-300 rounded-lg bg-gray-100" readonly>
@@ -169,7 +169,7 @@
                     <!-- Status Target -->
                     <div class="flex-1">
                         <label for="target" class="block text-xs font-medium text-gray-700">Target</label>
-                        <input type="text" id="targetStatus" name="target" class="w-full h-10 px-3 border rounded-lg bg-gray-100 readonly" readonly>
+                        <input type="text" id="targetStatus" name="target" class="w-full h-10 px-3 border border-gray-300 rounded-lg bg-gray-100 readonly" readonly>
                     </div>
                 </div>
             
@@ -252,8 +252,16 @@
             return response.json();
         })
         .then(data => {
+          // console.log(data);
+            if (!data || data.crNew === undefined || data.crNew === '0') {
+                alert('Data tidak tersedia untuk karyawan ini.');
+                return;
+            }
+
+            // Isi input dengan data dari server
             document.getElementById('id_karyawan').value = karyawanId;
-            document.getElementById('crNewTarget').value = data.crNew;
+            document.getElementById('crNewTarget').value = `${data.crNew}%`; // Tampilkan nilai dengan simbol %
+            document.getElementById('id_hasilcs').value = data.id_hasilcs;
 
             const targetInput = document.getElementById('targetStatus');
             targetInput.value = data.isTargetMet ? 'Memenuhi' : 'Warning';
@@ -267,56 +275,12 @@
                 targetInput.classList.add('bg-red-100', 'text-red-500', 'border-red-300');
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengambil data karyawan.');
+        });
 }
 
-function submitTargetNotification() {
-        // Ambil nilai dari input CrNew dan Target Status
-        const crNewValue = document.getElementById('crNewTarget')?.value || "N/A";
-        const targetStatusValue = document.getElementById('targetStatus')?.textContent || "N/A";
 
-        if (!crNewValue || !targetStatusValue) {
-            alert('Pastikan data CrNew dan Target Status telah terisi.');
-            return;
-        }
-
-        const notificationContainer = document.getElementById('notification-container');
-        if (!notificationContainer) {
-            alert('Notification container tidak ditemukan di DOM!');
-            return;
-        }
-
-        // Hapus notifikasi sebelumnya jika ada
-        const existingNotification = document.getElementById('notification-content');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-
-        const notificationMessage = `CrNew: ${crNewValue}, Status: ${targetStatusValue}`;
-        const notificationList = document.createElement('div');
-        notificationList.classList.add(
-            'absolute', 'top-12', 'right-0', 'bg-white', 'shadow-lg',
-            'p-4', 'rounded-lg', 'w-64', 'z-50'
-        );
-        notificationList.innerHTML = `
-            <div class="flex items-center space-x-2">
-                <span class="text-purple-600 font-bold">Notifikasi Baru</span>
-            </div>
-            <div class="mt-2 text-gray-800 text-sm">
-                ${notificationMessage}
-            </div>
-        `;
-        notificationList.id = 'notification-content';
-        notificationContainer.appendChild(notificationList);
-
-        document.querySelector('.relative').addEventListener('click', function (e) {
-            e.preventDefault();
-            const notificationContent = document.getElementById('notification-content');
-            if (notificationContent) {
-                notificationContent.classList.toggle('hidden');
-            }
-            });
-
-    }  
   </script>
 @endsection

@@ -25,6 +25,7 @@ class Karyawan extends Authenticatable
         'profile_karyawan',
         'password',
         'status',
+        'mulai_bekerja',
     ];
 
     public function jabatan()
@@ -35,5 +36,10 @@ class Karyawan extends Authenticatable
     public function produk()
     {
         return $this->hasMany(Produk::class, 'karyawan_id', 'id_karyawan');
+    }
+
+    public function bagiHasil()
+    {
+        return $this->hasMany(BagiHasil::class, 'karyawan_id'); // Pastikan nama kolom foreign key sesuai dengan yang ada di database
     }
 }

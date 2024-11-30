@@ -121,13 +121,13 @@ class PembagianProdukController extends Controller
             'produk_tambah.*' => 'nullable|exists:tb_produk,id_produk',
             'produk_hapus.*' => 'nullable|exists:tb_produk,id_produk', // New validation rule for deleted products
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-    
+
         $karyawan = Karyawan::findOrFail($id);
-    
+
         // Hapus produk yang ditandai untuk dihapus
         if ($request->filled('produk_hapus')) {
             foreach ($request->produk_hapus as $deleteId) {
@@ -138,25 +138,25 @@ class PembagianProdukController extends Controller
                 }
             }
         }
-    
+
         // Update or replace products
         if ($request->filled('produk_ids')) {
             foreach ($request->produk_ids as $produkId) {
                 $produk = Produk::find($produkId);
-    
+
                 // Check for a replacement product
                 if ($request->filled("produk_replacement.$produkId")) {
                     $replacementId = $request->input("produk_replacement.$produkId");
                     $replacementProduk = Produk::find($replacementId);
                     $replacementProduk->karyawan_id = $karyawan->id_karyawan; // Set new relationship
                     $replacementProduk->save();
-    
+
                     $produk->karyawan_id = null; // Remove the old product's relationship
                     $produk->save();
                 }
             }
         }
-    
+
         // Add new products if provided
         if ($request->filled('produk_tambah')) {
             foreach ($request->produk_tambah as $tambahId) {
@@ -167,10 +167,10 @@ class PembagianProdukController extends Controller
                 }
             }
         }
-    
+
         return redirect()->route('pembagianProdukCS.index')->with('success', 'Pembagian produk berhasil diperbarui.');
     }
-    
+
 
 
 

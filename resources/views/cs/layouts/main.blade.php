@@ -33,7 +33,18 @@
                     </div>
                 </a>
             </div>
-
+            <div id="notificationContainer" class="hidden">
+                <!-- Bagian notifikasi -->
+            </div>
+            <script>
+                const notificationContainer = document.getElementById('notificationContainer');
+                const currentHour = new Date().getHours();
+            
+                if (currentHour >= 11) {
+                    notificationContainer.classList.remove('hidden');
+                }
+            </script>
+            
             <!-- Notification, Profile, and Sign In Button for Larger Screens -->
             <div class="hidden lg:flex items-center space-x-4">
                 <div class="relative">
@@ -46,7 +57,7 @@
                             </span>
                         @endif
                     </button>
-                
+         
                     <!-- Dropdown Content -->
                     <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
                         <div class="p-4">
@@ -55,18 +66,15 @@
                         <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto">
                             @forelse ($notifications as $notification)
                                 <li class="p-4 hover:bg-gray-100">
-                                    <p class="text-sm text-gray-700">{{ $notification->message }}</p>
+                                    <p class="text-sm text-gray-700">{{ $notification->target }}</p>
+                                    <p class="text-sm text-gray-700">CR New: {{ $notification->hasilcs->cr_new ?? 'Tidak tersedia' }}%</p>
                                     <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
                                 </li>
                             @empty
                                 <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
                             @endforelse
+
                         </ul>
-                        <div class="p-2 text-center">
-                            <a href="{{ route('notifikasi') }}" class="text-blue-500 text-sm hover:underline">
-                                Lihat Semua Notifikasi
-                            </a>
-                        </div>
                     </div>
                 </div>                
                 
@@ -79,51 +87,52 @@
                 <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-400 text-white rounded">Logout</a>
             </div>
 
-            <!-- Burger Menu for Mobile -->
-            <div class="lg:hidden ml-auto" x-data="{ navigationOpen: false }">
-                <button @click="navigationOpen = !navigationOpen" class="focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16" stroke="white" /> <!-- Garis 1 -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16" stroke="white" /> <!-- Garis 2 -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16" stroke="white" /> <!-- Garis 3 -->
-                    </svg>
-                </button>
+           <!-- Burger Menu for Mobile --> 
+            <div class="lg:hidden ml-auto" x-data="{ navigationOpen: false, notificationOpen: false }">
+                <!-- Flex container for aligning the icons -->
+                <div class="flex items-center">
+                    <!-- Hamburger Menu Icon -->
+                    <button @click="navigationOpen = !navigationOpen" class="focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16" stroke="white" /> <!-- Garis 1 -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16" stroke="white" /> <!-- Garis 2 -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16" stroke="white" /> <!-- Garis 3 -->
+                        </svg>
+                    </button>
 
-                <!-- Dropdown Navigation -->
+                    <!-- Notification Icon next to Burger Menu -->
+                    <div class="ml-4 relative">
+                        <button @click="notificationOpen = !notificationOpen" class="focus:outline-none">
+                            <i data-feather="bell" class="text-white w-7 h-7"></i>
+                            @if ($notifications->count() > 0)
+                                <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
+                                    {{ $notifications->count() }}
+                                </span>
+                            @endif
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div x-show="notificationOpen" @click.away="notificationOpen = false" x-transition
+                            class="absolute right-0 top-full bg-white w-80 p-4 shadow-lg z-50">
+                            <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto">
+                                @forelse ($notifications as $notification)
+                                    <li class="p-4 hover:bg-gray-100">
+                                        <p class="text-sm text-gray-700">{{ $notification->target }}</p>
+                                        <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                                    </li>
+                                @empty
+                                    <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown Navigation (for Burger Menu) -->
                 <div x-show="navigationOpen" @click.away="navigationOpen = false" x-transition
                     class="absolute right-0 top-full bg-white w-38 p-4 shadow-lg z-40">
                     <nav>
                         <ul class="space-y-4 text-black">
-                            <!-- Notification Icon -->
-                            <li class="relative group">
-                                <a href="#" class="relative">
-                                    <i data-feather="bell" class="text-black w-7 h-7"></i>
-                                    @if ($notifications->count() > 0)
-                                        <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
-                                            {{ $notifications->count() }}
-                                        </span>
-                                    @endif
-                                </a>
-                                <!-- Dropdown -->
-                                <div class="absolute right-0 hidden group-hover:block bg-white border border-gray-300 rounded-lg shadow-md w-80 mt-2 z-10">
-                                    <ul class="divide-y divide-gray-200">
-                                        @forelse ($notifications as $notification)
-                                            <li class="p-4 hover:bg-gray-100">
-                                                <p class="text-sm text-gray-700">{{ $notification->cr }}</p>
-                                                <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
-                                            </li>
-                                        @empty
-                                            <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
-                                        @endforelse
-                                    </ul>
-                                    {{-- <div class="p-2 text-center">
-                                        <a href="{{ route('notifikasi') }}" class="text-blue-500 text-sm hover:underline">
-                                            Lihat Semua Notifikasi
-                                        </a>
-                                    </div> --}}
-                                </div>
-                            </li>
-                            
                             <!-- Profile Icon -->
                             <li>
                                 <a href="{{ route('settingcs') }}">
@@ -218,3 +227,4 @@
 </body>
 
 </html>
+

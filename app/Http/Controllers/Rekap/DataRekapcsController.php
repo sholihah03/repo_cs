@@ -10,10 +10,11 @@ use App\Models\Karyawan;
 use App\Models\BagiHasil;
 use App\Models\Perusahaan;
 use App\Models\RekapProduk;
+use App\Models\NotifikasiCs;
+use App\Models\PersenTarget;
 use App\Models\RekapCsTotal;
 use Illuminate\Http\Request;
 use App\Models\PersenBagiHasil;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DataRekapcsController extends Controller
@@ -106,34 +107,44 @@ class DataRekapcsController extends Controller
             $hasilCs = HasilCs::whereHas('rekapCs', function ($query) use ($karyawanId) {
                 $query->where('karyawan_id', $karyawanId);
             })
-            ->whereDate('created_at', Carbon::now()->toDateString()) // Filter harian
+            ->whereDoesntHave('notifikasics') // Menghindari data yang sudah ada di notifikasi_cs
             ->first();
     
             if ($hasilCs) {
-                // Ambil nilai cr_new dan konversi ke format persen
-                $crNew = number_format($hasilCs->cr_new, ) . '%';
-
-                // Ambil nilai persen_target dari tabel tb_persen_target menggunakan query manual
-                $persenTarget = DB::table('persen_target')
-                    ->where('karyawan_id', $karyawanId) // Sesuaikan kondisi dengan kebutuhan
-                    ->value('persen_target');
+                // Ambil nilai persen_target dari tabel persen_target
+                // $persenTarget = PersenTarget::where('perusahaan_id', $karyawan->perusahaan_id)
+                //     ->value('persen_target');
+                $persenTarget = PersenTarget::first()->value('persen_target');
     
-                 // Validasi apakah cr_new >= persen_target
-                $isTargetMet = $hasilCs->cr_new >= $persenTarget;
+                // Ambil nilai cr_new
+                $crNew = $hasilCs->cr_new;
+    
+                // Bandingkan cr_new dengan persen_target
+                $isTargetMet = $crNew >= $persenTarget; // Benar jika cr_new >= persen_target
+    
+                // Format nilai untuk ditampilkan ke UI (hilangkan angka desimal)
+                $crNewFormatted = number_format($crNew, 0); // Contoh: 70
+                $persenTargetFormatted = number_format($persenTarget, 0); // Contoh: 70
+
     
                 return response()->json([
-                    'crNew' => $crNew,
-                    'isTargetMet' => $isTargetMet,
+                    'crNew' => $crNewFormatted, // Nilai yang ditampilkan tanpa simbol "%"
+                    'id_hasilcs' => $hasilCs->id_hasilcs,
+                    'persenTarget' => $persenTargetFormatted,
+                    'isTargetMet' => $isTargetMet, // Status (true untuk "Memenuhi", false untuk "Warning")
+                    // 'coba' => $persenTarget, // Status (true untuk "Memenuhi", false untuk "Warning")
                 ]);
             }
         }
     
         // Jika data tidak ditemukan
         return response()->json([
-            'crNew' => '0%',
-            'isTargetMet' => false,
+            'crNew' => '0', // Default nilai 0 tanpa simbol "%"
+            'persenTarget' => '0',
+            'isTargetMet' => false, // Default status adalah "Warning"
         ]);
     }
+    
       
     public function searchKaryawanByNama(Request $request)
     {
@@ -170,13 +181,13 @@ class DataRekapcsController extends Controller
             'ratio_botol' => $request->input('ratio_botol'),
             'omzet' => $request->input('omzet'),
         ]);
-        
+         
         $persenBagiHasil = PersenBagiHasil::first();
         
         BagiHasil::create([
             'hasilcs_id' => $idBaru->id_hasilcs, // Akses ID dari instance model
             'persen_id' => $persenBagiHasil->id_persen,
-            'bagi_hasil' => $request->input('hasil')
+            'bagi_hasil' => $request->input('hasil'),
         ]);        
 
         return redirect()->back()->with('success', 'Data berhasil disimpan.');
