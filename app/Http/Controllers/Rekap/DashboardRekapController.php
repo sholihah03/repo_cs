@@ -16,7 +16,7 @@ class DashboardRekapController extends Controller
     {
         $perusahaan = Perusahaan::first();
 
-        $persenTarget = PersenTarget::where('perusahaan_id', $perusahaan->id_perusahaan)->value('persen_target') ?? 0;
+        $persenTarget = round(PersenTarget::where('perusahaan_id', $perusahaan->id_perusahaan)->value('persen_target') ?? 0);
 
         // Filter karyawan CS
         $karyawanQuery = Karyawan::where('jabatan_id', 4);
@@ -110,6 +110,6 @@ class DashboardRekapController extends Controller
                     ->orderBy('year', 'desc')
                     ->pluck('year');
 
-        return view('rekap.dashboardRekap', compact('perusahaan', 'karyawanWithBagiHasil', 'request', 'tahunList', 'karyawanWithTargetCr', 'tahunListCr'));
+        return view('rekap.dashboardRekap', compact('perusahaan', 'karyawanWithBagiHasil', 'request', 'tahunList', 'karyawanWithTargetCr', 'tahunListCr', 'persenTarget'));
     }
 }

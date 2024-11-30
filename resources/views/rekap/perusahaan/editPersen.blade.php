@@ -10,7 +10,7 @@
       <div class="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0" style="padding-top: 2px;">
         <div class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
-            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Edit Persen Perusahaan</h3>
+            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Edit Persen Bagi Hasil</h3>
           </div>
           <div class="flex-auto p-6">
             <form action="{{ route('persen.store') }}" method="POST">
