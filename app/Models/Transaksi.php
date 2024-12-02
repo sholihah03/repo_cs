@@ -19,4 +19,15 @@ class Transaksi extends Model
         'nama_transaksi',
         'type',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (!in_array($model->type, ['debit', 'kredit'])) {
+                throw new \InvalidArgumentException("Tipe transaksi tidak valid.");
+            }
+        });
+    }
 }

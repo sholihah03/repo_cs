@@ -10,7 +10,7 @@
     <form action="{{ route('produk.update', $produk->id_produk) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
-        
+
         <!-- Gambar Produk -->
         <div class="mb-4">
             <label for="gambar_produk" class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
@@ -18,25 +18,25 @@
             <!-- Display existing image -->
             <img src="{{ asset('storage/' . $produk->gambar_produk) }}" class="h-16 w-16 mt-2" alt="{{ $produk->nama_produk }}">
         </div>
-        
+
         <!-- Nama Produk -->
         <div class="mb-4">
             <label for="nama_produk" class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
             <input type="text" name="nama_produk" id="nama_produk" value="{{ $produk->nama_produk }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
-        
+
         <!-- Stok -->
         <div class="mb-4">
             <label for="stok" class="block text-sm font-medium text-gray-700 mb-1">Stok</label>
             <input type="number" name="stok" id="stok" value="{{ $produk->stok }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
-        
+
         <!-- Harga -->
         <div class="mb-4">
             <label for="harga_botol" class="block text-sm font-medium text-gray-700 mb-1">Harga</label>
-            <input type="text" name="harga_botol" id="harga_botol" value="{{ $produk->harga_botol }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input type="text" name="harga_botol" id="harga_botol" value="{{ number_format ($produk->harga_botol, 0) }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
-        
+
         <!-- Buttons (Update and Cancel) -->
         <div class="flex justify-start">
             <!-- Update Button -->
@@ -44,9 +44,9 @@
                 class="hover:bg-blue-600 transition duration-300 ease-in-out">
                 Update
             </button>
-            
+
             <!-- Cancel Button -->
-            <button type="button" onclick="window.location='{{ route('rekap.produk') }}';" 
+            <button type="button" onclick="window.location='{{ route('rekap.produk') }}';"
                     style="background-color: #ee2525; padding: 0.5rem 1rem; color: white; border-radius: 4px; text-transform: uppercase; margin-bottom: 1rem; margin-left: 1rem; display: inline-block;"
                     class="hover:bg-red-600 transition duration-300 ease-in-out">
                 Batal

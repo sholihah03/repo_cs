@@ -33,15 +33,51 @@
                     </div>
                 </a>
             </div>
-
+            <div id="notificationContainer" class="hidden">
+                <!-- Bagian notifikasi -->
+            </div>
+            <script>
+                const notificationContainer = document.getElementById('notificationContainer');
+                const currentHour = new Date().getHours();
+            
+                if (currentHour >= 11) {
+                    notificationContainer.classList.remove('hidden');
+                }
+            </script>
+            
             <!-- Notification, Profile, and Sign In Button for Larger Screens -->
             <div class="hidden lg:flex items-center space-x-4">
-                <!-- Notification Icon -->
-                <a href="#" class="relative">
-                    <i data-feather="bell" class="text-white" style="width: 28px; height: 28px;"></i>
-                    <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
-                </a>
+                <div class="relative">
+                    <!-- Notification Icon -->
+                    <button id="notificationToggle" class="relative focus:outline-none">
+                        <i data-feather="bell" class="text-white w-7 h-7"></i>
+                        @if ($notifications->count() > 0)
+                            <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
+                                {{ $notifications->count() }}
+                            </span>
+                        @endif
+                    </button>
+         
+                    <!-- Dropdown Content -->
+                    <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
+                        <div class="p-4">
+                            <h4 class="font-semibold text-gray-800">Notifikasi</h4>
+                        </div>
+                        <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto">
+                            @forelse ($notifications as $notification)
+                                <li class="p-4 hover:bg-gray-100">
+                                    <p class="text-sm text-gray-700">{{ $notification->target }}</p>
+                                    <p class="text-sm text-gray-700">CR New: {{ $notification->hasilcs->cr_new ?? 'Tidak tersedia' }}%</p>
+                                    <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                                </li>
+                            @empty
+                                <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
+                            @endforelse
 
+                        </ul>
+                    </div>
+                </div>                
+                
                 <!-- Profile Icon -->
                 <a href="{{ route('settingcs') }}">
                     <i data-feather="user" class="text-white" style="width: 28px; height: 28px;"></i>
@@ -51,28 +87,52 @@
                 <a href="{{ route('login') }}" class="px-4 py-2 bg-purple-400 text-white rounded">Logout</a>
             </div>
 
-            <!-- Burger Menu for Mobile -->
-            <div class="lg:hidden ml-auto" x-data="{ navigationOpen: false }">
-                <button @click="navigationOpen = !navigationOpen" class="focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16" stroke="white" /> <!-- Garis 1 -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16" stroke="white" /> <!-- Garis 2 -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16" stroke="white" /> <!-- Garis 3 -->
-                    </svg>
-                </button>
+           <!-- Burger Menu for Mobile --> 
+            <div class="lg:hidden ml-auto" x-data="{ navigationOpen: false, notificationOpen: false }">
+                <!-- Flex container for aligning the icons -->
+                <div class="flex items-center">
+                    <!-- Hamburger Menu Icon -->
+                    <button @click="navigationOpen = !navigationOpen" class="focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16" stroke="white" /> <!-- Garis 1 -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16" stroke="white" /> <!-- Garis 2 -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16" stroke="white" /> <!-- Garis 3 -->
+                        </svg>
+                    </button>
 
-                <!-- Dropdown Navigation -->
+                    <!-- Notification Icon next to Burger Menu -->
+                    <div class="ml-4 relative">
+                        <button @click="notificationOpen = !notificationOpen" class="focus:outline-none">
+                            <i data-feather="bell" class="text-white w-7 h-7"></i>
+                            @if ($notifications->count() > 0)
+                                <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">
+                                    {{ $notifications->count() }}
+                                </span>
+                            @endif
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div x-show="notificationOpen" @click.away="notificationOpen = false" x-transition
+                            class="absolute right-0 top-full bg-white w-80 p-4 shadow-lg z-50">
+                            <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto">
+                                @forelse ($notifications as $notification)
+                                    <li class="p-4 hover:bg-gray-100">
+                                        <p class="text-sm text-gray-700">{{ $notification->target }}</p>
+                                        <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                                    </li>
+                                @empty
+                                    <li class="p-4 text-sm text-gray-500">Tidak ada notifikasi baru.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown Navigation (for Burger Menu) -->
                 <div x-show="navigationOpen" @click.away="navigationOpen = false" x-transition
                     class="absolute right-0 top-full bg-white w-38 p-4 shadow-lg z-40">
                     <nav>
                         <ul class="space-y-4 text-black">
-                            <!-- Notification Icon -->
-                            <li>
-                                <a href="#" class="relative">
-                                    <i data-feather="bell" class="text-black" style="width: 28px; height: 28px;"></i>
-                                    <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
-                                </a>
-                            </li>
                             <!-- Profile Icon -->
                             <li>
                                 <a href="{{ route('settingcs') }}">
@@ -91,8 +151,80 @@
     </nav>
     <script>
         feather.replace()
+        function submitTargetNotification() {
+    // Ambil nilai dari input CrNew dan Status Target
+    const crNewValue = document.getElementById('crNewTarget').value;
+    const targetStatusValue = document.getElementById('targetStatus').textContent;
+
+    // Validasi jika data kosong
+    if (!crNewValue || !targetStatusValue) {
+        alert('Pastikan data CrNew dan Status Target telah terisi.');
+        return;
+    }
+
+    // Format notifikasi yang akan ditampilkan
+    const notificationMessage = `CrNew: ${crNewValue}, Status: ${targetStatusValue}`;
+
+    // Tambahkan notifikasi ke ikon notifikasi
+    const notificationIcon = document.querySelector('[data-feather="bell"]');
+    const notificationList = document.createElement('div');
+    notificationList.classList.add(
+        'absolute', 'top-12', 'right-0', 'bg-white', 'shadow-lg', 
+        'p-4', 'rounded-lg', 'w-64', 'z-50', 'animate-fade-in'
+    );
+    notificationList.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <span class="text-purple-600 font-bold">Notifikasi Baru</span>
+        </div>
+        <div class="mt-2 text-gray-800 text-sm">
+            ${notificationMessage}
+        </div>
+    `;
+
+    // Tampilkan notifikasi
+    const existingNotification = document.getElementById('notification-content');
+    if (existingNotification) {
+        existingNotification.remove(); // Hapus notifikasi lama jika ada
+    }
+    notificationList.id = 'notification-content';
+    notificationIcon.parentNode.appendChild(notificationList);
+
+    // Timer untuk otomatis menghilangkan notifikasi setelah 5 detik
+    setTimeout(() => {
+        if (notificationList) {
+            notificationList.remove();
+        }
+    }, 5000);
+}
+  // Fungsi untuk mengatur dropdown
+  function setupDropdown(toggleId, dropdownId) {
+        const toggle = document.getElementById(toggleId);
+        const dropdown = document.getElementById(dropdownId);
+
+        if (toggle && dropdown) {
+            toggle.addEventListener("click", () => {
+                dropdown.classList.toggle("hidden");
+            });
+
+            // Klik di luar untuk menutup dropdown
+            document.addEventListener("click", (event) => {
+                if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.add("hidden");
+                }
+            });
+        } else {
+            console.error(`Element with ID ${toggleId} or ${dropdownId} not found.`);
+        }
+    }
+
+    // Inisialisasi Dropdown Notifikasi
+    document.addEventListener("DOMContentLoaded", function () {
+        setupDropdown("notificationToggle", "notificationDropdown");
+    });
+
     </script>
 
 </body>
 
 </html>
+

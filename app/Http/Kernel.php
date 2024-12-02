@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -23,4 +24,10 @@ class Kernel extends HttpKernel
         'auth.cs' => \App\Http\Middleware\CheckCsAuthenticated::class,
         'auth.advertiser' => \App\Http\Middleware\CheckAdvertiserAuthenticatedMiddleware::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+{
+    // Menjadwalkan command untuk dijalankan setiap hari
+    $schedule->command('notifications:clean-expired')->daily();
+}
 }

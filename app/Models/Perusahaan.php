@@ -42,4 +42,9 @@ class Perusahaan extends Authenticatable
         return $this->hasOne(PersenBagiHasil::class, 'perusahaan_id', 'id_perusahaan');
     }
 
+    public function persenTarget()
+    {
+        return $this->hasOne(PersenTarget::class, 'perusahaan_id', 'id_perusahaan');
+    }
+
 }

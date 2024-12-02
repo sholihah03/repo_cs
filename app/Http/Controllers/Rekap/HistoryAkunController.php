@@ -11,7 +11,7 @@ class HistoryAkunController extends Controller
 {
     public function index(Request $request)
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $historyakun = HistoryAkun::all();
 
         return view('rekap.pegawai.historyakun', compact('historyakun', 'perusahaan'));

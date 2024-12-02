@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cs\Setting;
 
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ class SettingProfileController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $cs = Auth::guard('cs')->user(); // Mengambil data pengguna yang sedang login
         return view('cs.setting.settingProfile', compact('cs', 'perusahaan'));
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cs\Setting;
 
 use App\Models\Karyawan;
 use App\Models\Perusahaan;
+use App\Models\NotifikasiCs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,11 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $cs = Auth::guard('cs')->user(); // Mengambil data pengguna yang sedang login
-        return view('cs.setting.settingProfile', compact('cs', 'perusahaan'));
+        $notifications = NotifikasiCs::where('created_at', '>=', now()->subDay())->latest()->take(5)->get();
+
+        return view('cs.setting.settingProfile', compact('cs', 'perusahaan', 'notifications'));
     }
 
     // Proses update data profil pengguna yang sedang login

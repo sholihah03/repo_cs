@@ -65,8 +65,8 @@
                         <div class="mb-4">
                             <label for="nama_transaksi" class="block text-sm font-medium text-gray-700">Nama Transaksi:</label>
                             <input type="text" name="nama_transaksi" id="nama_transaksi" 
-                                   value="{{ session('nama_transaksi') }}" 
-                                   style="background-color: white; padding: 0.5rem; border-radius: 0.375rem; border: 1px solid #d1d5db; width: 100%;" required readonly>
+                            value="{{ old('nama_transaksi', session('nama_transaksi')) }}" 
+                            style="background-color: white; padding: 0.5rem; border-radius: 0.375rem; border: 1px solid #d1d5db; width: 100%;" required readonly>
                         </div>
                         <div class="mb-4">
                             <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal Transaksi:</label>
@@ -92,7 +92,7 @@
                                 Kirim
                             </button>
                         </div>
-                    </form>
+                    </form>                        
                     <!-- Form End -->
                 </div>
             </div>

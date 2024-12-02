@@ -19,7 +19,7 @@ class InformasiController extends Controller
     {
         // Mengambil semua jabatan
         $jabatan = Jabatan::all();
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $historyakun = HistoryAkun::all();
 
         // Mengambil karyawan berdasarkan jabatan_id dari request

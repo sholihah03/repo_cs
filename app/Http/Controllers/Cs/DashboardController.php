@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Cs;
 
-use App\Models\Perusahaan;
 use App\Models\Produk;
 use App\Models\RekapCs;
+use App\Models\Perusahaan;
 use App\Models\RekapProduk;
+use App\Models\NotifikasiCs;
 use App\Models\RekapCsTotal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +20,28 @@ class DashboardController extends Controller
         $cs = Auth::guard('cs')->user();
         $jabatan = $cs->jabatan;
         $produkList = Produk::where('karyawan_id', $cs->id_karyawan)->get();
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
 
+        $kemarin = Carbon::yesterday();
 
-        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList', 'perusahaan'));
+        // Update dan ambil notifikasi yang diupdate
+        $updatedNotifications = NotifikasiCs::whereDate('created_at', $kemarin)
+            ->update(['is_read' => 1]);
+
+        // dd($updatedNotifications);
+        // Ambil notifikasi dari database (contoh menggunakan model Notification)
+        // $notifications = NotifikasiCs::latest()->take(5)->get();
+        $notifications = NotifikasiCs::where('is_read', '!=', 1)
+                ->where('id_karyawan', $cs->id_karyawan) // Sesuaikan dengan kolom relasi jika ada
+                ->latest()
+                ->take(5)
+                ->get();
+
+        // Kirim notifikasi ke view
+        // return view('cs.layouts.main', compact('notifications'));
+        // dd($cs->id_karyawan);
+
+        return view('cs.layouts.index', compact('cs', 'jabatan', 'produkList', 'perusahaan','notifications'));
     }
 
     public function getProduct($id)

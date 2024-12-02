@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class AlamatPerusahaanController extends Controller
 {
     public function index(){
-        $perusahaan = Perusahaan::find(1);
+        $perusahaan = Perusahaan::first();
         $alamatPerusahaan = AlamatPerusahaan::where('perusahaan_id', 1)->first();
 
         return view('rekap.perusahaan.alamatperusahaan', compact('alamatPerusahaan', 'perusahaan'));

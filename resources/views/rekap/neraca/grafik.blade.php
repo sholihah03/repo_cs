@@ -5,15 +5,6 @@
 
 <div class="container mx-auto p-6">
     <h2 class="text-xl font-semibold mb-4">Grafik Transaksi Per Bulan</h2>
-    
-    <!-- Dropdown Tahun -->
-    <div class="mb-4">
-        <label for="tahunSelect" class="mr-2">Pilih Tahun:</label>
-        <select id="tahunSelect" class="border border-gray-300 rounded px-2 py-1">
-            <!-- Dropdown akan diisi oleh JavaScript -->
-        </select>
-    </div>
-
     <canvas id="transaksiChart" width="400" height="200"></canvas>
 </div>
 
@@ -22,58 +13,42 @@
     var ctx = document.getElementById('transaksiChart').getContext('2d');
     var transaksiData = @json($transaksiPerBulan);
 
-    // Mendapatkan tahun unik dari transaksiData
-    var uniqueYears = [...new Set(transaksiData.map(item => item.year))];
-    
-    // Mengisi dropdown tahun
-    var tahunSelect = document.getElementById('tahunSelect');
-    uniqueYears.forEach(function(year) {
-        var option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        tahunSelect.appendChild(option);
+    // Format label agar menampilkan bulan dan tahun (misalnya, "Jan 2024")
+    var labels = transaksiData.map(function(item) {
+        return new Date(item.year, item.month - 1).toLocaleString('id-ID', {
+            month: 'short',
+            year: 'numeric'
+        });
     });
 
-    // Fungsi untuk memfilter data berdasarkan tahun
-    function updateChartByYear(selectedYear) {
-        var filteredData = transaksiData.filter(function(item) {
-            return item.year == selectedYear;
-        });
-
-        // Urutkan data per bulan
-        filteredData.sort(function(a, b) {
-            return new Date(a.year, a.month - 1) - new Date(b.year, b.month - 1);
-        });
-
-        // Perbarui label dan data grafik
-        transaksiChart.data.labels = filteredData.map(function(item) {
-            return String(item.month).padStart(2, '0') + '-' + item.year;
-        });
-        transaksiChart.data.datasets[0].data = filteredData.map(function(item) {
-            return item.total;
-        });
-
-        transaksiChart.update();
-    }
-
-    // Event listener untuk dropdown tahun
-    tahunSelect.addEventListener('change', function() {
-        updateChartByYear(this.value);
+    var debitData = transaksiData.map(function(item) {
+        return item.total_debit;
     });
 
-    // Inisialisasi Chart
+    var kreditData = transaksiData.map(function(item) {
+        return item.total_kredit;
+    });
+
     var transaksiChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar', // Ubah tipe menjadi 'bar' untuk grafik batang
         data: {
-            labels: [],  // Label akan diisi oleh updateChartByYear
-            datasets: [{
-                label: 'Jumlah Transaksi',
-                data: [],
-                borderColor: '#3B82F6',
-                backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                fill: true,
-                tension: 0.4
-            }]
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Debit',
+                    data: debitData,
+                    backgroundColor: '#3B82F6',
+                    borderColor: '#3B82F6',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Kredit',
+                    data: kreditData,
+                    backgroundColor: '#EF4444',
+                    borderColor: '#EF4444',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -84,28 +59,34 @@
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
-                            return 'Total: Rp ' + tooltipItem.raw.toLocaleString();
+                            // Format angka untuk menghapus desimal
+                            return 'Total: Rp ' + tooltipItem.raw.toLocaleString('id-ID', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            });
                         }
                     }
                 }
             },
             scales: {
+                x: {
+                    stacked: true, // Untuk menampilkan grafik secara berurutan di sumbu X
+                },
                 y: {
+                    stacked: true, // Jika ingin menumpuk grafik debit dan kredit
                     beginAtZero: true,
                     ticks: {
                         callback: function(value) {
-                            return 'Rp ' + value.toLocaleString();
+                            return 'Rp ' + value.toLocaleString('id-ID', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            });
                         }
                     }
                 }
             }
         }
     });
-
-    // Set default tahun pada dropdown dan perbarui grafik pertama kali
-    if (uniqueYears.length > 0) {
-        tahunSelect.value = uniqueYears[0];
-        updateChartByYear(uniqueYears[0]);
-    }
 </script>
+
 @endsection

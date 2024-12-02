@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cs\NotifikasiCsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
@@ -24,6 +25,9 @@ use App\Http\Controllers\Rekap\AlamatPerusahaanController;
 use App\Http\Controllers\Rekap\KontakPerusahaanController;
 use App\Http\Controllers\Rekap\SettingPerusahaanController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
+use App\Http\Controllers\Rekap\DashboardAdvertiserController;
+use App\Http\Controllers\Rekap\DashboardDirekturController;
+use App\Http\Controllers\Rekap\DashboardKaryawanController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -49,11 +53,18 @@ Route::post('/login', [LoginController::class, 'login'])->name('loginrekap');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Dashboard Admin
-Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+Route::get('/dashboardDirektur', [DashboardDirekturController::class, 'index'])->name('dashboardDirektur');
+Route::get('/get-manager-data', [DashboardDirekturController::class, 'getManagerData'])->name('getManagerData');
+Route::get('/get-karyawan-data', [DashboardDirekturController::class, 'getKaryawanData'])->name('getKaryawanData');
+Route::get('/get-cs-data', [DashboardDirekturController::class, 'getCsData'])->name('getCsData');
+Route::get('/get-advertiser-data', [DashboardDirekturController::class, 'getAdvertiserData'])->name('getAdvertiserData');
+Route::get('/dashboardKaryawan', [DashboardKaryawanController::class, 'index'])->name('dashboardKaryawan');
+Route::get('/dashboardAdvertiser', [DashboardAdvertiserController::class, 'index'])->name('dashboardAdvertiser');
 
 Route::middleware(CheckCsAuthenticated::class)->group(function () {
 //cs
 Route::get('/dashboardCs', [DashboardController::class, 'indexCs'])->name('dashboardcs');
+Route::get('/notifikasics', [NotifikasiCsController::class, 'index'])->name('notifikasi');
 Route::view('/jam', 'cs.layouts.jam')->name('jam');
 Route::get('/cs/setting', [SettingController::class, 'index'])->name('settingcs');
 Route::put('/cs/setting/update', [SettingController::class, 'update'])->name('updateProfile.cs');
@@ -73,10 +84,21 @@ Route::post('/cs/rekap', [DashboardController::class, 'storeRekap'])->name('cs.s
 // });
 
 Route::middleware(CheckManagerAuthenticated::class)->group(function () {
+    Route::get('/dashboardRekap', [DashboardRekapController::class, 'index'])->name('dashboardRekap');
+
     Route::view('/rincian', 'rekap.rincian')->name('rincian');
     Route::view('/informasi', 'rekap.informasi')->name('informasi');
     Route::get('/rekapdata', [DataRekapcsController::class, 'index'])->name('rekapdata');
+    
+    Route::post('/notifikasi-cs/store', [NotifikasiCsController::class, 'store'])->name('notifikasi.cs.store');
+
+
     Route::get('/rekap/search-karyawan', [DataRekapcsController::class, 'searchKaryawan'])->name('rekap.search.karyawan');
+    Route::get('/rekap/search-karyawan-target', [DataRekapcsController::class, 'searchKaryawanTarget'])->name('rekap.search.karyawan.target');
+
+    Route::post('/rekap/hasilcs', [DataRekapcsController::class, 'store'])->name('hasilcs.store');
+    Route::get('/search-karyawan', [DataRekapcsController::class, 'searchKaryawanByNama'])
+    ->name('search.karyawan');
 
 
     //Rekap_Perusahaan
@@ -103,7 +125,9 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     //Rekap_Persen
     Route::get('/persen', [PersenController::class, 'index'])->name('persen.index');
     Route::get('/persen/edit', [PersenController::class, 'indexEdit'])->name('persen.edit');
+    Route::get('/persen/edit/target', [PersenController::class, 'indexEditTarget'])->name('persen.target.edit');
     Route::post('/persenPerusahaan', [PersenController::class, 'store'])->name('persen.store');
+    Route::post('/persenTargetPerusahaan', [PersenController::class, 'storeTarget'])->name('persen.target.store');
 
     //Rekap_Neraca
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
