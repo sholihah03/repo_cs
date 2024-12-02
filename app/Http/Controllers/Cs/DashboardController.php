@@ -70,5 +70,5 @@ class DashboardController extends Controller
     return redirect()->back()->with('success', 'Data rekap produk berhasil disimpan.');
 }
 
-    
+
 }

@@ -1,6 +1,8 @@
 @extends('rekap.includes.master')
 @section('title', 'datarekapcs')
-@include('rekap.includes.sidenav')
+@section('RekapdataActive','shadow-soft-xl')
+{{-- @include('rekap.includes.sidenav') --}}
+
 @section('content')
 <div class="w-full px-6 py-6 mx-auto">
 <div class="flex flex-wrap -mx-3 justify-center items-center">

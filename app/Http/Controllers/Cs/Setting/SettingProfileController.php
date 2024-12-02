@@ -11,8 +11,9 @@ class SettingProfileController extends Controller
 {
     public function index()
     {
+        $perusahaan = Perusahaan::find(1);
         $cs = Auth::guard('cs')->user(); // Mengambil data pengguna yang sedang login
-        return view('cs.setting.settingProfile', compact('cs'));
+        return view('cs.setting.settingProfile', compact('cs', 'perusahaan'));
     }
 
     // Update profile photo

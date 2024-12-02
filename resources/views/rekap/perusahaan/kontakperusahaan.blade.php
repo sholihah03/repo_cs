@@ -1,8 +1,7 @@
 @extends('rekap.includes.master')
 @section('title', 'Kontak Perusahaan')
-
+@section('RekapperusahaanActive','shadow-soft-xl',)
 @section('content')
-@include('rekap.includes.sidenav')
 <div class="w-full px-6 py-6 mx-auto">
   <!-- table 1 -->
   <div class="container z-10">
@@ -10,11 +9,17 @@
       <div class="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0" style="padding-top: 2px;">
         <div class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
-            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Kontak Perusahaan</h3>
+            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">
+              {{ isset($kontakPerusahaan) ? 'Edit Kontak Perusahaan' : 'Tambah Kontak Perusahaan'}}
+            </h3>
           </div>
           <div class="flex-auto p-6">
-            <form action="{{ route('kontakperusahaan.store') }}" method="POST">
+            <form action="{{ route('settingperusahaan.storeKontakPerusahaan') }}" method="POST">
               @csrf
+              {{-- Jika edit, tambahkan hidden input untuk ID --}}
+              @if (isset($perusahaan))
+                <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id_perusahaan }}">
+              @endif
 
               <!-- No. Telepon -->
               <label class="mb-2 ml-1 font-bold text-xs text-slate-700">No .Telp</label>

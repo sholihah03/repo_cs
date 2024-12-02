@@ -1,16 +1,29 @@
 @extends('rekap.includes.master')
-@section('title', 'rincian')
-@include('rekap.includes.sidenav')
+@section('title', 'settings')
+@section('SettingActive','shadow-soft-xl',)
 @section('content')
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+<!-- Nucleo Icons -->
+<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+<!-- Main Styling -->
+<link href="/assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5" rel="stylesheet" />
+
+<!-- Nepcha Analytics (nepcha.com) -->
+<!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+<script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
 <div class="w-full px-6 mx-auto">
-    <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl" style="background-image: url('{{ asset('soft/build/assets/img/curved-images/curved0.jpg') }}'); background-position-y: 50%">
+    <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl" style="background-image: url('{{ asset('assets/img/curved-images/curved0.jpg') }}'); background-position-y: 50%">
       <span class="absolute inset-y-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-purple-700 to-pink-500 opacity-60"></span>
     </div>
     <div class="relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
       <div class="flex flex-wrap -mx-3">
         <div class="flex-none w-auto max-w-full px-3">
           <div class="text-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
-            <img src="{{asset('soft/build/assets/img/bruce-mars.jpg')}}" alt="profile_image" class="w-full shadow-soft-sm rounded-xl" />
+            <img src="{{asset('assets/img/bruce-mars.jpg')}}" alt="profile_image" class="w-full shadow-soft-sm rounded-xl" />
           </div>
         </div>
         <div class="flex-none w-auto max-w-full px-3 my-auto">
@@ -92,30 +105,47 @@
                             <h6 class="mb-0">Profile Information</h6>
                         </div>
                         <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">                        
-                          <a href="{{ route('editPerusahaan') }}" data-target="tooltip_trigger" data-placement="top">
-                                <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
-                            </a>
+                          <!-- Ikon untuk tambah atau edit perusahaan (menggunakan satu ikon saja) -->
+                          <a href="{{route ('settingperusahaan.indexEditPerusahaan')}}" data-target="tooltip_trigger" data-placement="top">
+                            <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i> <!-- Ikon yang sama untuk tambah atau edit -->
+                          </a>              
                         </div>              
                     </div>
                 </div>
                 <div class="flex-auto p-4">
-                    <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-                        <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
-                            <strong class="text-slate-700">Nama Perusahaan:</strong> &nbsp; {{ $perusahaan->nama_perusahaan ?? 'Data tidak tersedia' }}
-                        </li>
-                        <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                            <strong class="text-slate-700">Nama Direktur:</strong> &nbsp; {{ $perusahaan->nama_direktur ?? 'Data tidak tersedia' }}
-                        </li>
-                        <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Logo:</strong> &nbsp; 
-                          @if ($perusahaan && $perusahaan->logo)
-                              <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo {{ $perusahaan->nama_perusahaan }}" style="width: 100px; height: auto;">
-                          @else
-                              'Data tidak tersedia'
-                          @endif
+                  <ul class="flex flex-col pl-0 mb-0 rounded-lg">
+                      <!-- Nama Perusahaan -->
+                      <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
+                          <strong class="text-slate-700">Nama Perusahaan:</strong>
+                          <!-- Menampilkan data jika ada, jika tidak tampilkan teks default -->
+                          <span class="text-sm text-gray-600">
+                              {{ isset($perusahaan) && $perusahaan->nama_perusahaan ? $perusahaan->nama_perusahaan : 'Data tidak tersedia' }}
+                          </span>
                       </li>
-                    </ul>
-                </div>
+              
+                      <!-- Nama Direktur -->
+                      <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                          <strong class="text-slate-700">Nama Direktur:</strong>
+                          <!-- Menampilkan data jika ada, jika tidak tampilkan teks default -->
+                          <span class="text-sm text-gray-600">
+                              {{ isset($perusahaan) && $perusahaan->nama_direktur ? $perusahaan->nama_direktur : 'Data tidak tersedia' }}
+                          </span>
+                      </li>
+              
+                      <!-- Logo -->
+                      <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
+                          <strong class="text-slate-700">Logo:</strong>
+                          <!-- Menampilkan logo jika ada, jika tidak tampilkan teks default -->
+                          <span class="text-sm text-gray-600">
+                              @if(isset($perusahaan) && $perusahaan->logo)
+                                  <img src="{{ asset('storage/' . $perusahaan->logo) }}" alt="Logo Perusahaan" class="h-8 w-8 rounded-full">
+                              @else
+                                  Data tidak tersedia
+                              @endif
+                          </span>
+                      </li>
+                  </ul>
+              </div>              
             </div>
         </div>    
         <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
@@ -126,7 +156,7 @@
                           <h6 class="mb-0">Kontak Perusahaan</h6>
                       </div>
                       <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                          <a href="{{ route('kontakperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                          <a href="{{route ('settingperusahaan.indexEditKontakPerusahaan')}}" data-target="tooltip_trigger" data-placement="top">
                               <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
                           </a>
                       </div>
@@ -135,16 +165,28 @@
               <div class="flex-auto p-4">
                   <ul class="flex flex-col pl-0 mb-0 rounded-lg">
                       <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
-                          <strong class="text-slate-700">No. Telp:</strong> &nbsp; {{ $kontakPerusahaan->no_telepon ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">No. Telp:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($kontakPerusahaan) && $kontakPerusahaan->no_telepon ? $kontakPerusahaan->no_telepon : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Email:</strong> &nbsp; {{ $kontakPerusahaan->email ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Email:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($kontakPerusahaan) && $kontakPerusahaan->email ? $kontakPerusahaan->email : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Instagram:</strong> &nbsp; {{ $kontakPerusahaan->instagram ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Instagram:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($kontakPerusahaan) && $kontakPerusahaan->instagram ? $kontakPerusahaan->instagram : 'Data tidak tersedia' }}
+                          </span> 
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">WhatsApp:</strong> &nbsp; {{ $kontakPerusahaan->wa ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">WhatsApp:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($kontakPerusahaan) && $kontakPerusahaan->wa ? $kontakPerusahaan->wa : 'Data tidak tersedia' }}
+                          </span> 
                       </li>
                   </ul>
               </div>
@@ -158,7 +200,7 @@
                           <h6 class="mb-0">Alamat Perusahaan</h6>
                       </div>
                       <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                          <a href="{{ route('alamatperusahaan') }}" data-target="tooltip_trigger" data-placement="top">
+                          <a href="{{route ('settingperusahaan.indexEditAlamatPerusahaan')}}" data-target="tooltip_trigger" data-placement="top">
                               <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
                           </a>
                       </div>
@@ -167,28 +209,52 @@
               <div class="flex-auto p-4">
                   <ul class="flex flex-col pl-0 mb-0 rounded-lg">
                       <li class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
-                          <strong class="text-slate-700">Provinsi:</strong> &nbsp; {{ $alamatPerusahaan->provinsi ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Provinsi:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->provinsi ? $alamatPerusahaan->provinsi : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Kabupaten:</strong> &nbsp; {{ $alamatPerusahaan->kabupaten ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Kabupaten:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->kabupaten ? $alamatPerusahaan->kabupaten : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Kecamatan:</strong> &nbsp; {{ $alamatPerusahaan->kecamatan ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Kecamatan:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->kecamatan ? $alamatPerusahaan->kecamatan : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Kelurahan:</strong> &nbsp; {{ $alamatPerusahaan->kelurahan ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Kelurahan:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->kelurahan ? $alamatPerusahaan->kelurahan : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Kode Pos:</strong> &nbsp; {{ $alamatPerusahaan->kode_pos ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Kode Pos:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->kode_pos ? $alamatPerusahaan->kode_pos : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">RT:</strong> &nbsp; {{ $alamatPerusahaan->rt ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">RT:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->rt ? $alamatPerusahaan->rt : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">RW:</strong> &nbsp; {{ $alamatPerusahaan->rw ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">RW:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->rw ? $alamatPerusahaan->rw : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                       <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                          <strong class="text-slate-700">Detail Lainnya:</strong> &nbsp; {{ $alamatPerusahaan->detail_lainnya ?? 'Data tidak tersedia' }}
+                          <strong class="text-slate-700">Detail Lainnya:</strong>
+                          <span class="text-sm text-gray-600">
+                            {{ isset($alamatPerusahaan) && $alamatPerusahaan->detail_lainnya ? $alamatPerusahaan->detail_lainnya : 'Data tidak tersedia' }}
+                          </span>
                       </li>
                   </ul>
               </div>
@@ -254,4 +320,12 @@
     {{-- </div> --}}
     </div>
 </div>
+
+  </script>
+<!-- plugin for scrollbar  -->
+<script src="/assets/js/plugins/perfect-scrollbar.min.js" async></script>
+<!-- github button -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- main script file  -->
+<script src="/assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5" async></script>
 @endsection

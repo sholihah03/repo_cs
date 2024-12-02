@@ -7,6 +7,25 @@
                 <div class="w-full bg-purple-100 shadow-lg px-6 pb-8 mt-20 sm:max-w-full sm:rounded-lg pt-4">
                     <h2 class="pl-6 text-2xl font-bold sm:text-xl">Setting Profile</h2>
 
+                    <!-- Flash message for success -->
+                    @if(session('success'))
+                        <div class="text-green-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Sukses!</strong>
+                            <span class="block sm:inline">{{ session('success') }}</span>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Kesalahan!</strong>
+                            <ul class="list-disc pl-5">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <!-- Flex container to keep profile image and forms in row layout -->
                     <div class="flex flex-col md:flex-row md:space-x-8 mt-8 items-center justify-center md:justify-start">
                         <!-- Update Profile -->

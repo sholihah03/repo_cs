@@ -1,15 +1,15 @@
 @extends('rekap.includes.master')
 @section('title', 'Pembagian Produk')
-
+@section('PembagianprodukActive','shadow-soft-xl',)
 @section('content')
-@include('rekap.includes.sidenav')
 
 <div class="flex-auto px-6 pt-6 pb-2">
     <h2 class="text-lg font-semibold mb-4">Pembagian Produk CS</h2>
-    <a href="{{ route('pembagianProdukCS.tambah') }}" 
-       style="background-color: #4caaf2; padding: 0.5rem 1rem; color: white; border-radius: 4px; text-transform: uppercase; margin-bottom: 1rem; display: inline-block;">
-       Pembagian
-    </a>
+    <div class="mx-4">
+        <a class="inline-block w-96 px-4 py-2 my-2 text-xs font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro bg-gradient-to-tl from-purple-700 to-pink-500 hover:shadow-soft-2xl hover:scale-102" href="{{ route('pembagianProdukCS.tambah') }}">
+            Pembagian Produk
+        </a>
+    </div>
     <div class="p-0 overflow-x-auto">
         @if($csList->isNotEmpty() && $csList->contains(fn($cs) => $cs->produk->isNotEmpty()))
             <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">

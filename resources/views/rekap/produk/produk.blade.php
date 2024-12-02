@@ -1,15 +1,16 @@
 @extends('rekap.includes.master')
 @section('title', 'Produk')
-
+@section('ProductActive','shadow-soft-xl',)
 @section('content')
-@include('rekap.includes.sidenav')
+
 
 <div class="flex-auto px-0 pt-0 pb-2">
     <h2 class="text-lg font-semibold mb-4">Daftar Produk</h2>
-    <a href="{{ route('rekap.createproduk') }}" 
-       style="background-color: #4caaf2; padding: 0.5rem 1rem; color: white; border-radius: 4px; text-transform: uppercase; margin-bottom: 1rem; display: inline-block;">
-       Tambah Produk
-    </a>
+    <div class="mx-5">
+        <a class="inline-block w-96 px-4 py-2 my-2 text-xs font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro bg-gradient-to-tl from-purple-700 to-pink-500 hover:shadow-soft-2xl hover:scale-102" href="{{ route('rekap.createproduk') }}">
+            Tambah Produk
+        </a>
+    </div>
     <div class="p-0 overflow-x-auto">
         <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
             <thead class="align-bottom">

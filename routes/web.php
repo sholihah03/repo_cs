@@ -10,8 +10,11 @@ use App\Http\Controllers\Cs\DashboardController;
 use App\Http\Controllers\Rekap\NeracaController;
 use App\Http\Controllers\Rekap\PersenController;
 use App\Http\Controllers\Rekap\ProdukController;
+use App\Http\Controllers\Rekap\KaryawanController;
 use App\Http\Middleware\CheckManagerAuthenticated;
+use App\Http\Controllers\Rekap\InformasiController;
 use App\Http\Controllers\Rekap\DataRekapcsController;
+use App\Http\Controllers\Rekap\HistoryAkunController;
 use App\Http\Controllers\Cs\Setting\SettingController;
 use App\Http\Controllers\Rekap\DataTransaksiController;
 use App\Http\Controllers\Rekap\DashboardRekapController;
@@ -19,6 +22,7 @@ use App\Http\Controllers\Rekap\PembagianProdukController;
 use App\Http\Controllers\Rekap\RekapPerusahaanController;
 use App\Http\Controllers\Rekap\AlamatPerusahaanController;
 use App\Http\Controllers\Rekap\KontakPerusahaanController;
+use App\Http\Controllers\Rekap\SettingPerusahaanController;
 use App\Http\Controllers\Cs\Setting\SettingProfileController;
 
 Route::get('/', function () {
@@ -76,13 +80,13 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
 
 
     //Rekap_Perusahaan
-    Route::get('/settingPerusahaan', [RekapPerusahaanController::class, 'index'])->name('rekapPerusahaan');
-    Route::get('/editPerusahaan', [RekapPerusahaanController::class, 'indexEdit'])->name('editPerusahaan');
-    Route::post('/rekapPerusahaan/store', [RekapPerusahaanController::class, 'store'])->name('rekapPerusahaan.store');
-    Route::get('/kontakPerusahaan', [KontakPerusahaanController::class, 'index'])->name('kontakperusahaan');
-    Route::post('/kontakperusahaan/store', [KontakPerusahaanController::class, 'store'])->name('kontakperusahaan.store');
-    Route::get('/alamatPerusahaan', [AlamatPerusahaanController::class, 'index'])->name('alamatperusahaan');
-    Route::post('/alamatperusahaan/store', [AlamatPerusahaanController::class, 'store'])->name('alamatperusahaan.store');
+    Route::get('/settingperusahaan', [SettingPerusahaanController::class, 'index'])->name('settingperusahaan.index');
+    Route::get('/rekap/settingperusahaan/edit', [SettingPerusahaanController::class, 'indexEditPerusahaan'])->name('settingperusahaan.indexEditPerusahaan');
+    Route::post('/rekap/perusahaan', [SettingPerusahaanController::class, 'storePerusahaan'])->name('settingperusahaan.storePerusahaan');
+    Route::get('/rekap/settingperusahaan/kontak', [SettingPerusahaanController::class, 'indexEditKontakPerusahaan'])->name('settingperusahaan.indexEditKontakPerusahaan');
+    Route::post('/rekap/kontak', [SettingPerusahaanController::class, 'storeKontakPerusahaan'])->name('settingperusahaan.storeKontakPerusahaan');
+    Route::get('/rekap/settingperusahaan/alamat', [SettingPerusahaanController::class, 'indexEditAlamatPerusahaan'])->name('settingperusahaan.indexEditAlamatPerusahaan');
+    Route::post('/rekap/alamat', [SettingPerusahaanController::class, 'storeAlamatPerusahaan'])->name('settingperusahaan.storeAlamatPerusahaan');
     Route::get('/profile', [RekapPerusahaanController::class, 'showProfile'])->name('profile');
 
     //Rekap_Produk
@@ -105,7 +109,7 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
     Route::post('/rekap/neraca/store', [NeracaController::class, 'store'])->name('rekap.neraca.store');
     Route::post('/rekap/transaksi/store', [DataTransaksiController::class, 'store'])->name('rekap.transaksi.store');
-    Route::get('/rekap/neraca/grafik', [DataTransaksiController::class, 'getTransaksiPerBulan'])->name('rekap.grafikTransaksi');
+    Route::get('/grafik', [DataTransaksiController::class, 'getTransaksiPerBulan'])->name('rekap.grafikTransaksi');
 
     //Rekap_PembagianProdukCS
     Route::get('/pembagianProdukCS', [PembagianProdukController::class, 'index'])->name('pembagianProdukCS.index');
@@ -114,4 +118,18 @@ Route::middleware(CheckManagerAuthenticated::class)->group(function () {
     Route::get('/pembagianProdukCS/edit/{id}', [PembagianProdukController::class, 'indexEdit'])->name('pembagianProdukCS.edit');
     Route::put('/pembagianProdukCS/update/{id}', [PembagianProdukController::class, 'update'])->name('pembagianProdukCS.update');
 
+//Rekap_Pegawai
+Route::get('/karyawan/index', [KaryawanController::class, 'index'])->name('karyawan.index');
+Route::post('/karyawan/store', [KaryawanController::class, 'store'])->name('karyawan.store');
+Route::put('/karyawan/update/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+Route::get('/informasi/index', [InformasiController::class, 'index'])->name('informasi.index');
+Route::get('/karyawan/filter', [KaryawanController::class, 'filter'])->name('karyawan.filter');
+Route::get('/historyakun', [HistoryAkunController::class, 'index'])->name('historyakun');
+Route::delete('/rekap/karyawan/{id}', [InformasiController::class, 'destroy'])->name('karyawan.destroy');
+Route::get('/informasipegawai', [InformasiController::class, 'index'])->name('informasipegawai');
+
 });
+
+
+

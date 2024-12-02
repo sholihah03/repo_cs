@@ -1,6 +1,6 @@
 @extends('rekap.includes.master')
 @section('title', 'Grafik Transaksi Per Bulan')
-@include('rekap.includes.sidenav')
+@section('NeracaActive','shadow-soft-xl',)
 @section('content')
 
 <div class="container mx-auto p-6">

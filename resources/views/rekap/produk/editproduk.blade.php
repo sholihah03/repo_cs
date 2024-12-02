@@ -2,7 +2,7 @@
 @section('title', 'Edit Produk')
 
 @section('content')
-@include('rekap.includes.sidenav')
+{{-- @include('rekap.includes.sidenav') --}}
 
 <div class="flex-auto px-0 pt-0 pb-2">
     <h2 class="text-lg font-semibold mb-4">Edit Data Produk</h2>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->enum('status', ['proses', 'aktif', 'tidak aktif'])->default('proses'); // Kolom enum status
             $table->timestamps();
-
+ 
             $table->foreign('jabatan_id')
                     ->references('id_jabatan')
                     ->on('tb_jabatan')

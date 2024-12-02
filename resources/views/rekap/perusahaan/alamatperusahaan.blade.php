@@ -1,19 +1,25 @@
 @extends('rekap.includes.master')
 @section('title', 'alamat perusahaan')
-
+@section('RekapperusahaanActive','shadow-soft-xl',)
 @section('content')
-@include('rekap.includes.sidenav')
 <div class="w-full px-6 py-6 mx-auto">
   <div class="container z-10">
     <div class="flex flex-wrap mt-0 -mx-3">
       <div class="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0" style="padding-top: 2px;">
         <div class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
           <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
-            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Welcome back</h3>
+            <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">
+              {{ isset($alamatPerusahaan) ? 'Edit Alamat Perusahaan' : 'Tambah Alamat Perusahaan'}}
+            </h3>
           </div>
           <div class="flex-auto p-6">
-            <form action="{{ route('alamatperusahaan.store') }}" method="POST">
+            <form action="{{ route('settingperusahaan.storeAlamatPerusahaan') }}" method="POST">
               @csrf
+              {{-- Jika edit, tambahkan hidden input untuk ID --}}
+              @if (isset($perusahaan))
+                <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id_perusahaan }}">
+              @endif
+              
               <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Provinsi</label>
               <div class="mb-4">
                   <input type="text" name="provinsi" class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" placeholder="Provinsi" value="{{ old('provinsi', $alamatPerusahaan->provinsi ?? '') }}" />

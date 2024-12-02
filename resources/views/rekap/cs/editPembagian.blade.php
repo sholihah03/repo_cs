@@ -1,8 +1,7 @@
 @extends('rekap.includes.master')
 @section('title', 'Edit Pembagian Produk')
-
+@section('PembagianprodukActive','shadow-soft-xl',)
 @section('content')
-@include('rekap.includes.sidenav')
 
 <div class="flex-auto px-6 pt-6 pb-4">
     <h2 class="text-lg font-semibold mb-4">Edit Pembagian Produk</h2>

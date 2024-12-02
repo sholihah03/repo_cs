@@ -25,6 +25,8 @@ class Karyawan extends Authenticatable
         'profile_karyawan',
         'password',
         'status',
+        'mulai_bekerja',
+        'akhir_bekerja',
     ];
 
     public function jabatan()
